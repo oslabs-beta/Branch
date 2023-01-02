@@ -20,11 +20,6 @@
         "title": "Hello World"
       },
       {
-        "command": "treeSVG.start",
-        "title": "Start new tree session",
-        "category": "Tree SVG"
-      },
-      {
         "command": "catCoding.start",
         "title": "Start new cat coding session",
         "category": "Cat Coding"
