@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Fresh App</title>
+        <title>VS|Branch</title>
       </Head>
       <main className="grid-cols-1">
         <header className=" bg-light-green max-w-[100%] h-1/2">
