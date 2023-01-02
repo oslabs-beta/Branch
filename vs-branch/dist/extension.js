@@ -7,12 +7,6 @@
 
 module.exports = require("vscode");
 
-/***/ }),
-/* 2 */
-/***/ ((module) => {
-
-module.exports = require("path");
-
 /***/ })
 /******/ 	]);
 /************************************************************************/
@@ -51,7 +45,6 @@ exports.deactivate = exports.activate = void 0;
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 const vscode = __webpack_require__(1);
-const path = __webpack_require__(2);
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 function activate(context) {
@@ -63,11 +56,7 @@ function activate(context) {
             // // Only allow the webview to access resources in our extension's media directory
             // localResourceRoots: [vscode.Uri.file(path.join(context.extensionPath, 'media'))]
         });
-        // Get path to resource on disk
-        const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'src', 'tree.js'));
-        // And get the special URI to use with the webview
-        const treeJS = panel.webview.asWebviewUri(onDiskPath);
-        panel.webview.html = getWebviewContent(treeJS);
+        panel.webview.html = getWebviewContent();
     }));
 }
 exports.activate = activate;
@@ -93,6 +82,7 @@ function getWebviewContent() {
   
 	  .node text {
 		font: 12px sans-serif;
+		fill: white;
 	  }
   
 	  .link {
@@ -104,11 +94,11 @@ function getWebviewContent() {
 	  </style>
   </head>
   <body>
-	  <img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" width="300" />
-	  <h1 id="lines-of-code-counter">0</h1>
+  <h1 id="treeData">This is the method: </h1>
+  <h2>This is the fetch data:   <p id="fetch"></p></h2>
 
 	  <script>
-	  var treeData = [
+	  let treeData = [
 		{
 		  "name": "LocalHost:8000",
 		  "parent": "null",
@@ -120,17 +110,20 @@ function getWebviewContent() {
 			  {
 				  "name": "/",
 				  "method": "GET",
+				  "person" : 1,
 				  "parent": "LocalHost:8000"
 				},
 				{
 				  "name": "/login",
 				  "method": "POST",
+				  "person" : 2,
 				  "parent": "LocalHost:8000"
 				},
 				{
 				  "name": "/createuser",
 				  "method": "POST",
-				  "parent": "Level 2: A"
+				  "person" : 3,
+				  "parent": "LocalHost:8000"
 				}
 			  ]
 			},
@@ -144,21 +137,21 @@ function getWebviewContent() {
 	  
 	  
 	  // ************** Generate the tree diagram	 *****************
-	  var margin = {top: 20, right: 120, bottom: 20, left: 120},
+	  let margin = {top: 20, right: 120, bottom: 20, left: 120},
 		  width = 960 - margin.right - margin.left,
 		  height = 500 - margin.top - margin.bottom;
 		  
-	  var i = 0,
+	  let i = 0,
 		  duration = 750,
 		  root;
 	  
-	  var tree = d3.layout.tree()
+	  let tree = d3.layout.tree()
 		  .size([height, width]);
 	  
-	  var diagonal = d3.svg.diagonal()
+	  let diagonal = d3.svg.diagonal()
 		  .projection(function(d) { return [d.y, d.x]; });
 	  
-	  var svg = d3.select("body").append("svg")
+	  let svg = d3.select("body").append("svg")
 		  .attr("width", width + margin.right + margin.left)
 		  .attr("height", height + margin.top + margin.bottom)
 		.append("g")
@@ -175,18 +168,18 @@ function getWebviewContent() {
 	  function update(source) {
 	  
 		// Compute the new tree layout.
-		var nodes = tree.nodes(root).reverse(),
+		let nodes = tree.nodes(root).reverse(),
 			links = tree.links(nodes);
 	  
 		// Normalize for fixed-depth.
 		nodes.forEach(function(d) { d.y = d.depth * 180; });
 	  
 		// Update the nodes…
-		var node = svg.selectAll("g.node")
+		let node = svg.selectAll("g.node")
 			.data(nodes, function(d) { return d.id || (d.id = ++i); });
 	  
 		// Enter any new nodes at the parent's previous position.
-		var nodeEnter = node.enter().append("g")
+		let nodeEnter = node.enter().append("g")
 			.attr("class", "node")
 			.attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
 			.on("click", click);
@@ -203,7 +196,7 @@ function getWebviewContent() {
 			.style("fill-opacity", 1e-6);
 	  
 		// Transition nodes to their new position.
-		var nodeUpdate = node.transition()
+		let nodeUpdate = node.transition()
 			.duration(duration)
 			.attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
 	  
@@ -215,7 +208,7 @@ function getWebviewContent() {
 			.style("fill-opacity", 1);
 	  
 		// Transition exiting nodes to the parent's new position.
-		var nodeExit = node.exit().transition()
+		let nodeExit = node.exit().transition()
 			.duration(duration)
 			.attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
 			.remove();
@@ -227,14 +220,14 @@ function getWebviewContent() {
 			.style("fill-opacity", 1e-6);
 	  
 		// Update the links…
-		var link = svg.selectAll("path.link")
+		let link = svg.selectAll("path.link")
 			.data(links, function(d) { return d.target.id; });
 	  
 		// Enter any new links at the parent's previous position.
 		link.enter().insert("path", "g")
 			.attr("class", "link")
 			.attr("d", function(d) {
-			  var o = {x: source.x0, y: source.y0};
+			  let o = {x: source.x0, y: source.y0};
 			  return diagonal({source: o, target: o});
 			});
 	  
@@ -247,7 +240,7 @@ function getWebviewContent() {
 		link.exit().transition()
 			.duration(duration)
 			.attr("d", function(d) {
-			  var o = {x: source.x, y: source.y};
+			  let o = {x: source.x, y: source.y};
 			  return diagonal({source: o, target: o});
 			})
 			.remove();
@@ -259,13 +252,36 @@ function getWebviewContent() {
 		});
 	  }
 	  
-	  // Toggle children on click.
+	  // Event handler for clicking a node
 	  function click(d) {
 		  console.log(d.method, d.name)
-	  
-		  fetch('https://swapi.dev/api/people/1')
-		  .then((response) => response.json())
-		  .then((data) => console.log(data));
+		  const methodData = document.getElementById('treeData');
+		  methodData.textContent = d.method;
+
+		  const fetchData = document.getElementById('fetch');
+
+		  if (d.person === 1) {
+			fetch('https://swapi.dev/api/people/1')
+			.then((response) => response.json())
+			.then((data) => {
+				fetchData.textContent = data.name;
+		  });
+		  }
+		  if (d.person === 2) {
+			fetch('https://swapi.dev/api/people/2')
+			.then((response) => response.json())
+			.then((data) => {
+				fetchData.textContent = data.name;
+		  });
+		  }
+		  if (d.person === 3) {
+			fetch('https://swapi.dev/api/people/3')
+			.then((response) => response.json())
+			.then((data) => {
+				fetchData.textContent = data.name;
+		  });
+		  }
+
 	  
 		if (d.children) {
 		  d._children = d.children;
