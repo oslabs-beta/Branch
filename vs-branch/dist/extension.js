@@ -1,11 +1,14 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 <<<<<<< HEAD
+<<<<<<< HEAD
 /******/ 	
 /******/ 	
 /******/ })()
 ;
 =======
+=======
+>>>>>>> dev
 /******/ 	var __webpack_modules__ = ([
 /* 0 */,
 /* 1 */
@@ -77,5 +80,9 @@ exports.deactivate = deactivate;
 module.exports = __webpack_exports__;
 /******/ })()
 ;
+<<<<<<< HEAD
+//# sourceMappingURL=extension.js.map
+>>>>>>> dev
+=======
 //# sourceMappingURL=extension.js.map
 >>>>>>> dev
