@@ -4,6 +4,8 @@
   },
   "importMap": "./import_map.json",
   "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
     "jsx": "react-jsx",
     "jsxImportSource": "preact"
   }

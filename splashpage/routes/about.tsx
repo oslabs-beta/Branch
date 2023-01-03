@@ -1,15 +1,84 @@
 import { PageProps } from '$fresh/server.ts';
+import Header from '../islands/Header.tsx';
+import Footer from '../islands/Footer.tsx';
 
 export default function AboutPage() {
   return (
-    <main>
-      <h1>About</h1>
-      <div className="flex flex-wrap justify-between">
-        <img src="https://ca.slack-edge.com/T03ULEJ5TK7-U0435R7RNKD-6994f7408236-512" />
-        <img src="https://ca.slack-edge.com/T03ULEJ5TK7-U0448T80P4M-dbbd0754f973-512" />
-        <img src="https://ca.slack-edge.com/T03ULEJ5TK7-U03VBUWPMMX-g043bf36f13b-512" />
-        <img src="https://ca.slack-edge.com/T03ULEJ5TK7-U03UVNRGPJ6-ac1d8b2829a0-512" />
-      </div>
-    </main>
+    <>
+      <head>
+        <title>VS|Branch - About Us</title>
+      </head>
+      <main>
+        <Header></Header>
+        <div className="bg-off-white h-screen">
+          <h1 className="pt-[100px] text-4xl text-center pb-[50px]">
+            About Us
+          </h1>
+          <div className="flex w-full">
+            <div className="w-1/4 bg-white m-3 p-3 rounded-xl grid justify-items-center shadow-md">
+              <img
+                src="https://i.imgur.com/1XXAny6.png"
+                alt="Team Face"
+                className="max-w-[200px]"
+              />
+              <div id="teamText" className="text-center">
+                <p>
+                  Jason Goldman <br />
+                  <a href="https://github.com/Trablink">Github</a>
+                  <br />
+                  Developer
+                </p>
+              </div>
+            </div>
+            <div className="w-1/4 bg-white m-3 p-3 rounded-xl grid justify-items-center shadow-md">
+              <img
+                src="https://i.imgur.com/1XXAny6.png"
+                alt="Team Face"
+                className="max-w-[200px]"
+              />
+              <div id="teamText" className="text-center">
+                <p>
+                  Jason Goldman <br />
+                  <a href="https://github.com/Trablink">Github</a>
+                  <br />
+                  Developer
+                </p>
+              </div>
+            </div>
+            <div className="w-1/4 bg-white m-3 p-3 rounded-xl grid justify-items-center shadow-md">
+              <img
+                src="https://i.imgur.com/1XXAny6.png"
+                alt="Team Face"
+                className="max-w-[200px]"
+              />
+              <div id="teamText" className="text-center">
+                <p>
+                  Jason Goldman <br />
+                  <a href="https://github.com/Trablink">Github</a>
+                  <br />
+                  Developer
+                </p>
+              </div>
+            </div>
+            <div className="w-1/4 bg-white m-3 p-3 rounded-xl grid justify-items-center shadow-md">
+              <img
+                src="https://i.imgur.com/1XXAny6.png"
+                alt="Team Face"
+                className="max-w-[200px]"
+              />
+              <div id="teamText" className="text-center">
+                <p>
+                  Jason Goldman <br />
+                  <a href="https://github.com/Trablink">Github</a>
+                  <br />
+                  Developer
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <Footer></Footer>
+      </main>
+    </>
   );
 }
