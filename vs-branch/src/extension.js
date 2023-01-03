@@ -53,7 +53,8 @@ function getWebviewContent() {
 	  </style>
   </head>
   <body>
-  <h1 id="treeData">This is the method: </h1>
+  <h1>This is the method: </h1>
+  <h1 id="treeData"></h1>
   <h2>This is the fetch data:   <p id="fetch"></p></h2>
 
 	  <script>
