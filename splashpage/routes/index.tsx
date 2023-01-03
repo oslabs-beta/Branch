@@ -1,58 +1,54 @@
 import { Head } from '$fresh/runtime.ts';
-import Counter from '../islands/Counter.tsx';
+import Header from '../islands/Header.tsx';
+import Footer from '../islands/Footer.tsx';
 
 export default function Home() {
   return (
     <>
       <Head>
-        <title>Fresh App</title>
+        <title>VS|Branch - Homepage</title>
       </Head>
-      <main className="grid-cols-1">
-        <header className=" bg-light-green max-w-[100%] h-1/2">
-          <div className="flex flex-row max-w-[100%]">
-            <div className="w-1/4">
-              <a href="/">
-                <img
-                  className="max-w-[70px]"
-                  src="https://imgur.com/sZRTCcz.png"
-                  alt="logoHolder"
-                ></img>
-              </a>
+      <main>
+        <Header></Header>
+        <div id="body" className="w-screen h-screen bg-off-white pt-[100px] ">
+          <div className="h-1/2 flex">
+            <div className="w-[50%]">
+              <p className="my-20 mx-10 text-justify text-lg">
+                FINALLY! A backend visualization solution for the Deno runtime
+                environment based within VS|Code has arrived. No more exporting
+                your files to another website. No more flipping between screens.
+                Now you can see it all and do it all from one easy, familiar
+                location!
+              </p>
             </div>
-            <div className="w-1/2 text-center text-5xl">
-              <p className="">VS|Branch</p>
-            </div>
-            <div className="w-1/4 flex justify-end">
-              <div>
-                <a href="/about" className="grow">
-                  About Us
-                </a>
-              </div>
-              <div className="self-end">
-                <a className="" href="https://github.com/oslabs-beta/VS-Branch">
-                  <img
-                    className="max-w-[40px]"
-                    src="https://imgur.com/Eq4BPYR.png"
-                    alt="Github"
-                  />
-                </a>
-              </div>
+            <div className="w-[50%]">
+              <img
+                className="max-w-[75%] mx-auto mt-10 rounded-xl"
+                src="https://yaobinouyang.gallerycdn.vsassets.io/extensions/yaobinouyang/codeatlas/1.3.34/1635120555850/273052/1/main.png"
+                alt="Placeholer Image"
+              />
             </div>
           </div>
-        </header>
-        <div className="min-h-[25%]">
-          <p>Part 1: Something braggy about how cool our extension is.</p>
-          <p>An image or gif showing that our shit is awesome</p>
+          <div className="h-1/2 flex">
+            <div className="w-[50%]">
+              <img
+                className="max-w-[75%] mx-auto mt-10 rounded-xl"
+                src="https://miro.medium.com/max/960/0*9gdFGVW4YGBCHYD7.jpg"
+                alt="Placeholder"
+              />
+            </div>
+            <div className="w-[50%]">
+              <p className="my-20 mx-10 text-justify text-lg">
+                MORE WORDS! Very important words. Words that will get us all
+                hired by top end companies. Words so good it'll make Ryan cry
+                the next time he reviews our progress. Words that will land our
+                entire team into codesmith lore. Words so powerful that James
+                will teach a hard-parts lecture on that alone.
+              </p>
+            </div>
+          </div>
         </div>
-        <div className="min-h-[25%]">
-          <p>
-            Part 2: If we have the time... this will be the interactive dem0
-          </p>
-        </div>
-
-        <footer className="flex justify-around bg-green text-tan fixed bottom-0 w-full">
-          <p>VS|Branch 2023</p>
-        </footer>
+        <Footer></Footer>
       </main>
     </>
   );
