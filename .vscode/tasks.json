@@ -15,6 +15,14 @@
 				"kind": "build",
 				"isDefault": true
 			}
+		},
+		{
+			"type": "npm",
+			"script": "transpile",
+			"path": "vs-branch",
+			"problemMatcher": [],
+			"label": "npm: transpile - vs-branch",
+			"detail": "tsc -p ./"
 		}
 	]
 }

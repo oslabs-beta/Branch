@@ -24,7 +24,7 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
-    "compile": "tsc -p ./",
+    "transpile": "tsc -p ./",
     "watch": "tsc -watch -p ./"
   },
   "devDependencies": {
