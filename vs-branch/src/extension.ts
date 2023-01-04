@@ -1,6 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import vscode = require('vscode');
+import * as path from 'path';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -15,19 +16,24 @@ export function activate(context: vscode.ExtensionContext) {
 			{
 				// Enable scripts in the webview
 				enableScripts: true,
-				// // Only allow the webview to access resources in our extension's media directory
-				// localResourceRoots: [vscode.Uri.file(path.join(context.extensionPath, 'media'))]
+				// Only allow the webview to access resources in our extension's media directory
+				localResourceRoots: [vscode.Uri.file(path.join(context.extensionPath, 'src'))]
 			}
 		  );
 	
-			panel.webview.html = getWebviewContent();
+			const onDiskPath = vscode.Uri.file(
+        path.join(context.extensionPath, 'src', 'tree.js')
+      );
+      const jsSrc = panel.webview.asWebviewUri(onDiskPath);
+
+			panel.webview.html = getWebviewContent(jsSrc);
 		})
 	  );
 
 }
 
 
-function getWebviewContent() {
+function getWebviewContent(jsSrc: vscode.Uri) {
 	return `<!DOCTYPE html>
   <html lang="en">
   <head>
@@ -64,7 +70,7 @@ function getWebviewContent() {
 		<h1>This is the method: </h1>
 		<h1 id="treeData"></h1>
 		<h2>This is the fetch data:   <p id="fetch"></p></h2>
-	  <script src="./tree.js"></script>
+		<script src="${jsSrc}"></script>
 	</body>
   </html>`;
   }
