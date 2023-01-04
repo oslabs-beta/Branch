@@ -5,6 +5,7 @@ exports.deactivate = exports.activate = void 0;
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require("vscode");
 const path = require("path");
+const scraper_1 = require("./scraper");
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 function activate(context) {
@@ -16,6 +17,14 @@ function activate(context) {
             // Only allow the webview to access resources in our extension's media directory
             localResourceRoots: [vscode.Uri.file(path.join(context.extensionPath, 'src'))]
         });
+        // Check if the 
+        if (vscode.workspace.workspaceFolders !== undefined) {
+            const cwd = vscode.workspace.workspaceFolders[0].uri.path;
+            const getResults = scraper_1.default.scrape(cwd, 'get');
+        }
+        else {
+            console.log('No working directory found!');
+        }
         const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'src', 'tree.js'));
         const jsSrc = panel.webview.asWebviewUri(onDiskPath);
         panel.webview.html = getWebviewContent(jsSrc);
