@@ -1,17 +1,5 @@
 import { exec, execSync, spawn } from 'child_process';
-
-/**
- * Object output formatting:
- * {
- *    name: 'http://localhost:3000',
- *    parent: null,
- *    children: [
- *        {
- *          
- *        }
- *    ]
- * }
- */
+import { verify } from 'crypto';
 
 const scrape = (cwd: string, method: string) => {
   //TODO fix asynchronicity problems, specifically when to return the data retrieved.
@@ -25,7 +13,7 @@ const scrape = (cwd: string, method: string) => {
   
     rg.stdout.on("data", data => {
       console.log(`ripgrep stdout: \n${data}`);
-      result = data.split('\n');
+      result = data;
     });
     
     rg.stderr.on("data", data => {
@@ -40,6 +28,7 @@ const scrape = (cwd: string, method: string) => {
     
     rg.on("close", code => {
         console.log(`ripgrep exited with code ${code}`);
+        console.log(`Resolved result: \n${result}`);
         resolve(result);
     });
   });
