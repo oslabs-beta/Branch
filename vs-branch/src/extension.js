@@ -16,15 +16,15 @@ function activate(context) {
             // Only allow the webview to access resources in our extension's src directory
             localResourceRoots: [vscode.Uri.file(path.join(context.extensionPath, 'src'))]
         });
-        const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'src', 'tree.js'));
-        const jsSrc = panel.webview.asWebviewUri(onDiskPath);
+        const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'src', 'tree.ts'));
+        const tsSrc = panel.webview.asWebviewUri(onDiskPath);
         const onDiskCSSPath = vscode.Uri.file(path.join(context.extensionPath, 'src', 'styles.css'));
         const cssSrc = panel.webview.asWebviewUri(onDiskCSSPath);
-        panel.webview.html = getWebviewContent(jsSrc, cssSrc);
+        panel.webview.html = getWebviewContent(tsSrc, cssSrc);
     }));
 }
 exports.activate = activate;
-function getWebviewContent(jsSrc, cssSrc) {
+function getWebviewContent(tsSrc, cssSrc) {
     return `<!DOCTYPE html>
   <html lang="en">
   <head>
@@ -39,7 +39,7 @@ function getWebviewContent(jsSrc, cssSrc) {
 	<div class="container">
 		<span class="treeContainer">
 			<h1 class="mainheader" >Route Tree</h1>
-			<script src="${jsSrc}"></script>
+			<script src="${tsSrc}"></script>
 		</span>
 		<span class="responseContainer">
 			<h1>This is the method: </h1>

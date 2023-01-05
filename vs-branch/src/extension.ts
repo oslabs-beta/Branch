@@ -3,6 +3,8 @@
 import vscode = require('vscode');
 import * as path from 'path';
 
+
+
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -22,22 +24,22 @@ export function activate(context: vscode.ExtensionContext) {
 		  );
 	
 			const onDiskPath = vscode.Uri.file(
-        path.join(context.extensionPath, 'src', 'tree.js')
+        path.join(context.extensionPath, 'src', 'tree.ts')
       );
-      const jsSrc = panel.webview.asWebviewUri(onDiskPath);
+      const tsSrc = panel.webview.asWebviewUri(onDiskPath);
 
 	  const onDiskCSSPath = vscode.Uri.file(
         path.join(context.extensionPath, 'src', 'styles.css')
       );
       const cssSrc = panel.webview.asWebviewUri(onDiskCSSPath);
 
-			panel.webview.html = getWebviewContent(jsSrc, cssSrc);
+			panel.webview.html = getWebviewContent(tsSrc, cssSrc);
 		})
 	  );
 
 }
 
-function getWebviewContent(jsSrc: vscode.Uri, cssSrc: vscode.Uri) {
+function getWebviewContent(tsSrc: vscode.Uri, cssSrc: vscode.Uri) {
 	return `<!DOCTYPE html>
   <html lang="en">
   <head>
@@ -52,7 +54,7 @@ function getWebviewContent(jsSrc: vscode.Uri, cssSrc: vscode.Uri) {
 	<div class="container">
 		<span class="treeContainer">
 			<h1 class="mainheader" >Route Tree</h1>
-			<script src="${jsSrc}"></script>
+			<script src="${tsSrc}"></script>
 		</span>
 		<span class="responseContainer">
 			<h1>This is the method: </h1>

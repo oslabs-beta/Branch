@@ -37,7 +37,6 @@ body {
 
 .treeContainer {
   outline: white solid 2px;
-  background-color: #b7c5b7;
 }
 
 .responseContainer {
@@ -69,4 +68,8 @@ body {
 
 .mainheader {
   padding-left: 2rem;
+}
+
+svg {
+  background-color: #b7c5b7;
 }
