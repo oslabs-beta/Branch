@@ -2,8 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import vscode = require('vscode');
 import * as path from 'path';
-import scrape from './scraper';
-import scraper from './scraper';
+import getRoutes from './scraper';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -23,10 +22,12 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		  );
 
-			// Check if the 
+			//TODO Scrape HERE, make asynchronous, write all scraped data to a JSON file
+			//TODO format the JSON like template.json, wrtite file to src directory
+
 			if(vscode.workspace.workspaceFolders !== undefined) {
 				const cwd = vscode.workspace.workspaceFolders[0].uri.path;
-				const getResults = scraper.scrape(cwd, 'get');
+				getRoutes(cwd);
 			} else {
 				console.log('No working directory found!');
 			}
@@ -36,14 +37,14 @@ export function activate(context: vscode.ExtensionContext) {
       );
       const jsSrc = panel.webview.asWebviewUri(onDiskPath);
 
-			panel.webview.html = getWebviewContent(jsSrc);
+			panel.webview.html = getWebviewContent(jsSrc, {});
 		})
 	  );
 
 }
 
 
-function getWebviewContent(jsSrc: vscode.Uri) {
+function getWebviewContent(jsSrc: vscode.Uri, treeData: Object) {
 	return `<!DOCTYPE html>
   <html lang="en">
   <head>
@@ -80,6 +81,9 @@ function getWebviewContent(jsSrc: vscode.Uri) {
 		<h1>This is the method: </h1>
 		<h1 id="treeData"></h1>
 		<h2>This is the fetch data:   <p id="fetch"></p></h2>
+		<script>
+			const TREE_DATA= ${treeData};
+		</script>
 		<script src="${jsSrc}"></script>
 	</body>
   </html>`;

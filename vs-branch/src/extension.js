@@ -17,21 +17,22 @@ function activate(context) {
             // Only allow the webview to access resources in our extension's media directory
             localResourceRoots: [vscode.Uri.file(path.join(context.extensionPath, 'src'))]
         });
-        // Check if the 
+        //TODO Scrape HERE, make asynchronous, write all scraped data to a JSON file
+        //TODO format the JSON like template.json, wrtite file to src directory
         if (vscode.workspace.workspaceFolders !== undefined) {
             const cwd = vscode.workspace.workspaceFolders[0].uri.path;
-            const getResults = scraper_1.default.scrape(cwd, 'get');
+            (0, scraper_1.default)(cwd);
         }
         else {
             console.log('No working directory found!');
         }
         const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'src', 'tree.js'));
         const jsSrc = panel.webview.asWebviewUri(onDiskPath);
-        panel.webview.html = getWebviewContent(jsSrc);
+        panel.webview.html = getWebviewContent(jsSrc, {});
     }));
 }
 exports.activate = activate;
-function getWebviewContent(jsSrc) {
+function getWebviewContent(jsSrc, treeData) {
     return `<!DOCTYPE html>
   <html lang="en">
   <head>
@@ -68,6 +69,9 @@ function getWebviewContent(jsSrc) {
 		<h1>This is the method: </h1>
 		<h1 id="treeData"></h1>
 		<h2>This is the fetch data:   <p id="fetch"></p></h2>
+		<script>
+			const TREE_DATA= ${treeData};
+		</script>
 		<script src="${jsSrc}"></script>
 	</body>
   </html>`;
