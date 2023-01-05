@@ -1,4 +1,5 @@
-let treeData = [
+
+let treeData = 
   {
     "name": "LocalHost:8000",
     "parent": "null",
@@ -11,13 +12,33 @@ let treeData = [
         "name": "/",
         "method": "GET",
         "person" : 1,
-        "parent": "LocalHost:8000"
+        "parent": "LocalHost:8000",
       },
       {
         "name": "/login",
         "method": "POST",
         "person" : 2,
-        "parent": "LocalHost:8000"
+        "parent": "LocalHost:8000",
+        "children": [
+          {
+            "name": "GET",
+            "method": "GET",
+            "person" : 1,
+            "parent": "LocalHost:8000",
+          },
+          {
+            "name": "POST",
+            "method": "POST",
+            "person" : 2,
+            "parent": "LocalHost:8000"
+          },
+          {
+            "name": "PATCH",
+            "method": "POST",
+            "person" : 3,
+            "parent": "LocalHost:8000"
+          }
+        ]
       },
       {
         "name": "/createuser",
@@ -30,15 +51,26 @@ let treeData = [
     {
       "name": "/about",
       "parent": "LocalHost:8000"
+    },
+    {
+      "name": "/pasta",
+      "parent": "LocalHost:8000",
+    },
+    {
+      "name": "/spagetti",
+      "parent": "LocalHost:8000",
+    },
+    {
+      "name": "/marinara",
+      "parent": "LocalHost:8000",
     }
     ]
-  }
-];
+  };
 
 // ************** Generate the tree diagram	 *****************
-let margin = {top: 20, right: 120, bottom: 20, left: 120},
-  width = 960 - margin.right - margin.left,
-  height = 500 - margin.top - margin.bottom;
+let margin = {top: 20, right: 120, bottom: 20, left: 150},
+  width = 800 - margin.right - margin.left,
+  height = 400 - margin.top - margin.bottom;
   
 let i = 0,
   duration = 750,
@@ -50,28 +82,44 @@ let tree = d3.layout.tree()
 let diagonal = d3.svg.diagonal()
   .projection(function(d) { return [d.y, d.x]; });
 
-let svg = d3.select("body").append("svg")
+let svg = d3.select(".treeContainer").append("svg")
   .attr("width", width + margin.right + margin.left)
+  .classed("svg", true)
   .attr("height", height + margin.top + margin.bottom)
 .append("g")
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-root = treeData[0];
+ 
+let zoom = d3.zoom()
+.on('zoom', handleZoom);
+
+function handleZoom(e) {
+d3.select('svg g')
+  .attr('transform', e.transform);
+}
+
+function initZoom() {
+d3.select('svg')
+  .call(zoom);
+}
+
+initZoom();
+
+root = treeData;
 root.x0 = height / 2;
 root.y0 = 0;
 
 update(root);
 
-d3.select(self.frameElement).style("height", "500px");
+d3.select(self.frameElement).style("height", "400px");
+d3.select(self.frameElement).style("width", "800px");
+
 
 function update(source) {
 
 // Compute the new tree layout.
 let nodes = tree.nodes(root).reverse(),
   links = tree.links(nodes);
-
-// Normalize for fixed-depth.
-nodes.forEach(function(d) { d.y = d.depth * 180; });
 
 // Update the nodes…
 let node = svg.selectAll("g.node")
@@ -149,15 +197,31 @@ nodes.forEach(function(d) {
   d.x0 = d.x;
   d.y0 = d.y;
 });
+
+// svg.call(d3.zoom()
+//       .extent([[0, 0], [width, height]])
+//       .scaleExtent([1, 8])
+//       .on("zoom", zoomed));
+
+//   function zoomed({transform}) {
+//     g.attr("transform", transform);
+//   }
+
+//   return svg.node();
+
 }
 
 // Event handler for clicking a node
 function click(d) {
-  console.log(d.method, d.name)
+  console.log(d.method, d.name);
   const methodData = document.getElementById('treeData');
   methodData.textContent = d.method;
 
   const fetchData = document.getElementById('fetch');
+
+  if (d.name === 'GET' || d.name === 'POST' || d.name === 'PATCH') {
+    console.log('click me to create fetch request', d.name);
+  }
 
   if (d.person === 1) {
   fetch('https://swapi.dev/api/people/1')
@@ -182,12 +246,29 @@ function click(d) {
   }
 
 
-if (d.children) {
-  d._children = d.children;
-  d.children = null;
-} else {
-  d.children = d._children;
-  d._children = null;
+  if (d.children) {
+    d._children = d.children;
+    d.children = null;
+  } else {
+    d.children = d._children;
+    d._children = null;
+  }
+
+  update(d);
 }
-update(d);
+
+//click handler for query params - input args?
+function clickHandler() {
+  
+  //findby id and add .value
+  const key = document.getElementById('key').value;
+  console.log(key);
+  document.getElementById('key').value = "";
+  const value = document.getElementById('value').value;
+  console.log(value);
+  document.getElementById('value').value = "";
+  const description = document.getElementById('description').value;
+  console.log(description);
+  document.getElementById('description').value = "";
 }
+

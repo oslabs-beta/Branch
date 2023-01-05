@@ -16,7 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
 			{
 				// Enable scripts in the webview
 				enableScripts: true,
-				// Only allow the webview to access resources in our extension's media directory
+				// Only allow the webview to access resources in our extension's src directory
 				localResourceRoots: [vscode.Uri.file(path.join(context.extensionPath, 'src'))]
 			}
 		  );
@@ -26,51 +26,50 @@ export function activate(context: vscode.ExtensionContext) {
       );
       const jsSrc = panel.webview.asWebviewUri(onDiskPath);
 
-			panel.webview.html = getWebviewContent(jsSrc);
+	  const onDiskCSSPath = vscode.Uri.file(
+        path.join(context.extensionPath, 'src', 'styles.css')
+      );
+      const cssSrc = panel.webview.asWebviewUri(onDiskCSSPath);
+
+			panel.webview.html = getWebviewContent(jsSrc, cssSrc);
 		})
 	  );
 
 }
 
-
-function getWebviewContent(jsSrc: vscode.Uri) {
+function getWebviewContent(jsSrc: vscode.Uri, cssSrc: vscode.Uri) {
 	return `<!DOCTYPE html>
   <html lang="en">
   <head>
 	  <meta charset="UTF-8">
 	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	  <title>Cat Coding</title>
+	  <title>VS|Branch</title>
 	  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
-	  <style>
-	
-	  .node {
-		  cursor: pointer;
-	  }
-  
-	  .node circle {
-		fill: #fff;
-		stroke: steelblue;
-		stroke-width: 3px;
-	  }
-  
-	  .node text {
-		font: 12px sans-serif;
-		fill: white;
-	  }
-  
-	  .link {
-		fill: none;
-		stroke: #ccc;
-		stroke-width: 2px;
-	  }
-	  
-	  </style>
+	  <script src="https://cdn.jsdelivr.net/npm/d3-zoom@3"></script>
+	  <link rel="stylesheet" href="${cssSrc}" />
   </head>
   <body>
-		<h1>This is the method: </h1>
-		<h1 id="treeData"></h1>
-		<h2>This is the fetch data:   <p id="fetch"></p></h2>
-		<script src="${jsSrc}"></script>
+	<div class="container">
+		<span class="treeContainer">
+			<h1 class="mainheader" >Route Tree</h1>
+			<script src="${jsSrc}"></script>
+		</span>
+		<span class="responseContainer">
+			<h1>This is the method: </h1>
+			<h1 id="treeData"></h1>
+			<h2>This is the fetch data:   <p id="fetch"></p></h2>
+		</span>
+	</div>
+		<div class="input" >
+			<h1>Query params</h1>
+			<label for="key" >Key:</label>
+			<input id="key"/>
+			<label for="value" >Value:</label>
+			<input id="value" />
+			<label for="description">Description:</label>
+			<input id="description" />
+			<button onclick="clickHandler()">Check Route</button>
+		</div>
 	</body>
   </html>`;
   }
