@@ -14,6 +14,7 @@ const scrape = (cwd: string, method: string) => {
     rg.stdout.on("data", data => {
       console.log(`ripgrep stdout: \n${data}`);
       result = data;
+      result = data;
     });
     
     rg.stderr.on("data", data => {
