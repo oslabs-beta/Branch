@@ -1,4 +1,5 @@
 import { exec, execSync, spawn } from 'child_process';
+import { verify } from 'crypto';
 
 /**
  * Object output formatting:
@@ -25,7 +26,7 @@ const scrape = (cwd: string, method: string) => {
   
     rg.stdout.on("data", data => {
       console.log(`ripgrep stdout: \n${data}`);
-      result = data.split('\n');
+      result = data;
     });
     
     rg.stderr.on("data", data => {
@@ -40,6 +41,7 @@ const scrape = (cwd: string, method: string) => {
     
     rg.on("close", code => {
         console.log(`ripgrep exited with code ${code}`);
+        console.log(`Resolved result: ${result}`);
         resolve(result);
     });
   });
