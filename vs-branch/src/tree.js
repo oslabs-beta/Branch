@@ -1,4 +1,5 @@
 "use strict";
+// deno-lint-ignore-file no-unused-vars
 const treeData = {
     name: 'http://localhost:3000',
     parent: null,
@@ -30,8 +31,10 @@ const treeData = {
     ],
 };
 // ************** Generate the tree diagram	 *****************
-let margin = { top: 20, right: 120, bottom: 20, left: 175 }, width = 800 - margin.right - margin.left, height = 400 - margin.top - margin.bottom;
-let i = 0, duration = 750, root;
+const margin = { top: 20, right: 120, bottom: 20, left: 175 }, width = 800 - margin.right - margin.left, height = 400 - margin.top - margin.bottom;
+let i = 0;
+const duration = 750;
+const root = treeData;
 let tree = d3.layout.tree().size([height, width]);
 let diagonal = d3.svg.diagonal().projection(function (d) {
     return [d.y, d.x];
@@ -44,15 +47,7 @@ let svg = d3
     .attr('height', height + margin.top + margin.bottom)
     .append('g')
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-let zoom = d3.zoom().on('zoom', handleZoom);
-function handleZoom(e) {
-    d3.select('svg g').attr('transform', e.transform);
-}
-function initZoom() {
-    d3.select('svg').call(zoom);
-}
-initZoom();
-root = treeData;
+// root = treeData;
 root.x0 = height / 2;
 root.y0 = 0;
 update(root);
@@ -60,13 +55,13 @@ d3.select(self.frameElement).style('height', '400px');
 d3.select(self.frameElement).style('width', '800px');
 function update(source) {
     // Compute the new tree layout.
-    let nodes = tree.nodes(root).reverse(), links = tree.links(nodes);
+    const nodes = tree.nodes(root).reverse(), links = tree.links(nodes);
     // Update the nodes…
-    let node = svg.selectAll('g.node').data(nodes, function (d) {
+    const node = svg.selectAll('g.node').data(nodes, function (d) {
         return d.id || (d.id = ++i);
     });
     // Enter any new nodes at the parent's previous position.
-    let nodeEnter = node
+    const nodeEnter = node
         .enter()
         .append('g')
         .attr('class', 'node')
@@ -94,7 +89,7 @@ function update(source) {
     })
         .style('fill-opacity', 1e-6);
     // Transition nodes to their new position.
-    let nodeUpdate = node
+    const nodeUpdate = node
         .transition()
         .duration(duration)
         .attr('transform', function (d) {
@@ -108,7 +103,7 @@ function update(source) {
     });
     nodeUpdate.select('text').style('fill-opacity', 1);
     // Transition exiting nodes to the parent's new position.
-    let nodeExit = node
+    const nodeExit = node
         .exit()
         .transition()
         .duration(duration)
@@ -128,7 +123,7 @@ function update(source) {
         .insert('path', 'g')
         .attr('class', 'link')
         .attr('d', function (d) {
-        let o = { x: source.x0, y: source.y0 };
+        const o = { x: source.x0, y: source.y0 };
         return diagonal({ source: o, target: o });
     });
     // Transition links to their new position.
@@ -139,7 +134,7 @@ function update(source) {
         .transition()
         .duration(duration)
         .attr('d', function (d) {
-        let o = { x: source.x, y: source.y };
+        const o = { x: source.x, y: source.y };
         return diagonal({ source: o, target: o });
     })
         .remove();
@@ -168,8 +163,9 @@ function click(d) {
             d.parent = d.parent.parent;
         }
         for (let i = 0; i < fullPath.length; i++) {
-            if (fullPath[i].name)
+            if (fullPath[i].name) {
                 pathStr += fullPath[i].name;
+            }
         }
         pathStr += d.name;
         console.log('PATHSTR', pathStr);
@@ -177,14 +173,9 @@ function click(d) {
     fetch(pathStr)
         .then((data) => data.json())
         .then((data) => {
-        const dataDiv = document.createElement('div');
-        dataDiv.innerText = JSON.stringify(data);
-        document.querySelector('#fetch').append(dataDiv);
+        data = JSON.stringify(data);
+        codemirror.getDoc().setValue(data);
     });
-    console.log(d.method, d.name);
-    const methodData = document.getElementById('treeData');
-    methodData.textContent = d.method;
-    const fetchData = document.getElementById('fetch');
     if (d.children) {
         d._children = d.children;
         d.children = null;
@@ -207,5 +198,12 @@ function clickHandler() {
     const description = document.getElementById('description').value;
     console.log(description);
     document.getElementById('description').value = '';
+}
+function addParams() {
+    const label = document.createElement('label').setAttribute('for', 'key');
+    label.innerHTML = 'Key: ';
+    document.querySelector('.input').append(label);
+    const input = document.createElement('input').setAttribute('id', 'key');
+    document.querySelector('.input').append(input);
 }
 //# sourceMappingURL=tree.js.map

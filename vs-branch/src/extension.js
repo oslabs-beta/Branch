@@ -18,13 +18,15 @@ function activate(context) {
         });
         const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'src', 'tree.ts'));
         const tsSrc = panel.webview.asWebviewUri(onDiskPath);
+        const onDiskModalPath = vscode.Uri.file(path.join(context.extensionPath, 'src', 'modal.ts'));
+        const modalSrc = panel.webview.asWebviewUri(onDiskModalPath);
         const onDiskCSSPath = vscode.Uri.file(path.join(context.extensionPath, 'src', 'styles.css'));
         const cssSrc = panel.webview.asWebviewUri(onDiskCSSPath);
-        panel.webview.html = getWebviewContent(tsSrc, cssSrc);
+        panel.webview.html = getWebviewContent(tsSrc, cssSrc, modalSrc);
     }));
 }
 exports.activate = activate;
-function getWebviewContent(tsSrc, cssSrc) {
+function getWebviewContent(tsSrc, cssSrc, modalSrc) {
     return `<!DOCTYPE html>
   <html lang="en">
   <head>
@@ -34,18 +36,34 @@ function getWebviewContent(tsSrc, cssSrc) {
 	  <link rel="stylesheet" href="${cssSrc}" />
 	  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
 	  <script src="https://cdn.jsdelivr.net/npm/d3-zoom@3"></script>
+	  <link rel="stylesheet"
+	  href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.css">
+	</link>
+	
+	<script type="text/javascript"
+	  src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js">
+	</script>
   </head>
   <body>
   	
 	<div class="container">
 		<span class="treeContainer">
 			<h1 class="mainheader" >Route Tree</h1>
-			<script src="${tsSrc}"></script>
 		</span>
-		<span class="responseContainer">
-			<h1>This is the method: </h1>
-			<h1 id="treeData"></h1>
-			<h2>This is the fetch data:   <p id="fetch"></p></h2>
+		<span class="responseContainer" >
+			<textarea id="code-block">
+			testObj = {
+				test: 'data',
+				test: 'data',
+				test: 'data',
+				test: 'data',
+				test: 'data',
+				test: 'data',
+				test: 'data',
+				test: 'data',
+				test: 'data',
+			}
+				</textarea>
 		</span>
 	</div>
 		<div class="input" >
@@ -56,8 +74,23 @@ function getWebviewContent(tsSrc, cssSrc) {
 			<input id="value" />
 			<label for="description">Description:</label>
 			<input id="description" />
+			<button onclick="addParams()">Add Params</button>
 			<button onclick="clickHandler()">Check Route</button>
 		</div>
+		<script>
+		// The codeMirror editor object
+		let codemirror = CodeMirror.fromTextArea(
+			document.getElementById("code-block"), 
+			{
+				lineNumbers     : true,
+				lineWrapping    : true,
+				mode            : "javascript",
+				htmlMode        : false,
+				theme           : "3024-night",
+				readOnly        : true
+		});
+		</script>
+		<script src="${tsSrc}"></script>
 	</body>
   </html>`;
 }
