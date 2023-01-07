@@ -46,11 +46,12 @@ function getWebviewContent(tsSrc: vscode.Uri, cssSrc: vscode.Uri) {
 	  <meta charset="UTF-8">
 	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	  <title>VS|Branch</title>
+	  <link rel="stylesheet" href="${cssSrc}" />
 	  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
 	  <script src="https://cdn.jsdelivr.net/npm/d3-zoom@3"></script>
-	  <link rel="stylesheet" href="${cssSrc}" />
   </head>
   <body>
+  	
 	<div class="container">
 		<span class="treeContainer">
 			<h1 class="mainheader" >Route Tree</h1>

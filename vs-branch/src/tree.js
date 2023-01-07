@@ -30,7 +30,7 @@ const treeData = {
     ],
 };
 // ************** Generate the tree diagram	 *****************
-let margin = { top: 20, right: 120, bottom: 20, left: 150 }, width = 800 - margin.right - margin.left, height = 400 - margin.top - margin.bottom;
+let margin = { top: 20, right: 120, bottom: 20, left: 175 }, width = 800 - margin.right - margin.left, height = 400 - margin.top - margin.bottom;
 let i = 0, duration = 750, root;
 let tree = d3.layout.tree().size([height, width]);
 let diagonal = d3.svg.diagonal().projection(function (d) {
@@ -177,37 +177,14 @@ function click(d) {
     fetch(pathStr)
         .then((data) => data.json())
         .then((data) => {
-        console.log(d);
-        console.log(data);
+        const dataDiv = document.createElement('div');
+        dataDiv.innerText = JSON.stringify(data);
+        document.querySelector('#fetch').append(dataDiv);
     });
     console.log(d.method, d.name);
     const methodData = document.getElementById('treeData');
     methodData.textContent = d.method;
     const fetchData = document.getElementById('fetch');
-    if (d.name === 'GET' || d.name === 'POST' || d.name === 'PATCH') {
-        console.log('click me to create fetch request', d.name);
-    }
-    if (d.person === 1) {
-        fetch('https://swapi.dev/api/people/1')
-            .then((response) => response.json())
-            .then((data) => {
-            fetchData.textContent = data.name;
-        });
-    }
-    if (d.person === 2) {
-        fetch('https://swapi.dev/api/people/2')
-            .then((response) => response.json())
-            .then((data) => {
-            fetchData.textContent = data.name;
-        });
-    }
-    if (d.person === 3) {
-        fetch('https://swapi.dev/api/people/3')
-            .then((response) => response.json())
-            .then((data) => {
-            fetchData.textContent = data.name;
-        });
-    }
     if (d.children) {
         d._children = d.children;
         d.children = null;

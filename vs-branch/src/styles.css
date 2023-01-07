@@ -27,12 +27,12 @@ body {
   fill: none;
   stroke: #b78b54;
   stroke-width: 2px;
-}/*# sourceMappingURL=styles.css.map */
+}
 
 .container {
- display: grid;
- grid-template-columns: 3fr 1fr;
- align-items: center;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  align-items: center;
 }
 
 .treeContainer {
@@ -41,8 +41,8 @@ body {
 
 .responseContainer {
   outline: white solid 2px;
-  /* background-color: white;
-  color: black; */
+  width: 15rem;
+  font-size: 0.5rem;
 }
 
 .input {
@@ -52,17 +52,16 @@ body {
   margin-top: 1rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
-
 }
 
 .input input {
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   margin-right: 1rem;
   background-color: #b7c5b7;
 }
 
 .input button {
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   background-color: #eee5d5;
 }
 
