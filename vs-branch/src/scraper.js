@@ -1,51 +1,72 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const child_process_1 = require("child_process");
-/**
- * Object output formatting:
- * {
- *    name: 'http://localhost:3000',
- *    parent: null,
- *    children: [
- *        {
- *
- *        }
- *    ]
- * }
- */
+const scrapedData = {};
+let scrapeCount = 0;
+class RouteTree {
+    constructor(name, reqParamRequired, methods, parent, children) {
+        this.name = name;
+        this.reqParamRequired = reqParamRequired;
+        this.parent = parent;
+        this.children = children;
+        this.methods = methods;
+    }
+    addChild(child) {
+        if (this.children) {
+            this.children.push(child);
+        }
+    }
+    setParent(parent) {
+        this.parent = parent;
+    }
+    addMethod(method) {
+        if (this.methods) {
+            this.methods.push(method);
+        }
+    }
+}
 const scrape = (cwd, method) => {
-    //TODO fix asynchronicity problems, specifically when to return the data retrieved.
-    // Ideas: Return a promise, resolve when child process exits
-    // run ripgrep in a shell 
-    return new Promise((resolve, reject) => {
-        let result = [];
-        const rg = (0, child_process_1.spawn)('rg', [`.${method}`, './'], {
-            cwd: cwd + '/server',
-        });
-        rg.stdout.on("data", data => {
-            console.log(`ripgrep stdout: \n${data}`);
-            result = data;
-        });
-        rg.stderr.on("data", data => {
-            console.log(`ripgrep stderr: ${data}`);
-            reject(data);
-        });
-        rg.on('error', (error) => {
-            console.log(`ripgrep error: ${error.message}`);
-            reject(error);
-        });
-        rg.on("close", code => {
-            console.log(`ripgrep exited with code ${code}`);
-            console.log(`Resolved result: ${result}`);
-            resolve(result);
-        });
+    let result;
+    const rg = (0, child_process_1.spawn)('rg', [`(.${method}[(]['"][./])`, './'], {
+        cwd: cwd + '/server',
+    });
+    rg.stdout.on('data', (data) => {
+        // console.log(`ripgrep stdout ${method}: \n${data}`);
+        result = data;
+    });
+    rg.stderr.on('data', (data) => {
+        console.log(`ripgrep: stderr: ${data}`);
+    });
+    rg.on('error', (error) => {
+        console.log(`ripgrep: error: ${error.message}`);
+    });
+    rg.on('close', (code) => {
+        scrapeCount++;
+        console.log(`ripgrep: ${method} exited with code ${code}`);
+        scrapedData[method] = result.toString();
+        if (scrapeCount >= 7) {
+            format();
+        }
     });
 };
-const format = () => { };
+const format = () => {
+    console.log('Format Running');
+    const result = new RouteTree('/', false);
+    const splitData = {};
+    for (const method in scrapedData) {
+        splitData[method] = scrapedData[method].split('\n');
+    }
+    console.log(splitData);
+};
 const getRoutes = async (cwd) => {
     const finalData = {};
-    const result = await scrape(cwd, 'get');
-    console.log('ripgrep result in getRoutes: ', result);
+    scrape(cwd, 'use');
+    scrape(cwd, 'get');
+    scrape(cwd, 'post');
+    scrape(cwd, 'delete');
+    scrape(cwd, 'put');
+    scrape(cwd, 'patch');
+    scrape(cwd, 'require');
 };
 exports.default = getRoutes;
 //# sourceMappingURL=scraper.js.map
