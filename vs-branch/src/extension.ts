@@ -49,9 +49,10 @@ export function activate(context: vscode.ExtensionContext) {
       );
       const cssSrc = panel.webview.asWebviewUri(onDiskCSSPath);
 
-      panel.webview.html = getWebviewContent(tsSrc, cssSrc, modalSrc);
-    })
-  );
+			panel.webview.html = getWebviewContent(tsSrc, cssSrc, modalSrc);
+		})
+	  );
+
 }
 
 function getWebviewContent(tsSrc: vscode.Uri, cssSrc: vscode.Uri, modalSrc: vscode.Uri) {
