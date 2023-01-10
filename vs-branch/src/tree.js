@@ -1,193 +1,295 @@
-let treeData = [
-  {
-    "name": "LocalHost:8000",
-    "parent": "null",
-    "children": [
-    {
-      "name": "/User",
-      "parent": "LocalHost:8000",
-      "children": [
-      {
-        "name": "/",
-        "method": "GET",
-        "person" : 1,
-        "parent": "LocalHost:8000"
-      },
-      {
-        "name": "/login",
-        "method": "POST",
-        "person" : 2,
-        "parent": "LocalHost:8000"
-      },
-      {
-        "name": "/createuser",
-        "method": "POST",
-        "person" : 3,
-        "parent": "LocalHost:8000"
-      }
-      ]
-    },
-    {
-      "name": "/about",
-      "parent": "LocalHost:8000"
-    }
-    ]
-  }
-];
-
+'use strict';
+// deno-lint-ignore-file no-unused-vars
+const treeData = {
+    name: 'http://localhost:3000',
+    parent: null,
+    children: [
+        {
+            name: '/chore',
+            parent: 'http://localhost:3000',
+            children: [
+                {
+                    name: '/',
+                    method: ['GET, POST'],
+                    parent: 'router1',
+                    children: [
+                        {
+                            name: 'GET',
+                            method: ['GET'],
+                            parent: 'router1',
+                            reqParamRequired: 'true',
+                            children: null,
+                        },
+                        {
+                            name: 'POST',
+                            method: ['POST'],
+                            parent: 'router1',
+                            reqParamRequired: 'true',
+                            children: null,
+                        },
+                    ],
+                },
+                {
+                    name: '/pasta',
+                    method: ['POST'],
+                    parent: 'router1',
+                    children: null,
+                },
+            ],
+        },
+        {
+            name: '/',
+            method: ['GET', 'POST'],
+            children: null,
+            parent: 'http://localhost:3000',
+        },
+    ],
+};
 // ************** Generate the tree diagram	 *****************
-let margin = {top: 20, right: 120, bottom: 20, left: 120},
-  width = 960 - margin.right - margin.left,
-  height = 500 - margin.top - margin.bottom;
-  
-let i = 0,
-  duration = 750,
-  root;
-
-let tree = d3.layout.tree()
-  .size([height, width]);
-
-let diagonal = d3.svg.diagonal()
-  .projection(function(d) { return [d.y, d.x]; });
-
-let svg = d3.select("body").append("svg")
-  .attr("width", width + margin.right + margin.left)
-  .attr("height", height + margin.top + margin.bottom)
-.append("g")
-  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-root = treeData[0];
+const margin = { top: 20, right: 120, bottom: 20, left: 175 }, width = 800 - margin.right - margin.left, height = 400 - margin.top - margin.bottom;
+let i = 0;
+const duration = 750;
+const root = treeData;
+let tree = d3.layout.tree().size([height, width]);
+let diagonal = d3.svg.diagonal().projection(function (d) {
+    return [d.y, d.x];
+});
+let svg = d3
+    .select('.treeContainer')
+    .append('svg')
+    .attr('width', width + margin.right + margin.left)
+    .classed('svg', true)
+    .attr('height', height + margin.top + margin.bottom)
+    .append('g')
+    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+// root = treeData;
 root.x0 = height / 2;
 root.y0 = 0;
-
 update(root);
-
-d3.select(self.frameElement).style("height", "500px");
-
+d3.select(self.frameElement).style('height', '400px');
+d3.select(self.frameElement).style('width', '800px');
 function update(source) {
-
-// Compute the new tree layout.
-let nodes = tree.nodes(root).reverse(),
-  links = tree.links(nodes);
-
-// Normalize for fixed-depth.
-nodes.forEach(function(d) { d.y = d.depth * 180; });
-
-// Update the nodes…
-let node = svg.selectAll("g.node")
-  .data(nodes, function(d) { return d.id || (d.id = ++i); });
-
-// Enter any new nodes at the parent's previous position.
-let nodeEnter = node.enter().append("g")
-  .attr("class", "node")
-  .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
-  .on("click", click);
-
-nodeEnter.append("circle")
-  .attr("r", 1e-6)
-  .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
-
-nodeEnter.append("text")
-  .attr("x", function(d) { return d.children || d._children ? -13 : 13; })
-  .attr("dy", ".35em")
-  .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
-  .text(function(d) { return d.name; })
-  .style("fill-opacity", 1e-6);
-
-// Transition nodes to their new position.
-let nodeUpdate = node.transition()
-  .duration(duration)
-  .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
-
-nodeUpdate.select("circle")
-  .attr("r", 10)
-  .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
-
-nodeUpdate.select("text")
-  .style("fill-opacity", 1);
-
-// Transition exiting nodes to the parent's new position.
-let nodeExit = node.exit().transition()
-  .duration(duration)
-  .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
-  .remove();
-
-nodeExit.select("circle")
-  .attr("r", 1e-6);
-
-nodeExit.select("text")
-  .style("fill-opacity", 1e-6);
-
-// Update the links…
-let link = svg.selectAll("path.link")
-  .data(links, function(d) { return d.target.id; });
-
-// Enter any new links at the parent's previous position.
-link.enter().insert("path", "g")
-  .attr("class", "link")
-  .attr("d", function(d) {
-    let o = {x: source.x0, y: source.y0};
-    return diagonal({source: o, target: o});
-  });
-
-// Transition links to their new position.
-link.transition()
-  .duration(duration)
-  .attr("d", diagonal);
-
-// Transition exiting nodes to the parent's new position.
-link.exit().transition()
-  .duration(duration)
-  .attr("d", function(d) {
-    let o = {x: source.x, y: source.y};
-    return diagonal({source: o, target: o});
-  })
-  .remove();
-
-// Stash the old positions for transition.
-nodes.forEach(function(d) {
-  d.x0 = d.x;
-  d.y0 = d.y;
-});
+    // Compute the new tree layout.
+    const nodes = tree.nodes(root).reverse(), links = tree.links(nodes);
+    // Update the nodes…
+    const node = svg.selectAll('g.node').data(nodes, function (d) {
+        return d.id || (d.id = ++i);
+    });
+    // Enter any new nodes at the parent's previous position.
+    const nodeEnter = node
+        .enter()
+        .append('g')
+        .attr('class', 'node')
+        .attr('transform', function (d) {
+        return 'translate(' + source.y0 + ',' + source.x0 + ')';
+    })
+        .on('click', click);
+    nodeEnter
+        .append('circle')
+        .attr('r', 1e-6)
+        .style('fill', function (d) {
+        return d._children ? 'lightsteelblue' : '#fff';
+    });
+    nodeEnter
+        .append('text')
+        .attr('x', function (d) {
+        return d.children || d._children ? -13 : 13;
+    })
+        .attr('dy', '.35em')
+        .attr('text-anchor', function (d) {
+        return d.children || d._children ? 'end' : 'start';
+    })
+        .text(function (d) {
+        return d.name;
+    })
+        .style('fill-opacity', 1e-6);
+    // Transition nodes to their new position.
+    const nodeUpdate = node
+        .transition()
+        .duration(duration)
+        .attr('transform', function (d) {
+        return 'translate(' + d.y + ',' + d.x + ')';
+    });
+    nodeUpdate
+        .select('circle')
+        .attr('r', 10)
+        .style('fill', function (d) {
+        return d._children ? 'lightsteelblue' : '#fff';
+    });
+    nodeUpdate.select('text').style('fill-opacity', 1);
+    // Transition exiting nodes to the parent's new position.
+    const nodeExit = node
+        .exit()
+        .transition()
+        .duration(duration)
+        .attr('transform', function (d) {
+        return 'translate(' + source.y + ',' + source.x + ')';
+    })
+        .remove();
+    nodeExit.select('circle').attr('r', 1e-6);
+    nodeExit.select('text').style('fill-opacity', 1e-6);
+    // Update the links…
+    let link = svg.selectAll('path.link').data(links, function (d) {
+        return d.target.id;
+    });
+    // Enter any new links at the parent's previous position.
+    link
+        .enter()
+        .insert('path', 'g')
+        .attr('class', 'link')
+        .attr('d', function (d) {
+        const o = { x: source.x0, y: source.y0 };
+        return diagonal({ source: o, target: o });
+    });
+    // Transition links to their new position.
+    link.transition().duration(duration).attr('d', diagonal);
+    // Transition exiting nodes to the parent's new position.
+    link
+        .exit()
+        .transition()
+        .duration(duration)
+        .attr('d', function (d) {
+        const o = { x: source.x, y: source.y };
+        return diagonal({ source: o, target: o });
+    })
+        .remove();
+    // Stash the old positions for transition.
+    nodes.forEach(function (d) {
+        d.x0 = d.x;
+        d.y0 = d.y;
+    });
+    // svg.call(d3.zoom()
+    //       .extent([[0, 0], [width, height]])
+    //       .scaleExtent([1, 8])
+    //       .on("zoom", zoomed));
+    //   function zoomed({transform}) {
+    //     g.attr("transform", transform);
+    //   }
+    //   return svg.node();
 }
-
+let pathStr = '';
 // Event handler for clicking a node
 function click(d) {
-  console.log(d.method, d.name)
-  const methodData = document.getElementById('treeData');
-  methodData.textContent = d.method;
-
-  const fetchData = document.getElementById('fetch');
-
-  if (d.person === 1) {
-  fetch('https://swapi.dev/api/people/1')
-  .then((response) => response.json())
-  .then((data) => {
-    fetchData.textContent = data.name;
-  });
-  }
-  if (d.person === 2) {
-  fetch('https://swapi.dev/api/people/2')
-  .then((response) => response.json())
-  .then((data) => {
-    fetchData.textContent = data.name;
-  });
-  }
-  if (d.person === 3) {
-  fetch('https://swapi.dev/api/people/3')
-  .then((response) => response.json())
-  .then((data) => {
-    fetchData.textContent = data.name;
-  });
-  }
-
-
-if (d.children) {
-  d._children = d.children;
-  d.children = null;
-} else {
-  d.children = d._children;
-  d._children = null;
+    for (const key in d) {
+        if (d[key] === 'parent') {
+            console.log(d[key]);
+        }
+    }
+    console.log(d);
+    //check if d.reqParamRequired === true
+    //if true, move cursor to query key box and popup alert or message saying to add params
+    //if param required and key input empty
+    //fetch localhost3000 ${d.name} + ${method[0]}
+    // let pathStr = '';
+    pathStr = '';
+    let input = document.querySelector('#url');
+    input.value = '';
+    // console.log('method', d.method);
+    if (d.method) {
+        const fullPath = [];
+        console.log('d.parent', d.parent);
+        const tempD = structuredClone(d);
+        while (tempD.parent) {
+            fullPath.unshift(tempD.parent);
+            tempD.parent = tempD.parent.parent;
+        }
+        for (let i = 0; i < fullPath.length; i++) {
+            if (fullPath[i].name) {
+                pathStr += fullPath[i].name;
+            }
+        }
+        // pathStr += d.name;
+        console.log('PATHSTR', pathStr);
+    }
+    // d = tempD;
+    if (d.reqParamRequired) {
+        console.log(pathStr);
+        // document.getElementById('key').value = pathStr;
+        // const url = document.querySelector('.url');
+        // url.innerText = 'URL: ';
+        // input.setAttribute('id', 'url');
+        // url.appendChild(input);
+        input.value = pathStr + ':ENTER PARAM HERE';
+        return addAlert();
+    }
+    fetch(pathStr)
+        .then((data) => data.json())
+        .then((data) => {
+        data = JSON.stringify(data);
+        codemirror.getDoc().setValue(data);
+    });
+    if (d.children) {
+        d._children = d.children;
+        d.children = null;
+    }
+    else {
+        d.children = d._children;
+        d._children = null;
+    }
+    update(d);
 }
-update(d);
+let bodyObj = {};
+//click handler for query params - input args?
+function checkRoute() {
+    console.log('Pathstr', pathStr);
+    const key = document.getElementById('key').value;
+    console.log(key);
+    document.getElementById('key').value = '';
+    const value = document.getElementById('value').value;
+    console.log(value);
+    document.getElementById('value').value = '';
+    // const keyInfo = document.getElementById('key').value;
+    // document.getElementById('key').value = '';
+    // const valueInfo = document.getElementById('value').value;
+    // document.getElementById('value').value = '';
+    // bodyObj[keyInfo] = valueInfo;
+    console.log(bodyObj);
+    console.log(pathStr);
+    fetch(pathStr, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bodyObj),
+    })
+        .then((data) => data.json())
+        .then((data) => {
+        data = JSON.stringify(data);
+        codemirror.getDoc().setValue(data);
+    });
 }
+const addParams = () => {
+    const keyInfo = document.getElementById('key').value;
+    document.getElementById('key').value = '';
+    const valueInfo = document.getElementById('value').value;
+    document.getElementById('value').value = '';
+    bodyObj[keyInfo] = valueInfo;
+    document.querySelector('.reqObj').innerText = JSON.stringify(bodyObj);
+    // const label = document.createElement('label').setAttribute('for', 'key');
+    // label.innerHTML = 'Key: ';
+    // document.querySelector('.input').append(label);
+    // const input = document.createElement('input').setAttribute('id', 'key');
+    // document.querySelector('.input').append(input);
+};
+//# sourceMappingURL=tree.js.map
+// const addParams = function () {
+// let btn = document.getElementById('params');
+// let div = document.getElementById('input');
+// let h1 = document.createElement('h1');
+// h1.innerText = 'hello world';
+// div.appendChild(h1);
+// };
+const addAlert = function () {
+    let h2 = document.querySelector('.alert');
+    h2.innerText = 'Please enter a req param';
+};
+const checkParam = () => {
+    const urlPath = document.querySelector('#url').value;
+    fetch(urlPath)
+        .then((data) => data.json())
+        .then((data) => {
+        data = JSON.stringify(data);
+        codemirror.getDoc().setValue(data);
+    });
+};
+//# sourceMappingURL=tree.js.map
