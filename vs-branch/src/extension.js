@@ -16,47 +16,92 @@ function activate(context) {
             // Only allow the webview to access resources in our extension's src directory
             localResourceRoots: [vscode.Uri.file(path.join(context.extensionPath, 'src'))]
         });
-        const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'src', 'tree.js'));
-        const jsSrc = panel.webview.asWebviewUri(onDiskPath);
+        const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'src', 'tree.ts'));
+        const tsSrc = panel.webview.asWebviewUri(onDiskPath);
+        const onDiskModalPath = vscode.Uri.file(path.join(context.extensionPath, 'src', 'modal.ts'));
+        const modalSrc = panel.webview.asWebviewUri(onDiskModalPath);
         const onDiskCSSPath = vscode.Uri.file(path.join(context.extensionPath, 'src', 'styles.css'));
         const cssSrc = panel.webview.asWebviewUri(onDiskCSSPath);
-        panel.webview.html = getWebviewContent(jsSrc, cssSrc);
+        panel.webview.html = getWebviewContent(tsSrc, cssSrc, modalSrc);
     }));
 }
 exports.activate = activate;
-function getWebviewContent(jsSrc, cssSrc) {
+function getWebviewContent(tsSrc, cssSrc, modalSrc) {
     return `<!DOCTYPE html>
   <html lang="en">
   <head>
 	  <meta charset="UTF-8">
 	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	  <title>VS|Branch</title>
+	  <link rel="stylesheet" href="${cssSrc}" />
 	  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
 	  <script src="https://cdn.jsdelivr.net/npm/d3-zoom@3"></script>
-	  <link rel="stylesheet" href="${cssSrc}" />
+	  <link rel="stylesheet"
+	  href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.css">
+	</link>
+	
+	<script type="text/javascript"
+	  src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js">
+	</script>
   </head>
   <body>
+  	
 	<div class="container">
 		<span class="treeContainer">
 			<h1 class="mainheader" >Route Tree</h1>
-			<script src="${jsSrc}"></script>
 		</span>
-		<span class="responseContainer">
-			<h1>This is the method: </h1>
-			<h1 id="treeData"></h1>
-			<h2>This is the fetch data:   <p id="fetch"></p></h2>
+		<span class="responseContainer" >
+			<textarea id="code-block">
+			testObj = {
+				test: 'data',
+				test: 'data',
+				test: 'data',
+				test: 'data',
+				test: 'data',
+				test: 'data',
+				test: 'data',
+				test: 'data',
+				test: 'data',
+			}
+				</textarea>
 		</span>
 	</div>
-		<div class="input" >
+		<div class="input" id="input">
+		<div >
 			<h1>Query params</h1>
+			<div>
+			<span class="alert"></span>
+			<label for="url" >URL: </label>
+			<input class="url" id="url"/>
+			<button onclick="checkParam()">Check Param</button>
+			</div>
 			<label for="key" >Key:</label>
-			<input id="key"/>
+			<input id="key" />
 			<label for="value" >Value:</label>
 			<input id="value" />
-			<label for="description">Description:</label>
-			<input id="description" />
-			<button onclick="clickHandler()">Check Route</button>
+			<button onclick="addParams()">Add to Body</button>
+			<button onclick="checkRoute()">Check Route</button>
 		</div>
+		<div>
+			<h2>Req Body Field</h2>
+			<div class="reqObj" ></div>
+		</div>
+	</div>
+		
+		<script>
+		// The codeMirror editor object
+		let codemirror = CodeMirror.fromTextArea(
+			document.getElementById("code-block"), 
+			{
+				lineNumbers     : true,
+				lineWrapping    : true,
+				mode            : "javascript",
+				htmlMode        : false,
+				theme           : "3024-night",
+				readOnly        : true
+		});
+		</script>
+		<script src="${tsSrc}"></script>
 	</body>
   </html>`;
 }
