@@ -7,45 +7,45 @@ import getRoutes from './scraper';
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-	context.subscriptions.push(
-		vscode.commands.registerCommand('catCoding.start', () => {
-		  // Create and show panel
-		  const panel = vscode.window.createWebviewPanel(
-			'catCoding',
-			'Cat Coding',
-			vscode.ViewColumn.One,
-			{
-				// Enable scripts in the webview
-				enableScripts: true,
-				// Only allow the webview to access resources in our extension's media directory
-				localResourceRoots: [vscode.Uri.file(path.join(context.extensionPath, 'src'))]
-			}
-		  );
+  context.subscriptions.push(
+    vscode.commands.registerCommand('catCoding.start', () => {
+      // Create and show panel
+      const panel = vscode.window.createWebviewPanel(
+        'catCoding',
+        'Cat Coding',
+        vscode.ViewColumn.One,
+        {
+          // Enable scripts in the webview
+          enableScripts: true,
+          // Only allow the webview to access resources in our extension's media directory
+          localResourceRoots: [
+            vscode.Uri.file(path.join(context.extensionPath, 'src')),
+          ],
+        }
+      );
 
-			//TODO Scrape HERE, make asynchronous, write all scraped data to a JSON file
-			//TODO format the JSON like template.json, wrtite file to src directory
+      //TODO Scrape HERE, make asynchronous, write all scraped data to a JSON file
+      //TODO format the JSON like template.json, wrtite file to src directory
 
-			if(vscode.workspace.workspaceFolders !== undefined) {
-				const cwd = vscode.workspace.workspaceFolders[0].uri.path;
-				getRoutes(cwd);
-			} else {
-				console.log('No working directory found!');
-			}
+      if (vscode.workspace.workspaceFolders !== undefined) {
+        const cwd = vscode.workspace.workspaceFolders[0].uri.path;
+        getRoutes(cwd);
+      } else {
+        console.error('No working directory found!');
+      }
 
-			const onDiskPath = vscode.Uri.file(
+      const onDiskPath = vscode.Uri.file(
         path.join(context.extensionPath, 'src', 'tree.js')
       );
       const jsSrc = panel.webview.asWebviewUri(onDiskPath);
 
-			panel.webview.html = getWebviewContent(jsSrc, {});
-		})
-	  );
-
+      panel.webview.html = getWebviewContent(jsSrc, {});
+    })
+  );
 }
 
-
 function getWebviewContent(jsSrc: vscode.Uri, treeData: Object) {
-	return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
   <html lang="en">
   <head>
 	  <meta charset="UTF-8">
@@ -87,7 +87,7 @@ function getWebviewContent(jsSrc: vscode.Uri, treeData: Object) {
 		<script src="${jsSrc}"></script>
 	</body>
   </html>`;
-  }
+}
 
 // This method is called when your extension is deactivated
 export function deactivate() {}

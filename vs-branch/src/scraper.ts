@@ -1,78 +1,96 @@
-import { exec, execSync, spawn } from 'child_process';
-import { verify } from 'crypto';
+import { spawn } from 'child_process';
 
-// import fs from 'fs';
-const fs = require('fs');
-const path = require('path');
-
-const scrapedData: string[] = [];
-let formattedData: RouteTree;
-
-type RouteTree = {
-  name: string;
-  method?: string[];
-  parent: string | null;
-  children: RouteTree[] | null;
+const scrapedData = {
 };
+let scrapeCount: number = 0;
+
+class RouteTree {
+  name: string;
+  reqParamRequired: boolean;
+  methods?: string[];
+  parent?: string;
+  children?: RouteTree[];
+
+  constructor(
+    name: string,
+    reqParamRequired: boolean,
+    methods?: string[],
+    parent?: string,
+    children?: RouteTree[]
+  ) {
+    this.name = name;
+    this.reqParamRequired = reqParamRequired;
+    this.parent = parent;
+    this.children = children;
+    this.methods = methods;
+  }
+
+  addChild(child: RouteTree): void {
+    if (this.children) {
+      this.children.push(child);
+    }
+  }
+
+  setParent(parent: string): void {
+    this.parent = parent;
+  }
+
+  addMethod(method: string): void {
+    if (this.methods) {
+      this.methods.push(method);
+    }
+  }
+}
 
 const scrape = (cwd: string, method: string) => {
-  //TODO fix asynchronicity problems, specifically when to return the data retrieved.
-  // Ideas: Return a promise, resolve when child process exits
-  // run ripgrep in a shell 
-  let result: string = '';
-  let rg;
-  console.log (`break point 1`);
-  rg = spawn('rg', [`.${method}`, './'],
-    { 
-      cwd : cwd + '/server', 
-    });
-    console.log (`break point 2`);
+  let result: string;
+  const rg = spawn('rg', [`(.${method}[(]['"][./])`, './'], { 
+    cwd: cwd + '/server',
+  });
 
-  rg.stdout.on("data", data => {
-    console.log (`break point 3`);
-    console.log(`ripgrep stdout: \n${data}`);
+  rg.stdout.on('data', (data) => {
+    // console.log(`ripgrep stdout ${method}: \n${data}`);
     result = data;
   });
-  
-  rg.stderr.on("data", data => {
-    console.log (`break point 4`);
-      console.log(`ripgrep stderr: ${data}`);
+
+  rg.stderr.on('data', (data) => {
+    console.log(`ripgrep: stderr: ${data}`);
   });
-  
+
   rg.on('error', (error) => {
-    console.log (`break point 5`);
-      console.log(`ripgrep error: ${error.message}`);
+    console.log(`ripgrep: error: ${error.message}`);
   });
-  
-  rg.on("close", code => {
-    console.log (`break point 6`);
-      // console.log(`ripgrep exited with code ${code}`);
-      // console.log(`Resolved ${method} result: \n${result}`);
-      scrapedData.push(result.toString());
-      console.log (`scrapedData: `, scrapedData);
-      // console.log(`fs:  `, fs);
-      // const fullPath = path.resolve(__dirname, 'test.ts');
-      // console.log('FULL PATH: ', fullPath);
-      // fs.writeFileSync(fullPath, result, {"flag": "a+"});
-      if(scrapedData.length > 4) {
-        format(scrapedData);
-      }
+
+  rg.on('close', (code) => {
+    scrapeCount++;
+    console.log(`ripgrep: ${method} exited with code ${code}`);
+    (scrapedData as any)[method] = result.toString();
+    if (scrapeCount >= 7) { format(); }
   });
 };
 
-const format = (input: string[]) => {
-  console.log('scrapedData in format: ', input);
+const format = () => {
+  // 
+  //
+  console.log('Format Running');
+  const result = new RouteTree('/', false);
+  const splitData = {};
+  for (const method in scrapedData) {
+    (splitData as any)[method] = (scrapedData as any)[method].split('\n');
+  }
+  console.log(splitData);
+  
 };
 
 const getRoutes = async (cwd: string) => {
   const finalData = {};
-  const getResult = await scrape(cwd, 'get');
-  const putResult = await scrape(cwd, 'post');
-  const patchResult = await scrape(cwd, 'patch');
-  const postResult = await scrape(cwd, 'put');
-  const deleteResult = await scrape(cwd, 'delete');
-  
+  scrape(cwd, 'use');
+  scrape(cwd, 'get');
+  scrape(cwd, 'post');
+  scrape(cwd, 'delete');
+  scrape(cwd, 'put');
+  scrape(cwd, 'patch');
+  scrape(cwd, 'require');
 };
-
 
 export default getRoutes;

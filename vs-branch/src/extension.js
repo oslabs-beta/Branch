@@ -15,7 +15,9 @@ function activate(context) {
             // Enable scripts in the webview
             enableScripts: true,
             // Only allow the webview to access resources in our extension's media directory
-            localResourceRoots: [vscode.Uri.file(path.join(context.extensionPath, 'src'))]
+            localResourceRoots: [
+                vscode.Uri.file(path.join(context.extensionPath, 'src')),
+            ],
         });
         //TODO Scrape HERE, make asynchronous, write all scraped data to a JSON file
         //TODO format the JSON like template.json, wrtite file to src directory
@@ -24,7 +26,7 @@ function activate(context) {
             (0, scraper_1.default)(cwd);
         }
         else {
-            console.log('No working directory found!');
+            console.error('No working directory found!');
         }
         const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'src', 'tree.js'));
         const jsSrc = panel.webview.asWebviewUri(onDiskPath);
