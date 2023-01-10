@@ -1,0 +1,91 @@
+
+body {
+  width: 95vw;
+  height: 100vh;
+  margin-top: 20px;
+  color: #b78b54;
+  background-color: #eee5d5;
+}
+
+.node {
+  cursor: pointer;
+}
+
+.node circle {
+  fill: #b7c5b7;
+  stroke: #eee5d5;
+  stroke-width: 3px;
+}
+
+.node text {
+  font: 12px sans-serif;
+  fill: #3f5e3c;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.link {
+  fill: none;
+  stroke: #b78b54;
+  stroke-width: 2px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  align-items: center;
+}
+
+.treeContainer {
+  outline: white solid 2px;
+}
+
+.responseContainer {
+  outline: white solid 2px;
+  width: 15rem;
+  font-size: 0.5rem;
+}
+
+.input {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  width: 90vw;
+  text-align: center;
+  outline: white solid 2px;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.input input {
+  border-radius: 0.5rem;
+  margin-right: 1rem;
+  background-color: #b7c5b7;
+}
+
+.input button {
+  border-radius: 0.5rem;
+  background-color: #eee5d5;
+}
+
+.mainheader {
+  padding-left: 2rem;
+}
+
+svg {
+  background-color: #b7c5b7;
+}
+
+.code-block {
+  /* width:inherit;
+  height: inherit; */
+}
+
+.alert {
+  color: red;
+}
+
+#url {
+  width: 500px;
+  margin-bottom: 1rem;
+}
