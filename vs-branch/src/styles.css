@@ -1,6 +1,7 @@
+
 body {
   width: 95vw;
-  height: 95vh;
+  height: 100vh;
   margin-top: 20px;
   color: #b78b54;
   background-color: #eee5d5;
@@ -46,6 +47,8 @@ body {
 }
 
 .input {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
   width: 90vw;
   text-align: center;
   outline: white solid 2px;
@@ -76,4 +79,13 @@ svg {
 .code-block {
   /* width:inherit;
   height: inherit; */
+}
+
+.alert {
+  color: red;
+}
+
+#url {
+  width: 500px;
+  margin-bottom: 1rem;
 }

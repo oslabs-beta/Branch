@@ -66,17 +66,28 @@ function getWebviewContent(tsSrc, cssSrc, modalSrc) {
 				</textarea>
 		</span>
 	</div>
-		<div class="input" >
+		<div class="input" id="input">
+		<div >
 			<h1>Query params</h1>
+			<div>
+			<span class="alert"></span>
+			<label for="url" >URL: </label>
+			<input class="url" id="url"/>
+			<button onclick="checkParam()">Check Param</button>
+			</div>
 			<label for="key" >Key:</label>
-			<input id="key"/>
+			<input id="key" />
 			<label for="value" >Value:</label>
 			<input id="value" />
-			<label for="description">Description:</label>
-			<input id="description" />
-			<button onclick="addParams()">Add Params</button>
-			<button onclick="clickHandler()">Check Route</button>
+			<button onclick="addParams()">Add to Body</button>
+			<button onclick="checkRoute()">Check Route</button>
 		</div>
+		<div>
+			<h2>Req Body Field</h2>
+			<div class="reqObj" ></div>
+		</div>
+	</div>
+		
 		<script>
 		// The codeMirror editor object
 		let codemirror = CodeMirror.fromTextArea(

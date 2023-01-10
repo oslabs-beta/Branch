@@ -1,18 +1,33 @@
-"use strict";
+'use strict';
 // deno-lint-ignore-file no-unused-vars
 const treeData = {
     name: 'http://localhost:3000',
     parent: null,
     children: [
         {
-            name: '/choresAndUsers',
+            name: '/chore',
             parent: 'http://localhost:3000',
             children: [
                 {
                     name: '/',
-                    method: ['GET'],
+                    method: ['GET, POST'],
                     parent: 'router1',
-                    children: null,
+                    children: [
+                        {
+                            name: 'GET',
+                            method: ['GET'],
+                            parent: 'router1',
+                            reqParamRequired: 'true',
+                            children: null,
+                        },
+                        {
+                            name: 'POST',
+                            method: ['POST'],
+                            parent: 'router1',
+                            reqParamRequired: 'true',
+                            children: null,
+                        },
+                    ],
                 },
                 {
                     name: '/pasta',
@@ -152,23 +167,50 @@ function update(source) {
     //   }
     //   return svg.node();
 }
+let pathStr = '';
 // Event handler for clicking a node
 function click(d) {
+    for (const key in d) {
+        if (d[key] === 'parent') {
+            console.log(d[key]);
+        }
+    }
+    console.log(d);
+    //check if d.reqParamRequired === true
+    //if true, move cursor to query key box and popup alert or message saying to add params
+    //if param required and key input empty
     //fetch localhost3000 ${d.name} + ${method[0]}
-    let pathStr = '';
+    // let pathStr = '';
+    pathStr = '';
+    let input = document.querySelector('#url');
+    input.value = '';
+    // console.log('method', d.method);
     if (d.method) {
         const fullPath = [];
-        while (d.parent) {
-            fullPath.unshift(d.parent);
-            d.parent = d.parent.parent;
+        console.log('d.parent', d.parent);
+        const tempD = structuredClone(d);
+        while (tempD.parent) {
+            fullPath.unshift(tempD.parent);
+            tempD.parent = tempD.parent.parent;
         }
         for (let i = 0; i < fullPath.length; i++) {
             if (fullPath[i].name) {
                 pathStr += fullPath[i].name;
             }
         }
-        pathStr += d.name;
+        // pathStr += d.name;
         console.log('PATHSTR', pathStr);
+    }
+    // d = tempD;
+    if (d.reqParamRequired) {
+        console.log(pathStr);
+        // document.getElementById('key').value = pathStr;
+        // const url = document.querySelector('.url');
+        // url.innerText = 'URL: ';
+        // input.setAttribute('id', 'url');
+        // url.appendChild(input);
+        input.value = pathStr + ':ENTER PARAM HERE';
+        return addAlert();
     }
     fetch(pathStr)
         .then((data) => data.json())
@@ -186,24 +228,68 @@ function click(d) {
     }
     update(d);
 }
+let bodyObj = {};
 //click handler for query params - input args?
-function clickHandler() {
-    //findby id and add .value
+function checkRoute() {
+    console.log('Pathstr', pathStr);
     const key = document.getElementById('key').value;
     console.log(key);
     document.getElementById('key').value = '';
     const value = document.getElementById('value').value;
     console.log(value);
     document.getElementById('value').value = '';
-    const description = document.getElementById('description').value;
-    console.log(description);
-    document.getElementById('description').value = '';
+    // const keyInfo = document.getElementById('key').value;
+    // document.getElementById('key').value = '';
+    // const valueInfo = document.getElementById('value').value;
+    // document.getElementById('value').value = '';
+    // bodyObj[keyInfo] = valueInfo;
+    console.log(bodyObj);
+    console.log(pathStr);
+    fetch(pathStr, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bodyObj),
+    })
+        .then((data) => data.json())
+        .then((data) => {
+        data = JSON.stringify(data);
+        codemirror.getDoc().setValue(data);
+    });
 }
-function addParams() {
-    const label = document.createElement('label').setAttribute('for', 'key');
-    label.innerHTML = 'Key: ';
-    document.querySelector('.input').append(label);
-    const input = document.createElement('input').setAttribute('id', 'key');
-    document.querySelector('.input').append(input);
-}
+const addParams = () => {
+    const keyInfo = document.getElementById('key').value;
+    document.getElementById('key').value = '';
+    const valueInfo = document.getElementById('value').value;
+    document.getElementById('value').value = '';
+    bodyObj[keyInfo] = valueInfo;
+    document.querySelector('.reqObj').innerText = JSON.stringify(bodyObj);
+    // const label = document.createElement('label').setAttribute('for', 'key');
+    // label.innerHTML = 'Key: ';
+    // document.querySelector('.input').append(label);
+    // const input = document.createElement('input').setAttribute('id', 'key');
+    // document.querySelector('.input').append(input);
+};
+//# sourceMappingURL=tree.js.map
+// const addParams = function () {
+// let btn = document.getElementById('params');
+// let div = document.getElementById('input');
+// let h1 = document.createElement('h1');
+// h1.innerText = 'hello world';
+// div.appendChild(h1);
+// };
+const addAlert = function () {
+    let h2 = document.querySelector('.alert');
+    h2.innerText = 'Please enter a req param';
+};
+const checkParam = () => {
+    const urlPath = document.querySelector('#url').value;
+    fetch(urlPath)
+        .then((data) => data.json())
+        .then((data) => {
+        data = JSON.stringify(data);
+        codemirror.getDoc().setValue(data);
+    });
+};
 //# sourceMappingURL=tree.js.map
