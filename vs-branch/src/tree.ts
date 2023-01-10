@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use strict';
 // deno-lint-ignore-file no-unused-vars
 const treeData = {
@@ -255,6 +256,7 @@ function checkRoute() {
   fetch(pathStr, {
     method: 'POST',
     headers: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(bodyObj),

@@ -6,15 +6,10 @@
 		{
 			"type": "npm",
 			"script": "watch",
-			"problemMatcher": "$tsc-watch",
-			"isBackground": true,
-			"presentation": {
-				"reveal": "never"
-			},
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			}
+			"path": "vs-branch",
+			"problemMatcher": [],
+			"label": "npm: watch - vs-branch",
+			"detail": "tsc -watch -p ./"
 		},
 		{
 			"type": "npm",

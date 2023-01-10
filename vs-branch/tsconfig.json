@@ -6,6 +6,7 @@
     "lib": ["ES2020", "dom"],
     "sourceMap": true,
     "rootDir": "src",
+    "outDir": "dist",
 		"noImplicitAny": true,
     "strict": true /* enable all strict type-checking options */
     /* Additional Checks */
