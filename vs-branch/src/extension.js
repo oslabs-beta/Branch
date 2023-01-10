@@ -40,32 +40,17 @@ function getWebviewContent(jsSrc, treeData) {
   <head>
 	  <meta charset="UTF-8">
 	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	  <title>Cat Coding</title>
+	  <title>VS|Branch</title>
+	  <link rel="stylesheet" href="${cssSrc}" />
 	  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
-	  <style>
+	  <script src="https://cdn.jsdelivr.net/npm/d3-zoom@3"></script>
+	  <link rel="stylesheet"
+	  href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.css">
+	</link>
 	
-	  .node {
-		  cursor: pointer;
-	  }
-  
-	  .node circle {
-		fill: #fff;
-		stroke: steelblue;
-		stroke-width: 3px;
-	  }
-  
-	  .node text {
-		font: 12px sans-serif;
-		fill: white;
-	  }
-  
-	  .link {
-		fill: none;
-		stroke: #ccc;
-		stroke-width: 2px;
-	  }
-	  
-	  </style>
+	<script type="text/javascript"
+	  src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js">
+	</script>
   </head>
   <body>
 		<h1>This is the method: </h1>
