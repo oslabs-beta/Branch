@@ -15,8 +15,7 @@
 			"outFiles": [
 				"${workspaceFolder}/vs-branch/out/**/*.js"
 			],
-			"preLaunchTask": "npm: transpile - vs-branch",
-			""
+			"preLaunchTask": "npm: transpile - vs-branch"
 		},
 		{
 			"name": "Run Extension - Watch",
