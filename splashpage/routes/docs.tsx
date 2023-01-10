@@ -34,6 +34,15 @@ export default function AboutPage() {
               view and test their backend routes within a Deno runtime
               environment.
             </p>
+            <br />
+            <p className="ml-4">
+              VS|Branch functions best when conventional syntax is used. This
+              includes:
+            </p>
+            <p className="ml-10">labeling all routes as "router" or "route"</p>
+            <p className="ml-10">
+              ensuring you use traditional routes (post, put, delete, etc...)
+            </p>
           </div>
           <div className="m-4">
             <h2 className="text-2xl text-green">Installation</h2>
