@@ -10,7 +10,7 @@ export default function Home() {
       </Head>
       <main>
         <Header></Header>
-        <div id="body" className="w-screen h-screen bg-off-white pt-[100px] ">
+        <div id="body" className="w-full h-full bg-off-white pt-[100px] ">
           <div className="h-1/2 flex">
             <div className="w-[50%]">
               <p className="my-20 mx-10 text-justify text-lg">
