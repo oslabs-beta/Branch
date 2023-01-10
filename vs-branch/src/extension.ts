@@ -2,7 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import vscode = require('vscode');
 import * as path from 'path';
-
+import getRoutes from './scraper';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -21,7 +21,17 @@ export function activate(context: vscode.ExtensionContext) {
 				localResourceRoots: [vscode.Uri.file(path.join(context.extensionPath, 'src'))]
 			}
 		  );
-	
+
+			//TODO Scrape HERE, make asynchronous, write all scraped data to a JSON file
+			//TODO format the JSON like template.json, wrtite file to src directory
+
+			if(vscode.workspace.workspaceFolders !== undefined) {
+				const cwd = vscode.workspace.workspaceFolders[0].uri.path;
+				getRoutes(cwd);
+			} else {
+				console.log('No working directory found!');
+			}
+
 			const onDiskPath = vscode.Uri.file(
         path.join(context.extensionPath, 'src', 'tree.ts')
       );

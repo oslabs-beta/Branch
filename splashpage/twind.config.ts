@@ -14,7 +14,8 @@ export default {
         'tan':'#eee5d5',
         'branch':'#b78b54',
         'off-white': "#dde6dc",
-        'white' : '#ffffff'
+        'white' : '#ffffff',
+        'dark' : '#0b1c09'
       }
     }
   }
