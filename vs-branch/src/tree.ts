@@ -1,6 +1,9 @@
-// @ts-nocheck
+// @ts-nocheck: d3 and DOM imported through HTML
 'use strict';
 // deno-lint-ignore-file no-unused-vars
+// const treeData = routesAndData.treeData;
+// console.log('hello from tree')
+// console.log("treeData from tree", treeData)
 const treeData = {
   name: 'http://localhost:3000',
   parent: null,

@@ -2,7 +2,8 @@
 // Import the module and reference it with the alias vscode in your code below
 import vscode = require('vscode');
 import * as path from 'path';
-import getRoutes from './scraper';
+// import getRoutes from './scraper';
+import routesAndData from './scraper';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -29,7 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
 
       if (vscode.workspace.workspaceFolders !== undefined) {
         const cwd = vscode.workspace.workspaceFolders[0].uri.path;
-        getRoutes(cwd);
+        routesAndData.getRoutes(cwd);
       } else {
         console.error('No working directory found!');
       }
