@@ -8,6 +8,9 @@ export default {
       '1/4': '25%'
     },
     extend: {
+      fontFamily: {
+        'comp': ["Saira"]
+      }
       colors: {
         'green':'#3f5e3c',
         'light-green':'#b7c5b7',

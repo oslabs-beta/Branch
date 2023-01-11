@@ -47,6 +47,9 @@ class RouteTree {
     }
   }
 }
+//===============================
+// SCRAPE - searches the current working director (cwd) for all instances of a specific method using ripgrep
+//===============================
 
 const scrape = (cwd: string, method: string) => {
   let result: string;
@@ -80,6 +83,10 @@ const scrape = (cwd: string, method: string) => {
     }
   });
 };
+
+//===============================
+// FORMAT - takes the raw scraped data and formats it into a usable structure
+//===============================
 
 const format = () => {
   /**
@@ -146,15 +153,9 @@ const format = () => {
   console.log(splitData);
 };
 
-// const getRoutes = (cwd: string) => {
-//   scrape(cwd, 'use');
-//   scrape(cwd, 'get');
-//   scrape(cwd, 'post');
-//   scrape(cwd, 'delete');
-//   scrape(cwd, 'put');
-//   scrape(cwd, 'patch');
-//   scrape(cwd, 'require');
-// };
+//===============================
+// RoutesAndData - executes SCRAPE on all method types asyncronously
+//===============================
 
 const routesAndData = {
   getRoutes: (cwd: string) => {
@@ -171,9 +172,18 @@ const routesAndData = {
     parent: null,
     reqParamRequired: 'false',
     children: [],
-  }
+  },
 };
 
+// const getRoutes = (cwd: string) => {
+//   scrape(cwd, 'use');
+//   scrape(cwd, 'get');
+//   scrape(cwd, 'post');
+//   scrape(cwd, 'delete');
+//   scrape(cwd, 'put');
+//   scrape(cwd, 'patch');
+//   scrape(cwd, 'require');
+// };
 
 // export default getRoutes;
 export default routesAndData;

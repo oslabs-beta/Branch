@@ -1,55 +1,56 @@
 // @ts-nocheck: d3 and DOM imported through HTML
 'use strict';
+import routesAndData from "./scraper";
+// const routesAndData = require('./scraper')
 // deno-lint-ignore-file no-unused-vars
-// const treeData = routesAndData.treeData;
-// console.log('hello from tree')
-// console.log("treeData from tree", treeData)
-const treeData = {
-  name: 'http://localhost:3000',
-  parent: null,
-  children: [
-    {
-      name: '/chore',
-      parent: 'http://localhost:3000',
-      children: [
-        {
-          name: '/',
-          method: ['GET, POST'],
-          parent: 'router1',
-          children: [
-            {
-              name: 'GET',
-              method: ['GET'],
-              parent: 'router1',
-              reqParamRequired: 'true',
-              children: null,
-            },
-            {
-              name: 'POST',
-              method: ['POST'],
-              parent: 'router1',
-              reqParamRequired: 'true',
-              children: null,
-            },
-          ],
-        },
-        {
-          name: '/pasta',
-          method: ['POST'],
-          parent: 'router1',
-          children: null,
-        },
-      ],
-    },
-    {
-      name: '/',
-      method: ['GET', 'POST'],
-      children: null,
-      parent: 'http://localhost:3000',
-    },
-  ],
-};
+
+// const treeData = {
+//   name: 'http://localhost:3000',
+//   parent: null,
+//   children: [
+//     {
+//       name: '/chore',
+//       parent: 'http://localhost:3000',
+//       children: [
+//         {
+//           name: '/',
+//           method: ['GET, POST'],
+//           parent: 'router1',
+//           children: [
+//             {
+//               name: 'GET',
+//               method: ['GET'],
+//               parent: 'router1',
+//               reqParamRequired: 'true',
+//               children: null,
+//             },
+//             {
+//               name: 'POST',
+//               method: ['POST'],
+//               parent: 'router1',
+//               reqParamRequired: 'true',
+//               children: null,
+//             },
+//           ],
+//         },
+//         {
+//           name: '/pasta',
+//           method: ['POST'],
+//           parent: 'router1',
+//           children: null,
+//         },
+//       ],
+//     },
+//     {
+//       name: '/',
+//       method: ['GET', 'POST'],
+//       children: null,
+//       parent: 'http://localhost:3000',
+//     },
+//   ],
+// };
 // ************** Generate the tree diagram	 *****************
+const treeData = routesAndData.treeData;
 const margin = { top: 20, right: 120, bottom: 20, left: 175 },
   width = 800 - margin.right - margin.left,
   height = 400 - margin.top - margin.bottom;
@@ -68,7 +69,6 @@ let svg = d3
   .attr('height', height + margin.top + margin.bottom)
   .append('g')
   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-// root = treeData;
 root.x0 = height / 2;
 root.y0 = 0;
 update(root);
@@ -165,32 +165,17 @@ function update(source) {
     d.x0 = d.x;
     d.y0 = d.y;
   });
-  // svg.call(d3.zoom()
-  //       .extent([[0, 0], [width, height]])
-  //       .scaleExtent([1, 8])
-  //       .on("zoom", zoomed));
-  //   function zoomed({transform}) {
-  //     g.attr("transform", transform);
-  //   }
-  //   return svg.node();
 }
 let pathStr = '';
 // Event handler for clicking a node
-function click(d) {
-  for (const key in d) {
-    if (d[key] === 'parent') {
-      console.log(d[key]);
-    }
-  }
+function click(d, node) {
 
-  console.log(d);
+
+  //get the node clicked on and change the color so that we know which route is being checked
+
   //check if d.reqParamRequired === true
   //if true, move cursor to query key box and popup alert or message saying to add params
-
   //if param required and key input empty
-
-  //fetch localhost3000 ${d.name} + ${method[0]}
-  // let pathStr = '';
   pathStr = '';
   let input = document.querySelector('#url');
   input.value = '';
@@ -208,19 +193,12 @@ function click(d) {
         pathStr += fullPath[i].name;
       }
     }
-    // pathStr += d.name;
-    console.log('PATHSTR', pathStr);
+    // console.log('PATHSTR', pathStr);
   }
-  // d = tempD;
   if (d.reqParamRequired) {
-    console.log(pathStr);
-    // document.getElementById('key').value = pathStr;
-    // const url = document.querySelector('.url');
-    // url.innerText = 'URL: ';
-    // input.setAttribute('id', 'url');
-    // url.appendChild(input);
+    // console.log(pathStr);
     input.value = pathStr + ':ENTER PARAM HERE';
-    return addAlert();
+    // return addAlert();
   }
 
   fetch(pathStr)
@@ -238,7 +216,11 @@ function click(d) {
   }
   update(d);
 }
+
+
 let bodyObj = {};
+
+
 //click handler for query params - input args?
 function checkRoute() {
   console.log('Pathstr', pathStr);
@@ -249,13 +231,8 @@ function checkRoute() {
   console.log(value);
   document.getElementById('value').value = '';
 
-  // const keyInfo = document.getElementById('key').value;
-  // document.getElementById('key').value = '';
-  // const valueInfo = document.getElementById('value').value;
-  // document.getElementById('value').value = '';
-  // bodyObj[keyInfo] = valueInfo;
-  console.log(bodyObj);
-  console.log(pathStr);
+  // console.log(bodyObj);
+  // console.log(pathStr);
   fetch(pathStr, {
     method: 'POST',
     headers: {
@@ -278,28 +255,13 @@ const addParams = () => {
   document.getElementById('value').value = '';
   bodyObj[keyInfo] = valueInfo;
   document.querySelector('.reqObj').innerText = JSON.stringify(bodyObj);
-  // const label = document.createElement('label').setAttribute('for', 'key');
-  // label.innerHTML = 'Key: ';
-  // document.querySelector('.input').append(label);
-  // const input = document.createElement('input').setAttribute('id', 'key');
-  // document.querySelector('.input').append(input);
 };
-//# sourceMappingURL=tree.js.map
 
-// const addParams = function () {
-// let btn = document.getElementById('params');
-// let div = document.getElementById('input');
+// const addAlert = function () {
+//   let h2 = document.querySelector('.alert');
 
-// let h1 = document.createElement('h1');
-// h1.innerText = 'hello world';
-// div.appendChild(h1);
+//   h2.innerText = 'Please enter a req param';
 // };
-
-const addAlert = function () {
-  let h2 = document.querySelector('.alert');
-
-  h2.innerText = 'Please enter a req param';
-};
 
 const checkParam = () => {
   const urlPath = document.querySelector('#url').value;

@@ -7,6 +7,9 @@ export default function AboutPage() {
     <>
       <head>
         <title>VS|Branch - Documentation</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Saira:wght@100&display=swap" rel="stylesheet">
       </head>
       <main>
         <Header></Header>
@@ -39,6 +42,7 @@ export default function AboutPage() {
               VS|Branch functions best when conventional syntax is used. This
               includes:
             </p>
+            <br />
             <p className="ml-10">labeling all routes as "router" or "route"</p>
             <p className="ml-10">
               ensuring you use traditional routes (post, put, delete, etc...)
@@ -47,7 +51,26 @@ export default function AboutPage() {
           <div className="m-4">
             <h2 className="text-2xl text-green">Installation</h2>
             <p className="m-4">
-              To install VS|Branch click the link on the top right of the page.
+              To use VS|Branch, you will first need to install ripGrep.
+            </p>
+            <p className="m-4">
+              For MacOS X Homebrew users, install ripgrep by entering the following into your terminal: 
+            </p>
+            <p className="m-4 font-comp">
+              $ brew install ripgrep
+            </p>
+            <p className="m-4">
+              For Arch Linux users, install ripgrep by entering the following into your terminal: 
+            </p>
+            <p className="m-4 font-comp">
+              $ pacman -S ripgrep
+            </p>
+            <p className="m-4">
+              For all other users, install ripgrep by navigating to the link below and following the associated instructions. 
+            </p>
+            <a href="https://docs.rs/crate/ripgrep/0.2.7">Ripgrep Docs</a>
+            <p className="m-4">
+              Once you have ripGrep installed on your machine, it is time to install VS|Branch. Click the link on the top right of the page.
             </p>
           </div>
           <div className="m-4">

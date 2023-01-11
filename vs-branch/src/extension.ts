@@ -2,8 +2,9 @@
 // Import the module and reference it with the alias vscode in your code below
 import vscode = require('vscode');
 import * as path from 'path';
-// import getRoutes from './scraper';
-import routesAndData from './scraper';
+// const routesAndData = require('./scraper')
+import routesAndData from "./scraper";
+
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -21,13 +22,12 @@ export function activate(context: vscode.ExtensionContext) {
           // Only allow the webview to access resources in our extension's src directory
           localResourceRoots: [
             vscode.Uri.file(path.join(context.extensionPath, 'src')),
+            vscode.Uri.file(path.join(context.extensionPath, 'dist')),
           ],
         }
       );
 
-      //TODO Scrape HERE, make asynchronous, write all scraped data to a JSON file
-      //TODO format the JSON like template.json, wrtite file to src directory
-
+      // INTEGRATION WITH SCRAPER.TS
       if (vscode.workspace.workspaceFolders !== undefined) {
         const cwd = vscode.workspace.workspaceFolders[0].uri.path;
         routesAndData.getRoutes(cwd);
@@ -36,28 +36,31 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       const onDiskPath = vscode.Uri.file(
-        path.join(context.extensionPath, 'src', 'tree.ts')
+        path.join(context.extensionPath, 'dist', 'tree.js')
       );
       const tsSrc = panel.webview.asWebviewUri(onDiskPath);
 
-			const onDiskModalPath = vscode.Uri.file(
-        path.join(context.extensionPath, 'src', 'modal.ts')
+      const onDiskScraperPath = vscode.Uri.file(
+        path.join(context.extensionPath, 'dist', 'scraper.js')
       );
-      const modalSrc = panel.webview.asWebviewUri(onDiskModalPath);
+      const scraperSrc = panel.webview.asWebviewUri(onDiskScraperPath);
 
-	  const onDiskCSSPath = vscode.Uri.file(
+      const onDiskCSSPath = vscode.Uri.file(
         path.join(context.extensionPath, 'src', 'styles.css')
       );
       const cssSrc = panel.webview.asWebviewUri(onDiskCSSPath);
 
-			panel.webview.html = getWebviewContent(tsSrc, cssSrc, modalSrc);
-		})
-	  );
-
+      panel.webview.html = getWebviewContent(tsSrc, cssSrc, scraperSrc);
+    })
+  );
 }
 
-function getWebviewContent(tsSrc: vscode.Uri, cssSrc: vscode.Uri, modalSrc: vscode.Uri) {
-	return `<!DOCTYPE html>
+function getWebviewContent(
+  tsSrc: vscode.Uri,
+  cssSrc: vscode.Uri,
+  scraperSrc: vscode.Uri
+) {
+  return `<!DOCTYPE html>
   <html lang="en">
   <head>
 	  <meta charset="UTF-8">
@@ -73,6 +76,7 @@ function getWebviewContent(tsSrc: vscode.Uri, cssSrc: vscode.Uri, modalSrc: vsco
 	<script type="text/javascript"
 	  src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js">
 	</script>
+	
   </head>
   <body>
   	
@@ -83,14 +87,6 @@ function getWebviewContent(tsSrc: vscode.Uri, cssSrc: vscode.Uri, modalSrc: vsco
 		<span class="responseContainer" >
 			<textarea id="code-block">
 			testObj = {
-				test: 'data',
-				test: 'data',
-				test: 'data',
-				test: 'data',
-				test: 'data',
-				test: 'data',
-				test: 'data',
-				test: 'data',
 				test: 'data',
 			}
 				</textarea>
@@ -118,25 +114,25 @@ function getWebviewContent(tsSrc: vscode.Uri, cssSrc: vscode.Uri, modalSrc: vsco
 		</div>
 	</div>
 		
-		<script>
-		// The codeMirror editor object
-		let codemirror = CodeMirror.fromTextArea(
-			document.getElementById("code-block"), 
-			{
-				lineNumbers     : true,
-				lineWrapping    : true,
-				mode            : "javascript",
-				htmlMode        : false,
-				theme           : "3024-night",
-				readOnly        : true
-		});
+		<script type="text/javascript">
+			// The codeMirror editor object
+			let codemirror = CodeMirror.fromTextArea(
+				document.getElementById("code-block"), 
+				{
+					lineNumbers     : true,
+					lineWrapping    : true,
+					mode            : "javascript",
+					htmlMode        : false,
+					theme           : "3024-night",
+					readOnly        : true
+			});
+
 		</script>
-		<script src="${tsSrc}"></script>
+		<script type="text/javascript" src="${tsSrc}">
+		</script>
 	</body>
   </html>`;
 }
-
-	
 
 // This method is called when your extension is deactivated
 export function deactivate() {}

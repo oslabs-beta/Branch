@@ -55,7 +55,7 @@ export default function AboutPage() {
               </div>
               <div id="secret">
                 <a href="/spsull" className="text-white">
-                  X
+                  Easter Egg
                 </a>
               </div>
             </div>
@@ -87,7 +87,7 @@ export default function AboutPage() {
               </div>
               <div id="secret">
                 <a href="/spbenj" className="text-white">
-                  X
+                  Easter Egg
                 </a>
               </div>
             </div>
@@ -119,7 +119,7 @@ export default function AboutPage() {
               </div>
               <div id="secret">
                 <a href="/sphall" className="text-white">
-                  X
+                  Easter Egg
                 </a>
               </div>
             </div>
@@ -151,7 +151,7 @@ export default function AboutPage() {
               </div>
               <div id="secret">
                 <a href="/spgold" className="text-white">
-                  X
+                  Easter Egg
                 </a>
               </div>
             </div>
