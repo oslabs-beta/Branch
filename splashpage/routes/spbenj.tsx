@@ -49,7 +49,7 @@ export default function AboutPage() {
                   Chase Benjamin <br />
                   <a
                     id="myGithubLink"
-                    href="https://github.com/Trablink"
+                    href="https://github.com/chasebenj"
                     className="underline text-blue-700"
                   >
                     Github

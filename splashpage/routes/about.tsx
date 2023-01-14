@@ -93,7 +93,7 @@ export default function AboutPage() {
             </div>
             <div className="w-1/4 bg-white m-3 p-3 rounded-xl grid justify-items-center shadow-md">
               <img
-                src="https://i.imgur.com/1XXAny6.png"
+                src="https://ca.slack-edge.com/T03ULEJ5TK7-U03UVNRGPJ6-ac1d8b2829a0-512"
                 alt="Team Face"
                 className="max-w-[200px]"
               />
@@ -108,7 +108,7 @@ export default function AboutPage() {
                   </a>
                   <br />
                   <a
-                    href="https://github.com/SirGoatsalot"
+                    href="https://www.linkedin.com/in/zachh85/"
                     className="underline text-blue-700"
                   >
                     LinkedIn

@@ -40,7 +40,7 @@ export default function AboutPage() {
             <div className="w-1/4 bg-white m-3 p-3 rounded-xl grid justify-items-center shadow-md">
               <img
                 id="myFace"
-                src="https://i.imgur.com/1XXAny6.png"
+                src="https://ca.slack-edge.com/T03ULEJ5TK7-U03UVNRGPJ6-ac1d8b2829a0-512"
                 alt="Team Face"
                 className="max-w-[200px]"
               />
@@ -49,7 +49,7 @@ export default function AboutPage() {
                   Zach Hall <br />
                   <a
                     id="myGithubLink"
-                    href="https://github.com/Trablink"
+                    href="https://github.com/zachh85"
                     className="underline text-blue-700"
                   >
                     Github
@@ -57,7 +57,7 @@ export default function AboutPage() {
                   <br />
                   <a
                     id="myLinkedInProfile"
-                    href="www.linkedin.com/in/jason-goldman-3039986"
+                    href="https://www.linkedin.com/in/zachh85/"
                     className="underline text-blue-700"
                   >
                     LinkedIn
