@@ -3,7 +3,12 @@ const { spawn } = require('child_process');
 
 const scrapedData = {};
 let scrapeCount = 0;
-const treeData = {};
+let treeData = {
+  name: `http://localhost:3000`,
+  parent: null,
+  reqParamRequired: false,
+  children: [],
+};
 
 class RouteTree {
   constructor(name, reqParamRequired, methods, parent, children) {
@@ -30,11 +35,12 @@ class RouteTree {
     }
   }
 }
+
 //===============================
 // SCRAPE - searches the current working director (cwd) for all instances of a specific method using ripgrep
 //===============================
 
-const scrape = (cwd, method) => {
+const scrape = (cwd, method, webview) => {
   let result;
   const rg = spawn('rg', [`(.${method}[(]['"][./])`, './'], {
     cwd: cwd + '/server',
@@ -56,9 +62,13 @@ const scrape = (cwd, method) => {
   rg.on('close', (code) => {
     scrapeCount++;
     console.log(`ripgrep: ${method} exited with code ${code}`);
-    scrapedData[method] = result.toString();
+    if (result) {
+      scrapedData[method] = result.toString();
+    }
+    console.log('Scrape Count: ', scrapeCount);
     if (scrapeCount >= 7) {
-      format();
+      format(webview);
+      scrapeCount = 0;
     }
   });
 };
@@ -67,7 +77,7 @@ const scrape = (cwd, method) => {
 // FORMAT - takes the raw scraped data and formats it into a usable structure
 //===============================
 
-const format = () => {
+const format = (webview) => {
   /**
     "./routes/api.js:router.get('/home', userController.getUser, (req, res) => {",
     "./routes/api.js:router.put('/points', userController.updateUser, (req, res) => {",
@@ -107,7 +117,7 @@ const format = () => {
           treeData['children'].push({
             name: `${slicedRoute}`,
             parent: `http://localhost:3000`,
-            reqParamRequired: 'false',
+            reqParamRequired: false,
             children: [],
           });
         }
@@ -115,26 +125,35 @@ const format = () => {
     );
   }
   console.log('treeData After format: ', treeData);
+  console.log('Sending message to webview...');
+  webview.webview.postMessage(treeData);
+  treeData = {
+    name: `http://localhost:3000`,
+    parent: null,
+    reqParamRequired: false,
+    children: [],
+  };
 };
 
 //===============================
 // RoutesAndData - executes SCRAPE on all method types asyncronously
 //===============================
 
-function getRoutes() {
+const scraper = {};
+
+scraper.getRoutes = (webview) => {
   if (vscode.workspace.workspaceFolders) {
     const cwd = vscode.workspace.workspaceFolders[0].uri.path;
-    scrape(cwd, 'use');
-    scrape(cwd, 'get');
-    scrape(cwd, 'post');
-    scrape(cwd, 'delete');
-    scrape(cwd, 'put');
-    scrape(cwd, 'patch');
-    scrape(cwd, 'require');
-    return treeData;
+    scrape(cwd, 'use', webview);
+    scrape(cwd, 'get', webview);
+    scrape(cwd, 'post', webview);
+    scrape(cwd, 'delete', webview);
+    scrape(cwd, 'put', webview);
+    scrape(cwd, 'patch', webview);
+    scrape(cwd, 'require', webview);
   } else {
     console.error('No workspace directory found!');
   }
 };
 
-module.exports = getRoutes, treeData;
+module.exports = scraper;

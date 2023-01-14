@@ -1,11 +1,13 @@
 const vscode = require('vscode');
 const path = require('path');
+const scraper = require('./src/scraper');
 
 function activate(context) {
 	console.log('Extension Running!');
 
+	let panel;
 	let start = vscode.commands.registerCommand('vs-branch.start', function () {
-		const panel = vscode.window.createWebviewPanel(
+		panel = vscode.window.createWebviewPanel(
 			'vs-branch',
 			'VS | Branch',
 			vscode.ViewColumn.One,
@@ -32,7 +34,12 @@ function activate(context) {
 		panel.webview.html = getWebViewContent(jsSrc, cssSrc);
 	});
 
-	context.subscriptions.push(start);
+	let scrape = vscode.commands.registerCommand('vs-branch.scrape', function () {
+		vscode.window.showInformationMessage('Scraping Server files...');
+		scraper.getRoutes(panel);
+	});
+
+	context.subscriptions.push(start, scrape);
 }
 
 function getWebViewContent(jsSrc, cssSrc) {
@@ -54,7 +61,8 @@ function getWebViewContent(jsSrc, cssSrc) {
 	</script>
   </head>
   <body>
-  	
+	<script type="text/javascript" src="${jsSrc}">
+	</script>
 	<div class="container">
 		<span class="treeContainer">
 			<h1 class="mainheader" >Route Tree</h1>
@@ -102,8 +110,7 @@ function getWebViewContent(jsSrc, cssSrc) {
 					readOnly        : true
 			});
 		</script>
-		<script type="text/javascript" src="${jsSrc}">
-		</script>
+
 	</body>
   </html>`;
 }

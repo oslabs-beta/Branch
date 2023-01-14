@@ -13,6 +13,9 @@
 - `configurations` - list of debug/run configurations
   - `args: --extensionDevelopmentPath` - Tells VSCode which directory to launch the extension from (with ${workspaceFolder} being the directory currently open in VSCode)
 
+### extension.js
+- ``
+
 ## Directories
 
 ### `out`
