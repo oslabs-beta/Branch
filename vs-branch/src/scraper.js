@@ -2,6 +2,7 @@ const vscode = require('vscode');
 const { spawn } = require('child_process');
 
 const scrapedData = {};
+const METHODS = ['get', 'post', 'put', 'patch', 'delete'];
 // increment MAX_SCRAPES for every additional scrape required before formatting
 const MAX_SCRAPES = 8;
 let scrapeCount = 0;
@@ -80,13 +81,19 @@ const scrape = (cwd, method, webview) => {
 //===============================
 
 const format = (webview) => {
-  // First, filter through the 'require' statements, and map each router name to the path of the file.
-  let routerPaths = null;
-  if (scrapedData['require']) {
-    routerPaths = getRouterPaths(scrapedData['require'].split('\n'))
+  // TODO First, filter through the 'require' statements, and map each router name to the path of the file.
+  // Then, append the given routes to the root of treeData
+  if (scrapedData['require'] && scrapedData['use']) {
+    const routerPaths = getRouterPaths(scrapedData['require'].split('\n'));
     delete scrapedData['require'];
+    // TODO Second, filter through the 'use' statements, appending each route as a child to the parent route in treeData
+    formatRouters(scrapedData['use'].split('\n'), routerPaths);
+    delete scrapedData['use'];
+    console.log('Tree Data: ', treeData);
   }
-  console.log('Router Paths: ', routerPaths);
+  
+  // TODO Finally, iterate through each method in scrapedData, and place it under it's respective router
+  
   for (const method in scrapedData) {
     scrapedData[method] = scrapedData[method].split('\n');
     scrapedData[method] = scrapedData[method].map(
@@ -101,6 +108,7 @@ const format = (webview) => {
     );
   }
 
+  // Send the final formatted data to the webview.
   webview.webview.postMessage(treeData);
 };
 
@@ -112,7 +120,6 @@ const getRouterPaths = (routes) => {
    */
   const routerMap = {};
   routes.forEach((route) => {
-    console.log('Raw Route: ', route);
     // pluck the router paths and names from the raw strings
     const routerPath = route.match(/(?<=(require[(]'))\.\/r.*(?=')/g);
     const routerName = route.match(/(?<=(const )).*(?=( =))/);
@@ -121,8 +128,29 @@ const getRouterPaths = (routes) => {
     }
   });
   return routerMap;
-} 
+};
 
+const formatRouters= (routes, routerPaths) => {
+  routes.forEach((route) => {
+    console.log('use route: ', route);
+    let routeName = route.match(/(?<=(use\(')).*(?=',)/);
+    routeName = routeName ? routeName[0] : undefined;
+    let routerName = route.match(/(?<=, ).*(?=\);)/);
+    routerName = routerName ? routerName[0] : undefined;
+    console.log('Router Paths Keys: ', Object.keys(routerPaths));
+    console.log('routeName: ', routeName);
+    console.log('routerName: ', routerName);
+    if (Object.keys(routerPaths).includes(routerName)) {
+      treeData.children.push({
+        name: routeName,
+        reqParamRequired: false,
+        methods: null,
+        parent: treeData.name,
+        children: []
+      });
+    }
+  });
+};
 //===============================
 // RoutesAndData - executes SCRAPE on all method types asyncronously
 //===============================
