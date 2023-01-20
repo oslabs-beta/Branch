@@ -1,3 +1,17 @@
+//================================
+// Header Island - included on all webpages
+//================================
+
+//================================
+// Imports
+//================================
+
+// NO IMPORTS NECESSARY
+
+//================================
+// Header Island HTML & Tailwind CSS
+//================================
+
 export default function Header() {
   return (
     <>

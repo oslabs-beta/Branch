@@ -1,3 +1,17 @@
+//================================
+// Footer Island - included on all webpages
+//================================
+
+//================================
+// Imports
+//================================
+
+// NO IMPORTS NECESSARY
+
+//================================
+// Footer Island HTML & Tailwind CSS
+//================================
+
 export default function Footer() {
   return (
     <>

@@ -1,6 +1,17 @@
+//================================
+// Homepage for VS|Branch
+//================================
+
+//================================
+// Imports
+//================================
 import { Head } from '$fresh/runtime.ts';
 import Header from '../islands/Header.tsx';
 import Footer from '../islands/Footer.tsx';
+
+//================================
+// Homepage HTML & Tailwind CSS
+//================================
 
 export default function Home() {
   return (

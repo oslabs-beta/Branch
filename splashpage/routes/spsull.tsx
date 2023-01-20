@@ -1,6 +1,17 @@
+//================================
+// Easter Egg Page - Foster Sullivan
+//================================
+
+//================================
+// Imports
+//================================
 import { PageProps } from '$fresh/server.ts';
 import Header from '../islands/Header.tsx';
 import Footer from '../islands/Footer.tsx';
+
+//================================
+// Easter Egg HTML & Tailwind CSS
+//================================
 
 export default function AboutPage() {
   return (

@@ -1,6 +1,17 @@
+//================================
+// About Page - Information about the team (includes 4 easteregg links)
+//================================
+
+//================================
+// Imports
+//================================
 import { PageProps } from '$fresh/server.ts';
 import Header from '../islands/Header.tsx';
 import Footer from '../islands/Footer.tsx';
+
+//================================
+// About Page HTML & Tailwind CSS
+//================================
 
 export default function AboutPage() {
   return (

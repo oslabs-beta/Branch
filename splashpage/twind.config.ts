@@ -1,4 +1,15 @@
+//================================
+// Tailwinds Config File
+//================================
+
+//================================
+// Imports
+//================================
 import { Options } from "$fresh/plugins/twind.ts";
+
+//================================
+// Export Tailwind theme
+//================================
 
 export default {
   selfURL: import.meta.url,

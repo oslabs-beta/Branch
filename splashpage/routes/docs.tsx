@@ -1,15 +1,23 @@
+//================================
+// Documentation Page
+//================================
+
+//================================
+// Imports
+//================================
 import { PageProps } from '$fresh/server.ts';
 import Header from '../islands/Header.tsx';
 import Footer from '../islands/Footer.tsx';
+
+//================================
+// Docs Page HTML & Tailwind CSS
+//================================
 
 export default function AboutPage() {
   return (
     <>
       <head>
         <title>VS|Branch - Documentation</title>
-        {/* <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@100&display=swap"> */}
       </head>
       <main>
         <Header></Header>
@@ -49,7 +57,6 @@ export default function AboutPage() {
               />
             </div>
           </div>
-
           <div id="body" className="h-full">
             <div id="spacer" className="w-full p-[50px]"></div>
             <div id="scrollOption" className="h-full overflow-scroll">
@@ -369,3 +376,7 @@ export default function AboutPage() {
     </>
   );
 }
+
+//================================
+// NOTE: Feel free to remove chocolate cake recipe if needed
+//================================
