@@ -2,6 +2,8 @@ const vscode = require('vscode');
 const { spawn } = require('child_process');
 
 const scrapedData = {};
+// increment MAX_SCRAPES for every additional scrape required before formatting
+const MAX_SCRAPES = 8;
 let scrapeCount = 0;
 let treeData = {
   name: `http://localhost:3000`,
@@ -66,7 +68,7 @@ const scrape = (cwd, method, webview) => {
       scrapedData[method] = result.toString();
     }
     console.log('Scrape Count: ', scrapeCount);
-    if (scrapeCount >= 7) {
+    if (scrapeCount >= MAX_SCRAPES) {
       format(webview);
       scrapeCount = 0;
     }
@@ -78,62 +80,48 @@ const scrape = (cwd, method, webview) => {
 //===============================
 
 const format = (webview) => {
-  /**
-    "./routes/api.js:router.get('/home', userController.getUser, (req, res) => {",
-    "./routes/api.js:router.put('/points', userController.updateUser, (req, res) => {",
-    "./routes/api.js:router.post('/signup/request', userController.createUser, (req, res) => {",
-   */
-  const splitData = {};
-  // console.log('PRE SCRAPED DATA', scrapedData);
+  // First, filter through the 'require' statements, and map each router name to the path of the file.
+  let routerPaths = null;
+  if (scrapedData['require']) {
+    routerPaths = getRouterPaths(scrapedData['require'].split('\n'))
+    delete scrapedData['require'];
+  }
+  console.log('Router Paths: ', routerPaths);
   for (const method in scrapedData) {
-    splitData[method] = scrapedData[method].split('\n');
-    splitData[method] = splitData[method].map(
+    scrapedData[method] = scrapedData[method].split('\n');
+    scrapedData[method] = scrapedData[method].map(
       (route) => {
-        // const filter = new RegExp(`/[.]get[(]['"][./]/`);
-        // const index = route.search(/.get/);
-
-        // TODO NOTE TO FUTURE SELVES -- If adding future HTTP request types,
-        // they must be added to the regex below.
-        const index = route.search(
-          /(?<=([.](use|get|post|delete|put|patch))|(require))/
-        );
-        // [(]['"][.]*[/]
+        // Slice the name of the route out of the full route string
+        // Old RegExp => /(?<=([.](use|get|post|delete|put|patch))|(require))/
+        const methodExp = new RegExp(`(?<=[.](${method}))`, 'g');
+        const methodIndex = route.search(methodExp);
         const commaIndex = route.search(/,/);
-        const slicedRoute = route.slice(index + 2, commaIndex - 1);
-
-        // //index of the last paren after the require filename
-        // const lastParenInd = route.search(/[)]/);
-        // console.log('COMMA INDEX & PAREN IND', commaIndex + 1, lastParenInd);
-        // const routeFile = route.slice(commaIndex + 1, lastParenInd);
-        // console.log('ROUTE FILE NAME: ', routeFile);
-        // console.log('route: ', route);
-        const use = /[.]use/;
-        const colon = /:/;
-
-        // console.log('ROUTE', route, 'COLON TEST', colon.test(slicedRoute));
-        // if route has dot use in it and there is no colon
-        if (use.test(route) && !colon.test(slicedRoute)) {
-          //push the child into the treeData object with localhost as the parent & reqParamRequired as false
-          treeData['children'].push({
-            name: `${slicedRoute}`,
-            parent: `http://localhost:3000`,
-            reqParamRequired: false,
-            children: [],
-          });
-        }
+        const routeName= route.slice(methodIndex + 2, commaIndex - 1);
       }
     );
   }
-  console.log('treeData After format: ', treeData);
-  console.log('Sending message to webview...');
+
   webview.webview.postMessage(treeData);
-  treeData = {
-    name: `http://localhost:3000`,
-    parent: null,
-    reqParamRequired: false,
-    children: [],
-  };
 };
+
+const getRouterPaths = (routes) => {
+  /**
+   * REQUIREMENTS TO NOTE IN DOCS: 
+   *  - folder containing router files shouls start with 'r'
+   *  - import statements must be defined as constants
+   */
+  const routerMap = {};
+  routes.forEach((route) => {
+    console.log('Raw Route: ', route);
+    // pluck the router paths and names from the raw strings
+    const routerPath = route.match(/(?<=(require[(]'))\.\/r.*(?=')/g);
+    const routerName = route.match(/(?<=(const )).*(?=( =))/);
+    if (routerPath && routerName) {
+      routerMap[routerName[0]] = routerPath[0];
+    }
+  });
+  return routerMap;
+} 
 
 //===============================
 // RoutesAndData - executes SCRAPE on all method types asyncronously
@@ -151,6 +139,7 @@ scraper.getRoutes = (webview) => {
     scrape(cwd, 'put', webview);
     scrape(cwd, 'patch', webview);
     scrape(cwd, 'require', webview);
+    scrape(cwd, 'listen', webview);
   } else {
     console.error('No workspace directory found!');
   }
