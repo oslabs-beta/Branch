@@ -143,7 +143,15 @@ const format = (webview) => {
           }
           // add the current method to that route's methods
           // Check if route name has a colon at the beginning. If it does, set reqParam = true.
-        } 
+        } else {
+          treeData.children.push({
+            name: routeName,
+            methods: [method],
+            reqParamRequired: /('\/:)/.test(route),
+            children: [],
+            parent: treeData.name
+          });
+        }
     });
   }
   // Send the final formatted data to the webview.
@@ -171,10 +179,12 @@ const getRouterPaths = (routes) => {
 
 const formatRouters= (routes, routerPaths) => {
   routes.forEach((route) => {
+    
     let routeName = route.match(/(?<=(use\(')).*(?=',)/);
     routeName = routeName ? routeName[0] : undefined;
     let routerName = route.match(/(?<=, ).*(?=\);)/);
     routerName = routerName ? routerName[0] : undefined;
+
     if (Object.keys(routerPaths).includes(routerName)) {
       routerPaths[routeName] = routerPaths[routerName];
       delete routerPaths[routerName];
