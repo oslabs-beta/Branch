@@ -40,7 +40,7 @@ export default function AboutPage() {
             <div className="w-1/4 bg-white m-3 p-3 rounded-xl grid justify-items-center shadow-md">
               <img
                 id="myFace"
-                src="https://ca.slack-edge.com/T03ULEJ5TK7-U03UVNRGPJ6-ac1d8b2829a0-512"
+                src="https://imgur.com/Zy1xRqP.png"
                 alt="Team Face"
                 className="max-w-[200px]"
               />
@@ -49,7 +49,7 @@ export default function AboutPage() {
                   Zach Hall <br />
                   <a
                     id="myGithubLink"
-                    href="https://github.com/zachh85"
+                    href="https://github.com/z-r-hall"
                     className="underline text-blue-700"
                   >
                     Github
@@ -57,56 +57,59 @@ export default function AboutPage() {
                   <br />
                   <a
                     id="myLinkedInProfile"
-                    href="https://www.linkedin.com/in/zachh85/"
+                    href="https://www.linkedin.com/in/z-r-hall/"
                     className="underline text-blue-700"
                   >
                     LinkedIn
                   </a>
                   <br />
-                  Developer
+                  Software Engineer
                 </p>
                 <br />
               </div>
               <div id="special fact" className="text-center">
-                FACT: I make a good neighbor app... but it could be even better.
+                I love spending time backpacking through the woods or lazily
+                kayaking down the river.
               </div>
             </div>
             <div className="w-1/4 bg-white m-3 p-3 rounded-xl grid justify-items-center shadow-md">
               <img
                 id="Gatsby"
-                src="https://imgur.com/NzWR6RJ.png"
+                src="https://imgur.com/pzkbra4.png"
                 alt="CatFace"
                 className="max-w-[200px]"
               />
               <div id="teamText" className="text-center">
                 <p>
-                  Gatsby 'Catvid' Goldman <br />
+                  Paper Towel Pete! <br />
                   <br />
-                  Snuggler
+                  Lover (mostly)
                 </p>
                 <br />
               </div>
               <div id="secret pets" className="text-center">
-                Adopted during the pandemic. Loves belly rubs. Snores loudly.
+                I love going in and out, attacking Sophie for no reason, and
+                sleeping.
               </div>
             </div>{' '}
             <div className="w-1/4 bg-white m-3 p-3 rounded-xl grid justify-items-center shadow-md">
               <img
                 id="Grimm"
-                src="https://imgur.com/xyocd6n.png"
+                src="https://imgur.com/rybiruT.png"
                 alt="Team Face"
                 className="max-w-[200px]"
               />
               <div id="teamText" className="text-center">
                 <p>
-                  Grimm 'Catio' Goldman <br />
+                  Sophie Belle <br />
                   <br />
-                  Mischief Maker
+                  The Curious One
                 </p>
                 <br />
               </div>
               <div id="secret pets" className="text-center">
-                Loves to play fetch! Must sit in every lap. Constantly moving.
+                I am a lover of cold weather, barking into the darkness, and
+                making sure Pete doesn't eat my food.
               </div>
             </div>
           </div>

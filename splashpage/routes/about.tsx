@@ -61,7 +61,7 @@ export default function AboutPage() {
             </div>
             <div className="w-1/4 bg-white m-3 p-3 rounded-xl grid justify-items-center shadow-md">
               <img
-                src="https://i.imgur.com/1XXAny6.png"
+                src="https://imgur.com/Od6cI5p.png"
                 alt="Team Face"
                 className="max-w-[200px]"
               />
@@ -93,7 +93,7 @@ export default function AboutPage() {
             </div>
             <div className="w-1/4 bg-white m-3 p-3 rounded-xl grid justify-items-center shadow-md">
               <img
-                src="https://ca.slack-edge.com/T03ULEJ5TK7-U03UVNRGPJ6-ac1d8b2829a0-512"
+                src="https://imgur.com/Zy1xRqP.png"
                 alt="Team Face"
                 className="max-w-[200px]"
               />
@@ -101,14 +101,14 @@ export default function AboutPage() {
                 <p>
                   Zach Hall <br />
                   <a
-                    href="https://github.com/Zachh85"
+                    href="https://github.com/z-r-hall"
                     className="underline text-blue-700"
                   >
                     Github
                   </a>
                   <br />
                   <a
-                    href="https://www.linkedin.com/in/zachh85/"
+                    href="https://www.linkedin.com/in/z-r-hall/"
                     className="underline text-blue-700"
                   >
                     LinkedIn

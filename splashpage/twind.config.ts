@@ -20,7 +20,9 @@ export default {
         'off-white': "#dde6dc",
         'white' : '#ffffff',
         'dark' : '#0b1c09',
-        'link' : '#0202e6'
+        'link' : '#0202e6',
+        'blue' : '#0000ff',
+        'red' : '#ff0000'
       }
     }
   }
