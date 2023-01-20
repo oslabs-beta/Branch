@@ -24,7 +24,7 @@ function activate(context) {
 
 		const jsSrc = panel.webview.asWebviewUri(
 			vscode.Uri.file(
-				path.join(context.extensionPath, 'out', 'main.js')
+				path.join(context.extensionPath, 'src', 'main.js')
 			));
 		const cssSrc = panel.webview.asWebviewUri(
 			vscode.Uri.file(
@@ -68,6 +68,7 @@ function getWebViewContent(jsSrc, cssSrc) {
 			<h1 class="mainheader" >Route Tree</h1>
 		</span>
 		<span class="responseContainer" >
+		<h1>Response Data</h1>
 			<textarea id="code-block">
 			testObj = {
 				test: 'data',
@@ -77,22 +78,26 @@ function getWebViewContent(jsSrc, cssSrc) {
 	</div>
 		<div class="input" id="input">
 		<div >
-			<h1>Query params</h1>
+			<h2>Query Params: </h2>
 			<div>
 			<span class="alert"></span>
 			<label for="url" >URL: </label>
 			<input class="url" id="url"/>
-			<button onclick="checkParam()">Check Param</button>
+			<button class="get" onclick="checkParam()">GET</button>
+			<button class="delete" onclick="deleteItem()">DELETE</button>
 			</div>
+			<h2>Request Body: </h2>
 			<label for="key" >Key:</label>
 			<input id="key" />
 			<label for="value" >Value:</label>
 			<input id="value" />
-			<button onclick="addParams()">Add to Body</button>
-			<button onclick="checkRoute()">Check Route</button>
+			<button class"addParam" onclick="addParams()">Add to Body</button>
+			<button class="post" onclick="checkRoute()">POST</button>
+			<button class="put" onclick="put()">PUT</button>
+			<div class="required"></div>
 		</div>
 		<div>
-			<h2>Req Body Field</h2>
+			<h2>Current Req Body <button onclick="deleteReqBody()">X</button></h2>
 			<div class="reqObj" ></div>
 		</div>
 	</div>

@@ -8,7 +8,7 @@ const treeData = {
       children: [
         {
           name: '/',
-          method: ['GET, POST'],
+          method: ['GET, POST', 'DELETE', 'PUT'],
           parent: 'router1',
           children: [
             {
@@ -22,6 +22,20 @@ const treeData = {
               name: 'POST',
               method: ['POST'],
               parent: 'router1',
+              reqParamRequired: 'false',
+              children: null,
+            },
+            {
+              name: 'DELETE',
+              method: ['DELETE'],
+              parent: 'router1',
+              reqParamRequired: 'true',
+              children: null,
+            },
+            {
+              name: 'PUT',
+              method: ['PUT'],
+              parent: 'router1',
               reqParamRequired: 'true',
               children: null,
             },
@@ -33,7 +47,7 @@ const treeData = {
           parent: 'router1',
           children: null,
         },
-      ]
+      ],
     },
     {
       name: '/',
@@ -160,13 +174,67 @@ const displayTree = (treeData) => {
       d.y0 = d.y;
     });
   }
-}
+};
 
-window.addEventListener('message', msg => {displayTree(msg.data)});
+// window.addEventListener('message', msg => {displayTree(msg.data)});
+window.addEventListener('message', (msg) => {
+  displayTree(treeData);
+});
+
 let pathStr = '';
 // Event handler for clicking a node
 function click(d, node) {
+  const required = document.querySelector('.required');
+  
+  if (d.method[0] === 'GET') {
+    required.innerText = '';
+    document.querySelector('.get').style.backgroundColor = 'red';
+    document.querySelector('#url').style.borderColor = 'red';
 
+    document.querySelector('.put').style.backgroundColor = '#eee5d5';
+    document.querySelector('#key').style.borderColor = '#b7c5b7';
+    document.querySelector('#value').style.borderColor = '#b7c5b7';
+    document.querySelector('.delete').style.backgroundColor = '#eee5d5';
+    document.querySelector('.post').style.backgroundColor = '#eee5d5';
+    // document.querySelector('.addParam').style.backgroundColor = '#eee5d5';
+  }
+  if (d.method[0] === 'POST') {
+    document.querySelector('#url').value = '';
+    required.innerText = '';
+    document.querySelector('.post').style.backgroundColor = 'red';
+    document.querySelector('#key').style.borderColor = 'red';
+    document.querySelector('#value').style.borderColor = 'red';
+    // document.querySelector('.addParam').style.backgroundColor = 'red'
+
+    document.querySelector('.put').style.backgroundColor = '#eee5d5';
+    document.querySelector('.get').style.backgroundColor = '#eee5d5';
+    document.querySelector('#url').style.borderColor = '#b7c5b7';
+    document.querySelector('.delete').style.backgroundColor = '#eee5d5';
+  }
+  if (d.method[0] === 'PUT') {
+    required.innerText = '';
+    document.querySelector('.put').style.backgroundColor = 'red';
+    document.querySelector('#key').style.borderColor = 'red';
+    document.querySelector('#value').style.borderColor = 'red';
+    document.querySelector('#url').style.borderColor = 'red';
+    // document.querySelector('.addParam').style.backgroundColor = 'red'
+
+    document.querySelector('.delete').style.backgroundColor = '#eee5d5';
+    document.querySelector('.get').style.backgroundColor = '#eee5d5';
+    document.querySelector('.post').style.backgroundColor = '#eee5d5';
+  }
+  if (d.method[0] === 'DELETE') {
+    required.innerText = '';
+    document.querySelector('.delete').style.backgroundColor = 'red';
+    document.querySelector('#url').style.borderColor = 'red';
+
+    document.querySelector('.put').style.backgroundColor = '#eee5d5';
+    document.querySelector('#key').style.borderColor = '#b7c5b7';
+    document.querySelector('#value').style.borderColor = '#b7c5b7';
+    document.querySelector('.get').style.backgroundColor = '#eee5d5';
+    document.querySelector('.post').style.backgroundColor = '#eee5d5';
+    // document.querySelector('.addParam').style.backgroundColor = '#eee5d5';
+  }
 
   //get the node clicked on and change the color so that we know which route is being checked
 
@@ -192,18 +260,19 @@ function click(d, node) {
     }
     // console.log('PATHSTR', pathStr);
   }
-  if (d.reqParamRequired) {
+  if (d.reqParamRequired && d.method[0] !== 'POST') {
     // console.log(pathStr);
-    input.value = pathStr + ':ENTER PARAM HERE';
+    input.value = pathStr + ':ENTER PARAM ID HERE';
     // return addAlert();
   }
-
+  if(d.method[0] === 'GET' && d.reqParamRequired === false) {
   fetch(pathStr)
     .then((data) => data.json())
     .then((data) => {
       data = JSON.stringify(data);
       codemirror.getDoc().setValue(data);
     });
+  }
   if (d.children) {
     d._children = d.children;
     d.children = null;
@@ -219,6 +288,7 @@ let bodyObj = {};
 //click handler for query params - input args?
 // eslint-disable-next-line no-unused-vars
 function checkRoute() {
+  
   console.log('Pathstr', pathStr);
   const key = document.getElementById('key').value;
   console.log(key);
@@ -245,11 +315,17 @@ function checkRoute() {
 
 // eslint-disable-next-line no-unused-vars
 const addParams = () => {
+  const required = document.querySelector('.required');
+  required.innerText = '';
   const keyInfo = document.getElementById('key').value;
   document.getElementById('key').value = '';
   const valueInfo = document.getElementById('value').value;
   document.getElementById('value').value = '';
-  bodyObj[keyInfo] = valueInfo;
+  if (keyInfo !== '' && valueInfo !== '') {
+    bodyObj[keyInfo] = valueInfo;
+  } else {
+    required.innerText = 'Please add key and value';
+  }
   document.querySelector('.reqObj').innerText = JSON.stringify(bodyObj);
 };
 
@@ -261,11 +337,65 @@ const addParams = () => {
 
 // eslint-disable-next-line no-unused-vars
 const checkParam = () => {
+  document.querySelector('.get').style.backgroundColor = '#eee5d5';
   const urlPath = document.querySelector('#url').value;
   fetch(urlPath)
-    .then((data) => data.json())
-    .then((data) => {
-      data = JSON.stringify(data);
-      codemirror.getDoc().setValue(data);
-    });
+  // .then((data) => data.json())
+  .then((data) => {
+    data = JSON.stringify(data);
+    codemirror.getDoc().setValue(data);
+  });
 };
+
+function deleteItem() {
+  document.querySelector('.delete').style.backgroundColor = '#eee5d5';
+  document.querySelector('#url').style.borderColor = '#b7c5b7';
+  const urlPath = document.querySelector('#url').value;
+  document.getElementById('url').value = '';
+
+  fetch(urlPath, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  // .then((data) => data.json())
+  .then((data) => {
+    console.log(data)
+    data = JSON.stringify(data);
+    codemirror.getDoc().setValue(data);
+  });
+}
+
+function put() {
+  document.querySelector('.put').style.backgroundColor = '#eee5d5';
+  document.querySelector('#key').style.borderColor = '#b7c5b7';
+  document.querySelector('#value').style.borderColor = '#b7c5b7';
+  document.querySelector('#url').style.borderColor = '#b7c5b7';
+  // document.querySelector('.addParam').style.backgroundColor = '#eee5d5';
+
+  //id from req.param
+  const urlPath = document.querySelector('#url').value;
+
+  //bodyObj
+
+  document.getElementById('key').value = '';
+  document.getElementById('value').value = '';
+
+  fetch(urlPath, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(bodyObj),
+  })
+    .then(data => {
+    data = JSON.stringify(data.status)
+    codemirror.getDoc().setValue(data);
+    });
+}
+
+const deleteReqBody = () => {
+  reqBody = {};
+  document.querySelector('.reqObj').innerText = '';
+}

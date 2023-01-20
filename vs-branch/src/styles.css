@@ -84,3 +84,17 @@ svg {
   width: 500px;
   margin-bottom: 1rem;
 }
+
+#value {
+  width: 200px;
+  margin-bottom: 1rem;
+}
+
+#key { 
+  width: 200px;
+  margin-bottom: 1rem;
+}
+
+.required {
+  color: red;
+}
