@@ -6,10 +6,10 @@ function activate(context) {
   console.log('Extension Running!');
 
   let panel;
-  let start = vscode.commands.registerCommand('vs-branch.start', function () {
+  let start = vscode.commands.registerCommand('branch.start', function () {
     panel = vscode.window.createWebviewPanel(
-      'vs-branch',
-      'VS | Branch',
+      'branch',
+      'Branch',
       vscode.ViewColumn.One,
       {
         // Enable scripts in the webview
@@ -19,6 +19,7 @@ function activate(context) {
           vscode.Uri.file(path.join(context.extensionPath, 'src')),
           vscode.Uri.file(path.join(context.extensionPath, 'out')),
         ],
+		retainContextWhenHidden: true,
       }
     );
 
@@ -30,14 +31,12 @@ function activate(context) {
     );
 
     panel.webview.html = getWebViewContent(jsSrc, cssSrc);
-  });
 
-  let scrape = vscode.commands.registerCommand('vs-branch.scrape', function () {
-    vscode.window.showInformationMessage('Scraping Server files...');
+	vscode.window.showInformationMessage('Scraping Server files...');
     scraper.getRoutes(panel);
   });
 
-  context.subscriptions.push(start, scrape);
+  context.subscriptions.push(start);
 }
 
 function getWebViewContent(jsSrc, cssSrc) {

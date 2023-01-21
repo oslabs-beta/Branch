@@ -1,66 +1,65 @@
 /* eslint-disable no-unused-vars */
 // deno-lint-ignore-file no-unused-vars
 /* eslint-disable no-undef */
-const treeData = {
-  name: 'http://localhost:3000',
-  parent: null,
-  children: [
-    {
-      name: '/chore',
-      parent: 'http://localhost:3000',
-      children: [
-        {
-          name: '/',
-          method: ['GET, POST', 'DELETE', 'PUT'],
-          parent: 'router1',
-          children: [
-            {
-              name: 'GET',
-              method: ['GET'],
-              parent: 'router1',
-              reqParamRequired: 'true',
-              children: null,
-            },
-            {
-              name: 'POST',
-              method: ['POST'],
-              parent: 'router1',
-              reqParamRequired: 'false',
-              children: null,
-            },
-            {
-              name: 'DELETE',
-              method: ['DELETE'],
-              parent: 'router1',
-              reqParamRequired: 'true',
-              children: null,
-            },
-            {
-              name: 'PUT',
-              method: ['PUT'],
-              parent: 'router1',
-              reqParamRequired: 'true',
-              children: null,
-            },
-          ],
-        },
-        {
-          name: '/pasta',
-          method: ['POST'],
-          parent: 'router1',
-          children: null,
-        },
-      ],
-      ],
-    },
-    {
-      name: '/',
-      method: ['GET', 'POST'],
-      children: null,
-      parent: 'http://localhost:3000',
-    },
-  ],
-};
+// const treeData = {
+//   name: 'http://localhost:3000',
+//   parent: null,
+//   children: [
+//     {
+//       name: '/chore',
+//       parent: 'http://localhost:3000',
+//       children: [
+//         {
+//           name: '/',
+//           methods: ['GET, POST', 'DELETE', 'PUT'],
+//           parent: 'router1',
+//           children: [
+//             {
+//               name: 'GET',
+//               methods: ['GET'],
+//               parent: 'router1',
+//               reqParamRequired: 'true',
+//               children: null,
+//             },
+//             {
+//               name: 'POST',
+//               methods: ['POST'],
+//               parent: 'router1',
+//               reqParamRequired: 'false',
+//               children: null,
+//             },
+//             {
+//               name: 'DELETE',
+//               methods: ['DELETE'],
+//               parent: 'router1',
+//               reqParamRequired: 'true',
+//               children: null,
+//             },
+//             {
+//               name: 'PUT',
+//               methods: ['PUT'],
+//               parent: 'router1',
+//               reqParamRequired: 'true',
+//               children: null,
+//             },
+//           ],
+//         },
+//         {
+//           name: '/pasta',
+//           methods: ['POST'],
+//           parent: 'router1',
+//           children: null,
+//         },
+//       ],
+//     },
+//     {
+//       name: '/',
+//       methods: ['GET', 'POST'],
+//       children: null,
+//       parent: 'http://localhost:3000',
+//     },
+//   ],
+// };
 
 const displayTree = (treeData) => {
   // ************** Generate the tree diagram	 *****************
@@ -204,16 +203,19 @@ const displayTree = (treeData) => {
   }
 };
 
-// window.addEventListener('message', msg => {displayTree(msg.data)});
 // deno-lint-ignore no-window-prefix
-window.addEventListener('message', (msg) => {
-  displayTree(treeData);
-});
+window.addEventListener('message', msg => {
+  displayTree(msg.data)});
+// deno-lint-ignore no-window-prefix
+// window.addEventListener('message', (msg) => {
+//   displayTree(treeData);
+// });
 
 //string that we will use to build/rebuild our path
 let pathStr = '';
 // Event handler for clicking a node
 function click(d, node) {
+  console.log(d)
   //saving html elements into variables for easier access
   const required = document.querySelector('.required');
   const get = document.querySelector('.get');
@@ -228,7 +230,8 @@ function click(d, node) {
 
   /*highlight the required fields based on the request type and 
   ensure that all non-required fields are changed back to their original color*/
-  if (d.method[0] === 'GET') {
+  const string = d.methods[0].toLowerCase();
+  if (string === 'get') {
     //required fields 
     required.innerText = '';
     get.style.backgroundColor = 'red';
@@ -241,7 +244,7 @@ function click(d, node) {
     post.style.backgroundColor = '#eee5d5';
     // document.querySelector('.addParam').style.backgroundColor = '#eee5d5';
   }
-  if (d.method[0] === 'POST') {
+  if (string === 'post') {
     url.value = '';
     required.innerText = '';
     post.style.backgroundColor = 'red';
@@ -254,7 +257,7 @@ function click(d, node) {
     url.style.borderColor = '#b7c5b7';
     delete1.style.backgroundColor = '#eee5d5';
   }
-  if (d.method[0] === 'PUT') {
+  if (string === 'put') {
     required.innerText = '';
     put.style.backgroundColor = 'red';
     key.style.borderColor = 'red';
@@ -266,7 +269,7 @@ function click(d, node) {
     get.style.backgroundColor = '#eee5d5';
     post.style.backgroundColor = '#eee5d5';
   }
-  if (d.method[0] === 'DELETE') {
+  if (string === 'delete') {
     required.innerText = '';
     delete1.style.backgroundColor = 'red';
     url.style.borderColor = 'red';
@@ -285,7 +288,7 @@ function click(d, node) {
   input.value = '';
 
   //if the node has a method property, it is an endpoint and we need to construct our urlpath for the fetch
-  if (d.method) {
+  if (d.methods.length > 0) {
     const fullPath = [];
     //save node to temp variable so we don't mutate orignal object
     const tempD = structuredClone(d);
@@ -302,14 +305,14 @@ function click(d, node) {
     }
   }
   //if a param is required - generate the urlpath and add instructions then populate the url input
-  if (d.reqParamRequired && d.method[0] !== 'POST') {
+  if (d.reqParamRequired && d.methods[0] !== 'post') {
     input.value = pathStr + ':ENTER PARAM ID HERE';
   } else {
     input.value = pathStr;
   }
 
   //if there is no param required for the GET request, fetch all 
-  if (d.method[0] === 'GET' && d.reqParamRequired === false) {
+  if (d.methods[0] === 'get' && d.reqParamRequired === false) {
     fetch(pathStr)
       .then((data) => data.json())
       .then((data) => {
@@ -444,5 +447,3 @@ function subtract(a, b) {
 }
 
 module.exports = {sum, subtract, click, checkRoute, addParams, checkParam, deleteItem, put, deleteReqBody};
-
-// export default main

@@ -68,11 +68,13 @@ body {
   border-radius: 0.5rem;
   margin-right: 1rem;
   background-color: var(--vscode-editor-selectionBackground);
+  color: var(--vscode-textPreformat-foreground);
 }
 
 .input button {
   border-radius: 0.5rem;
-  background-color: var(--vscode-editor-selectionBackground);
+  background-color: var(--vscode-extensionButton-prominentBackground);
+  color: var(--vscode-extensionButton-prominentForeground);
 }
 
 .mainheader {

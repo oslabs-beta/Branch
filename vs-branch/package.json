@@ -10,19 +10,14 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:vs-branch.start"
+    "onCommand:branch.start"
   ],
   "main": "./extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "vs-branch.start",
+        "command": "branch.start",
         "title": "Start",
-        "category": "Branch"
-      },
-      {
-        "command": "vs-branch.scrape",
-        "title": "Scrape",
         "category": "Branch"
       }
     ]
