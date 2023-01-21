@@ -3,47 +3,45 @@ const path = require('path');
 const scraper = require('./src/scraper');
 
 function activate(context) {
-	console.log('Extension Running!');
+  console.log('Extension Running!');
 
-	let panel;
-	let start = vscode.commands.registerCommand('vs-branch.start', function () {
-		panel = vscode.window.createWebviewPanel(
-			'vs-branch',
-			'VS | Branch',
-			vscode.ViewColumn.One,
-			{
-				// Enable scripts in the webview
-				enableScripts: true,
-				// Only allow the webview to access resources in our extension's src/dist directories
-				localResourceRoots: [
-					vscode.Uri.file(path.join(context.extensionPath, 'src')),
-					vscode.Uri.file(path.join(context.extensionPath, 'out')),
-				],
-			}
-		);
+  let panel;
+  let start = vscode.commands.registerCommand('vs-branch.start', function () {
+    panel = vscode.window.createWebviewPanel(
+      'vs-branch',
+      'VS | Branch',
+      vscode.ViewColumn.One,
+      {
+        // Enable scripts in the webview
+        enableScripts: true,
+        // Only allow the webview to access resources in our extension's src/dist directories
+        localResourceRoots: [
+          vscode.Uri.file(path.join(context.extensionPath, 'src')),
+          vscode.Uri.file(path.join(context.extensionPath, 'out')),
+        ],
+      }
+    );
 
-		const jsSrc = panel.webview.asWebviewUri(
-			vscode.Uri.file(
-				path.join(context.extensionPath, 'src', 'main.js')
-			));
-		const cssSrc = panel.webview.asWebviewUri(
-			vscode.Uri.file(
-				path.join(context.extensionPath, 'src', 'styles.css')
-			));
-		
-		panel.webview.html = getWebViewContent(jsSrc, cssSrc);
-	});
+    const jsSrc = panel.webview.asWebviewUri(
+      vscode.Uri.file(path.join(context.extensionPath, 'src', 'main.js'))
+    );
+    const cssSrc = panel.webview.asWebviewUri(
+      vscode.Uri.file(path.join(context.extensionPath, 'src', 'styles.css'))
+    );
 
-	let scrape = vscode.commands.registerCommand('vs-branch.scrape', function () {
-		vscode.window.showInformationMessage('Scraping Server files...');
-		scraper.getRoutes(panel);
-	});
+    panel.webview.html = getWebViewContent(jsSrc, cssSrc);
+  });
 
-	context.subscriptions.push(start, scrape);
+  let scrape = vscode.commands.registerCommand('vs-branch.scrape', function () {
+    vscode.window.showInformationMessage('Scraping Server files...');
+    scraper.getRoutes(panel);
+  });
+
+  context.subscriptions.push(start, scrape);
 }
 
 function getWebViewContent(jsSrc, cssSrc) {
-	return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
   <html lang="en">
   <head>
 	  <meta charset="UTF-8">
@@ -76,7 +74,7 @@ function getWebViewContent(jsSrc, cssSrc) {
 				</textarea>
 		</span>
 	</div>
-		<div class="input" id="input">
+	<div class="input" id="input">
 		<div >
 			<h2>Query Params: </h2>
 			<div>
@@ -96,8 +94,8 @@ function getWebViewContent(jsSrc, cssSrc) {
 			<button class="put" onclick="put()">PUT</button>
 			<div class="required"></div>
 		</div>
-		<div>
-			<h2>Current Req Body <button onclick="deleteReqBody()">X</button></h2>
+		<div class="reqBody" id="reqBody">
+			<h2>Current Req Body <button onclick="deleteReqBody()">Clear</button></h2>
 			<div class="reqObj" ></div>
 		</div>
 	</div>
@@ -124,6 +122,6 @@ function getWebViewContent(jsSrc, cssSrc) {
 function deactivate() {}
 
 module.exports = {
-	activate,
-	deactivate
-}
+  activate,
+  deactivate,
+};

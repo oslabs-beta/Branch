@@ -1,4 +1,3 @@
-
 body {
   width: 95vw;
   height: 100vh;
@@ -34,16 +33,18 @@ body {
   display: grid;
   grid-template-columns: 3fr 1fr;
   align-items: center;
+  border-radius: 8px;
 }
 
 .treeContainer {
-  outline: white solid 2px;
+  position: relative;
 }
 
 .responseContainer {
-  outline: white solid 2px;
-  width: 15rem;
+  width: 100%;
   font-size: 0.5rem;
+  border-radius: 8px;
+  margin-left: 4px;
 }
 
 .input {
@@ -55,6 +56,11 @@ body {
   margin-top: 1rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
+  border-radius: 8px;
+}
+
+.reqBody {
+  border-left: white solid 2px;
 }
 
 .input input {
@@ -70,6 +76,9 @@ body {
 
 .mainheader {
   padding-left: 2rem;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 svg {
@@ -90,7 +99,7 @@ svg {
   margin-bottom: 1rem;
 }
 
-#key { 
+#key {
   width: 200px;
   margin-bottom: 1rem;
 }

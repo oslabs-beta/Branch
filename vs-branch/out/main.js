@@ -63,11 +63,11 @@ var displayTree = (treeData2) => {
   let i = 0;
   const duration = 750;
   const root = treeData2;
-  let tree = d3.layout.tree().size([height, width]);
-  let diagonal = d3.svg.diagonal().projection(function(d) {
+  const tree = d3.layout.tree().size([height, width]);
+  const diagonal = d3.svg.diagonal().projection(function(d) {
     return [d.y, d.x];
   });
-  let svg = d3.select(".treeContainer").append("svg").attr("width", width + margin.right + margin.left).classed("svg", true).attr("height", height + margin.top + margin.bottom).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  const svg = d3.select(".treeContainer").append("svg").attr("width", width + margin.right + margin.left).classed("svg", true).attr("height", height + margin.top + margin.bottom).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
   root.x0 = height / 2;
   root.y0 = 0;
   update2(root);
@@ -103,7 +103,7 @@ var displayTree = (treeData2) => {
     }).remove();
     nodeExit.select("circle").attr("r", 1e-6);
     nodeExit.select("text").style("fill-opacity", 1e-6);
-    let link = svg.selectAll("path.link").data(links, function(d) {
+    const link = svg.selectAll("path.link").data(links, function(d) {
       return d.target.id;
     });
     link.enter().insert("path", "g").attr("class", "link").attr("d", function(d) {
@@ -127,53 +127,59 @@ window.addEventListener("message", (msg) => {
 var pathStr = "";
 function click(d, node) {
   const required = document.querySelector(".required");
+  const get = document.querySelector(".get");
+  const post = document.querySelector(".post");
+  const url = document.querySelector("#url");
+  const put2 = document.querySelector(".put");
+  const delete1 = document.querySelector(".delete");
+  const key = document.querySelector("#key");
+  const value = document.querySelector("#value");
   if (d.method[0] === "GET") {
     required.innerText = "";
-    document.querySelector(".get").style.backgroundColor = "red";
-    document.querySelector("#url").style.borderColor = "red";
-    document.querySelector(".put").style.backgroundColor = "#eee5d5";
-    document.querySelector("#key").style.borderColor = "#b7c5b7";
-    document.querySelector("#value").style.borderColor = "#b7c5b7";
-    document.querySelector(".delete").style.backgroundColor = "#eee5d5";
-    document.querySelector(".post").style.backgroundColor = "#eee5d5";
+    get.style.backgroundColor = "red";
+    url.style.borderColor = "red";
+    put2.style.backgroundColor = "#eee5d5";
+    key.style.borderColor = "#b7c5b7";
+    value.style.borderColor = "#b7c5b7";
+    delete1.style.backgroundColor = "#eee5d5";
+    post.style.backgroundColor = "#eee5d5";
   }
   if (d.method[0] === "POST") {
-    document.querySelector("#url").value = "";
+    url.value = "";
     required.innerText = "";
-    document.querySelector(".post").style.backgroundColor = "red";
-    document.querySelector("#key").style.borderColor = "red";
-    document.querySelector("#value").style.borderColor = "red";
-    document.querySelector(".put").style.backgroundColor = "#eee5d5";
-    document.querySelector(".get").style.backgroundColor = "#eee5d5";
-    document.querySelector("#url").style.borderColor = "#b7c5b7";
-    document.querySelector(".delete").style.backgroundColor = "#eee5d5";
+    post.style.backgroundColor = "red";
+    key.style.borderColor = "red";
+    value.style.borderColor = "red";
+    put2.style.backgroundColor = "#eee5d5";
+    get.style.backgroundColor = "#eee5d5";
+    url.style.borderColor = "#b7c5b7";
+    delete1.style.backgroundColor = "#eee5d5";
   }
   if (d.method[0] === "PUT") {
     required.innerText = "";
-    document.querySelector(".put").style.backgroundColor = "red";
-    document.querySelector("#key").style.borderColor = "red";
-    document.querySelector("#value").style.borderColor = "red";
-    document.querySelector("#url").style.borderColor = "red";
-    document.querySelector(".delete").style.backgroundColor = "#eee5d5";
-    document.querySelector(".get").style.backgroundColor = "#eee5d5";
-    document.querySelector(".post").style.backgroundColor = "#eee5d5";
+    put2.style.backgroundColor = "red";
+    key.style.borderColor = "red";
+    value.style.borderColor = "red";
+    url.style.borderColor = "red";
+    delete1.style.backgroundColor = "#eee5d5";
+    get.style.backgroundColor = "#eee5d5";
+    post.style.backgroundColor = "#eee5d5";
   }
   if (d.method[0] === "DELETE") {
     required.innerText = "";
-    document.querySelector(".delete").style.backgroundColor = "red";
-    document.querySelector("#url").style.borderColor = "red";
-    document.querySelector(".put").style.backgroundColor = "#eee5d5";
-    document.querySelector("#key").style.borderColor = "#b7c5b7";
-    document.querySelector("#value").style.borderColor = "#b7c5b7";
-    document.querySelector(".get").style.backgroundColor = "#eee5d5";
-    document.querySelector(".post").style.backgroundColor = "#eee5d5";
+    delete1.style.backgroundColor = "red";
+    url.style.borderColor = "red";
+    put2.style.backgroundColor = "#eee5d5";
+    key.style.borderColor = "#b7c5b7";
+    value.style.borderColor = "#b7c5b7";
+    get.style.backgroundColor = "#eee5d5";
+    post.style.backgroundColor = "#eee5d5";
   }
   pathStr = "";
-  let input = document.querySelector("#url");
+  const input = document.querySelector("#url");
   input.value = "";
   if (d.method) {
     const fullPath = [];
-    console.log("d.parent", d.parent);
     const tempD = structuredClone(d);
     while (tempD.parent) {
       fullPath.unshift(tempD.parent);
@@ -187,6 +193,8 @@ function click(d, node) {
   }
   if (d.reqParamRequired && d.method[0] !== "POST") {
     input.value = pathStr + ":ENTER PARAM ID HERE";
+  } else {
+    input.value = pathStr;
   }
   if (d.method[0] === "GET" && d.reqParamRequired === false) {
     fetch(pathStr).then((data) => data.json()).then((data) => {
@@ -203,4 +211,93 @@ function click(d, node) {
   }
   update(d);
 }
+var bodyObj = {};
+function checkRoute() {
+  const key = document.getElementById("key").value;
+  document.getElementById("key").value = "";
+  const value = document.getElementById("value").value;
+  document.getElementById("value").value = "";
+  fetch(pathStr, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(bodyObj)
+  }).then((data) => data.json()).then((data) => {
+    data = JSON.stringify(data);
+    codemirror.getDoc().setValue(data);
+  });
+}
+var addParams = () => {
+  const required = document.querySelector(".required");
+  required.innerText = "";
+  const keyInfo = document.getElementById("key").value;
+  document.getElementById("key").value = "";
+  const valueInfo = document.getElementById("value").value;
+  document.getElementById("value").value = "";
+  if (keyInfo !== "" && valueInfo !== "") {
+    bodyObj[keyInfo] = valueInfo;
+  } else {
+    required.innerText = "Please add key and value";
+  }
+  document.querySelector(".reqObj").innerText = JSON.stringify(bodyObj);
+};
+var checkParam = () => {
+  document.querySelector(".get").style.backgroundColor = "#eee5d5";
+  const urlPath = document.querySelector("#url").value;
+  fetch(urlPath).then((data) => data.json()).then((data) => {
+    data = JSON.stringify(data);
+    codemirror.getDoc().setValue(data);
+  });
+};
+var statusInfo = {};
+function deleteItem() {
+  document.querySelector(".delete").style.backgroundColor = "#eee5d5";
+  document.querySelector("#url").style.borderColor = "#b7c5b7";
+  const urlPath = document.querySelector("#url").value;
+  document.getElementById("url").value = "";
+  fetch(urlPath, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then((data) => {
+    statusInfo["status code"] = data.status;
+    statusInfo["status"] = data.statusText;
+    data = JSON.stringify(statusInfo);
+    codemirror.getDoc().setValue(data);
+  });
+}
+function put() {
+  document.querySelector(".put").style.backgroundColor = "#eee5d5";
+  document.querySelector("#key").style.borderColor = "#b7c5b7";
+  document.querySelector("#value").style.borderColor = "#b7c5b7";
+  document.querySelector("#url").style.borderColor = "#b7c5b7";
+  const urlPath = document.querySelector("#url").value;
+  document.getElementById("key").value = "";
+  document.getElementById("value").value = "";
+  fetch(urlPath, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(bodyObj)
+  }).then((data) => {
+    statusInfo["status code"] = data.status;
+    statusInfo["status"] = data.statusText;
+    data = JSON.stringify(statusInfo);
+    codemirror.getDoc().setValue(status);
+  });
+}
+var deleteReqBody = () => {
+  bodyObj = {};
+  document.querySelector(".reqObj").innerText = "";
+};
+function sum(a, b) {
+  return a + b;
+}
+function subtract(a, b) {
+  return a - b;
+}
+module.exports = { sum, subtract, click, checkRoute, addParams, checkParam, deleteItem, put, deleteReqBody };
 //# sourceMappingURL=main.js.map
