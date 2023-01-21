@@ -33,7 +33,7 @@ const treeData = {
           parent: 'router1',
           children: null,
         },
-      ]
+      ],
     },
     {
       name: '/',
@@ -166,8 +166,6 @@ window.addEventListener('message', msg => {displayTree(msg.data)});
 let pathStr = '';
 // Event handler for clicking a node
 function click(d, node) {
-
-
   //get the node clicked on and change the color so that we know which route is being checked
 
   //check if d.reqParamRequired === true

@@ -40,7 +40,7 @@ export default function AboutPage() {
             <div className="w-1/4 bg-white m-3 p-3 rounded-xl grid justify-items-center shadow-md">
               <img
                 id="myFace"
-                src="https://i.imgur.com/1XXAny6.png"
+                src="https://imgur.com/Od6cI5p.png"
                 alt="Team Face"
                 className="max-w-[200px]"
               />
@@ -49,7 +49,7 @@ export default function AboutPage() {
                   Chase Benjamin <br />
                   <a
                     id="myGithubLink"
-                    href="https://github.com/Trablink"
+                    href="https://github.com/chasebenj"
                     className="underline text-blue-700"
                   >
                     Github
@@ -74,9 +74,10 @@ export default function AboutPage() {
             <div className="w-1/4 bg-white m-3 p-3 rounded-xl grid justify-items-center shadow-md">
               <img
                 id="Gatsby"
-                src="https://imgur.com/NzWR6RJ.png"
+                src="https://imgur.com/LgHFxQ7.png"
                 alt="CatFace"
-                className="max-w-[200px]"
+                className="max-w-[200px] rounded-md
+              "
               />
               <div id="teamText" className="text-center">
                 <p>
@@ -93,7 +94,7 @@ export default function AboutPage() {
             <div className="w-1/4 bg-white m-3 p-3 rounded-xl grid justify-items-center shadow-md">
               <img
                 id="Grimm"
-                src="https://imgur.com/xyocd6n.png"
+                src="https://imgur.com/m9WNtWs.png"
                 alt="Team Face"
                 className="max-w-[200px]"
               />
