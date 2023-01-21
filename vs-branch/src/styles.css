@@ -1,0 +1,112 @@
+body {
+  width: 95vw;
+  height: 100vh;
+  margin-top: 20px;
+  color: var(--vscode-textPreformat-foreground);
+  background-color: var(--vscode-editor-background);
+  font-family: var(--vscode-editor-font-family);
+}
+
+.node {
+  cursor: pointer;
+}
+
+.node circle {
+  fill: var(--vscode-window-activeBorder);
+  stroke: var(--vscode-window-inactiveBorder);
+  stroke-width: 3px;
+}
+
+.node text {
+  font: 12px sans-serif;
+  fill: var(--vscode-textPreformat-foreground);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.link {
+  fill: none;
+  stroke: var(--vscode-focusBorder);
+  stroke-width: 2px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.treeContainer {
+  position: relative;
+}
+
+.responseContainer {
+  width: 100%;
+  font-size: 0.5rem;
+  border-radius: 8px;
+  margin-left: 4px;
+}
+
+.input {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  width: 90vw;
+  text-align: center;
+  outline: var(--vscode-editor-selectionBackground) solid 2px;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-radius: 8px;
+}
+
+.reqBody {
+  border-left: var(--vscode-editor-selectionBackground) solid 2px;
+}
+
+.input input {
+  border-radius: 0.5rem;
+  margin-right: 1rem;
+  background-color: var(--vscode-editor-selectionBackground);
+  color: var(--vscode-textPreformat-foreground);
+}
+
+.input button {
+  border-radius: 0.5rem;
+  background-color: var(--vscode-extensionButton-prominentBackground);
+  color: var(--vscode-extensionButton-prominentForeground);
+}
+
+.mainheader {
+  padding-left: 2rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+svg {
+  background-color: var(--vscode-editor-selectionBackground);
+}
+
+.alert {
+  color: red;
+}
+
+#url {
+  width: 500px;
+  margin-bottom: 1rem;
+}
+
+#value {
+  width: 200px;
+  margin-bottom: 1rem;
+}
+
+#key {
+  width: 200px;
+  margin-bottom: 1rem;
+}
+
+.required {
+  color: red;
+}
