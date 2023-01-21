@@ -51,6 +51,7 @@ const treeData = {
           children: null,
         },
       ],
+      ],
     },
     {
       name: '/',
