@@ -10,7 +10,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:test-branch.helloWorld"
+    "onCommand:vs-branch.start"
   ],
   "main": "./extension.js",
   "contributes": {
@@ -18,6 +18,11 @@
       {
         "command": "vs-branch.start",
         "title": "Start",
+        "category": "Branch"
+      },
+      {
+        "command": "vs-branch.scrape",
+        "title": "Scrape",
         "category": "Branch"
       }
     ]
@@ -27,7 +32,8 @@
     "esbuild-base": "esbuild ./src/main.js --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
     "esbuild": "npm run esbuild-base -- --sourcemap",
     "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
-    "test-compile": "tsc -p ./"
+    "test-compile": "tsc -p ./",
+    "test": "jest"
   },
   "devDependencies": {
     "@types/glob": "^8.0.0",
@@ -38,11 +44,14 @@
     "esbuild": "^0.16.17",
     "eslint": "^8.28.0",
     "glob": "^8.0.3",
+    "jest": "^29.3.1",
     "mocha": "^10.1.0",
+    "supertest": "^6.3.3",
     "typescript": "^4.9.3"
   },
   "dependencies": {
     "fs": "^0.0.1-security",
+    "jest-environment-jsdom": "^29.3.1",
     "path": "^0.12.7"
   }
 }
