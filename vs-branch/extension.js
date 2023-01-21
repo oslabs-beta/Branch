@@ -3,47 +3,45 @@ const path = require('path');
 const scraper = require('./src/scraper');
 
 function activate(context) {
-	console.log('Extension Running!');
+  console.log('Extension Running!');
 
-	let panel;
-	let start = vscode.commands.registerCommand('vs-branch.start', function () {
-		panel = vscode.window.createWebviewPanel(
-			'vs-branch',
-			'VS | Branch',
-			vscode.ViewColumn.One,
-			{
-				// Enable scripts in the webview
-				enableScripts: true,
-				// Only allow the webview to access resources in our extension's src/dist directories
-				localResourceRoots: [
-					vscode.Uri.file(path.join(context.extensionPath, 'src')),
-					vscode.Uri.file(path.join(context.extensionPath, 'out')),
-				],
-			}
-		);
+  let panel;
+  let start = vscode.commands.registerCommand('vs-branch.start', function () {
+    panel = vscode.window.createWebviewPanel(
+      'vs-branch',
+      'VS | Branch',
+      vscode.ViewColumn.One,
+      {
+        // Enable scripts in the webview
+        enableScripts: true,
+        // Only allow the webview to access resources in our extension's src/dist directories
+        localResourceRoots: [
+          vscode.Uri.file(path.join(context.extensionPath, 'src')),
+          vscode.Uri.file(path.join(context.extensionPath, 'out')),
+        ],
+      }
+    );
 
-		const jsSrc = panel.webview.asWebviewUri(
-			vscode.Uri.file(
-				path.join(context.extensionPath, 'out', 'main.js')
-			));
-		const cssSrc = panel.webview.asWebviewUri(
-			vscode.Uri.file(
-				path.join(context.extensionPath, 'src', 'styles.css')
-			));
-		
-		panel.webview.html = getWebViewContent(jsSrc, cssSrc);
-	});
+    const jsSrc = panel.webview.asWebviewUri(
+      vscode.Uri.file(path.join(context.extensionPath, 'src', 'main.js'))
+    );
+    const cssSrc = panel.webview.asWebviewUri(
+      vscode.Uri.file(path.join(context.extensionPath, 'src', 'styles.css'))
+    );
 
-	let scrape = vscode.commands.registerCommand('vs-branch.scrape', function () {
-		vscode.window.showInformationMessage('Scraping Server files...');
-		scraper.getRoutes(panel);
-	});
+    panel.webview.html = getWebViewContent(jsSrc, cssSrc);
+  });
 
-	context.subscriptions.push(start, scrape);
+  let scrape = vscode.commands.registerCommand('vs-branch.scrape', function () {
+    vscode.window.showInformationMessage('Scraping Server files...');
+    scraper.getRoutes(panel);
+  });
+
+  context.subscriptions.push(start, scrape);
 }
 
 function getWebViewContent(jsSrc, cssSrc) {
-	return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
   <html lang="en">
   <head>
 	  <meta charset="UTF-8">
@@ -68,6 +66,7 @@ function getWebViewContent(jsSrc, cssSrc) {
 			<h1 class="mainheader" >Route Tree</h1>
 		</span>
 		<span class="responseContainer" >
+		<h1>Response Data</h1>
 			<textarea id="code-block">
 			testObj = {
 				test: 'data',
@@ -75,24 +74,28 @@ function getWebViewContent(jsSrc, cssSrc) {
 				</textarea>
 		</span>
 	</div>
-		<div class="input" id="input">
+	<div class="input" id="input">
 		<div >
-			<h1>Query params</h1>
+			<h2>Query Params: </h2>
 			<div>
 			<span class="alert"></span>
 			<label for="url" >URL: </label>
 			<input class="url" id="url"/>
-			<button onclick="checkParam()">Check Param</button>
+			<button class="get" onclick="checkParam()">GET</button>
+			<button class="delete" onclick="deleteItem()">DELETE</button>
 			</div>
+			<h2>Request Body: </h2>
 			<label for="key" >Key:</label>
 			<input id="key" />
 			<label for="value" >Value:</label>
 			<input id="value" />
-			<button onclick="addParams()">Add to Body</button>
-			<button onclick="checkRoute()">Check Route</button>
+			<button class"addParam" onclick="addParams()">Add to Body</button>
+			<button class="post" onclick="checkRoute()">POST</button>
+			<button class="put" onclick="put()">PUT</button>
+			<div class="required"></div>
 		</div>
-		<div>
-			<h2>Req Body Field</h2>
+		<div class="reqBody" id="reqBody">
+			<h2>Current Req Body <button onclick="deleteReqBody()">Clear</button></h2>
 			<div class="reqObj" ></div>
 		</div>
 	</div>
@@ -119,6 +122,6 @@ function getWebViewContent(jsSrc, cssSrc) {
 function deactivate() {}
 
 module.exports = {
-	activate,
-	deactivate
-}
+  activate,
+  deactivate,
+};
