@@ -6,7 +6,7 @@ export default function AboutPage() {
   return (
     <>
       <head>
-        <title>VS|Branch - Benjamin</title>
+        <title>Branch - Benjamin</title>
       </head>
       <main>
         <Header></Header>

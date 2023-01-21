@@ -13,7 +13,7 @@ export default function Header() {
             </a>
           </div>
           <div className="w-1/2 text-left text-5xl">
-            <p className="text-green mt-2 ml-[10px]">VS|Branch</p>
+            <p className="text-green mt-2 ml-[10px]">Branch</p>
           </div>
           <div className="w-1/2 flex justify-end">
             <div className="my-auto">
@@ -31,7 +31,7 @@ export default function Header() {
               </a>
             </div>
             <div className="self-end my-auto ml-5 mr-10">
-              <a className="" href="https://github.com/oslabs-beta/VS-Branch">
+              <a className="" href="https://github.com/oslabs-beta/Branch">
                 <img
                   className="max-w-[30px]"
                   src="https://imgur.com/Eq4BPYR.png"

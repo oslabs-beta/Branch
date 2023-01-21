@@ -6,7 +6,7 @@ export default function AboutPage() {
   return (
     <>
       <head>
-        <title>VS|Branch - Documentation</title>
+        <title>Branch - Documentation</title>
         {/* <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@100&display=swap"> */}
@@ -72,27 +72,27 @@ export default function AboutPage() {
                 <h2 className="text-2xl text-green" id="overview">
                   Overview
                 </h2>
-                <p className="m-4">
-                  VS|Branch is an extension for VSCode which allows developers
-                  to view and test their backend routes within express and/or
-                  oak.
-                </p>
+                <h3 className="m-4 mr-40 font-medium">
+                  Branch is an extension for VSCode which allows developers to
+                  view and test their backend routes within Express or Oak
+                  frameworks.
+                </h3>
                 <br />
                 <p className="ml-4">
-                  VS|Branch functions best when conventional syntax standards
-                  and best practices are used. This includes:
+                  Branch functions best when conventional syntax standards and
+                  best practices are used. This includes:
                 </p>
                 <br />
                 <ul className="list-square">
                   <li className="ml-10">
-                    Saving all server files inside a server directory.
+                    Saving all server files inside a server directory
                   </li>
                   <li className="ml-10">
                     Saving port number in a port variable. Alternatively, you
-                    can use port 3000 or 8080 directly.
+                    can use port 3000 or 8080 directly
                   </li>
                   <li className="ml-10">
-                    Using traditional routes (get, post, put, delete)
+                    Using traditional routes (GET, POST, PUT, DELETE)
                   </li>
                 </ul>
               </div>
@@ -101,9 +101,26 @@ export default function AboutPage() {
                   Installation
                 </h2>
                 <p className="m-4">
-                  To use VS|Branch, you will first need to install ripGrep on
-                  your machine.
+                  To use Branch, you will first need to ensure that{' '}
+                  <a
+                    href="https://docs.rs/crate/ripgrep/0.2.7"
+                    className="font-medium text-blue"
+                  >
+                    RipGrep
+                  </a>{' '}
+                  (a command line search tool) is installed on your machine.
                 </p>
+                <p className="m-4 ml-10">
+                  To check to see what version of RipGrep is installed on your
+                  machine, enter the following in your terminal.
+                </p>
+                <p className="m-4 ml-16 font-comp bg-green-100 p-2 w-[300px]">
+                  $ rg --version
+                </p>
+                <p className="m-4 ml-10">
+                  We recommend that you use version 13.0.0 or newer.
+                </p>
+                <br />
                 <p className="m-4 ml-10">
                   For MacOS X Homebrew users, install ripgrep by entering the
                   following into your terminal:
@@ -123,15 +140,17 @@ export default function AboutPage() {
                   below and following the associated instructions.
                 </p>
                 <a
-                  className="ml-20 font-bold text-link underline text-xl"
+                  className="ml-20 font-bold text-link text-3xl"
                   href="https://docs.rs/crate/ripgrep/0.2.7"
                 >
-                  Ripgrep Docs
+                  - RipGrep Docs -
                 </a>
-                <p className="m-4">
+                <p className="m-4 ml-10 mr-40">
                   Once you have ripGrep installed on your machine, it is time to
-                  install VS|Branch. Click the install link on the top right of
-                  this page.
+                  install the Branch extension into VSCode. Click the install
+                  link on the top right of this page to navigate to the
+                  VisualStudio Marketplace. Now just click install and follow
+                  the prompts.
                 </p>
               </div>
               <div className="m-4" id="instructions">
@@ -141,12 +160,31 @@ export default function AboutPage() {
                 <br />
                 <div id="layoutExplinationBox" className="w-full flex">
                   <div id="letteredExplination" className=" m-4 mr-5">
-                    <h3>
-                      The VS|Branch view consists of four primary sections:
-                    </h3>
+                    <h3>The Branch view consists of four primary sections:</h3>
                     <br />
-                    <ul className="m-4">
+                    <ul id="shortList" className="ml-40">
                       <li>
+                        <span className="font-bold text-xl">A</span>
+                        <span className="font-bold"> - Route Tree </span>
+                      </li>
+                      <li>
+                        <span className="font-bold text-xl">B</span>
+                        <span className="font-bold"> - Query Fields </span>
+                      </li>
+                      <li>
+                        <span className="font-bold text-xl">C</span>
+                        <span className="font-bold">
+                          {' '}
+                          - Request Body Field{' '}
+                        </span>
+                      </li>
+                      <li>
+                        <span className="font-bold text-xl">D</span>
+                        <span className="font-bold"> - Response Object </span>
+                      </li>
+                    </ul>
+                    <ul className="m-4">
+                      <li className="mt-[120px]">
                         <span className="font-bold text-xl">A</span>
                         <span className="font-bold"> - Route Tree: </span>This
                         is the interactive visual representation of your routes.
@@ -154,9 +192,9 @@ export default function AboutPage() {
                         by a{' '}
                         <span className="text-blue font-bold">blue circle</span>
                         . Simply click on that circle to see the route expanded.
-                        When selecting an endpoint (GET, POST, etc...),
-                        VS|Branch will begin filling out the appropriate query
-                        fields below.
+                        When selecting an endpoint (GET, POST, etc...), Branch
+                        will begin filling out the appropriate query fields
+                        below.
                       </li>
                       <br />
                       <li>
@@ -269,6 +307,13 @@ export default function AboutPage() {
                     </ul>
                   </div>
                   <div id="instructionImages">
+                    <div id="sampleAppLayout" className="">
+                      <img
+                        src="https://imgur.com/UYUZl3Q.png"
+                        alt="Example App Layout"
+                        className="rounded-lg border-4 border-black mt-7 w-[80%]"
+                      />
+                    </div>
                     <div id="sampleAppLayout" className="">
                       <img
                         src="https://imgur.com/UYUZl3Q.png"

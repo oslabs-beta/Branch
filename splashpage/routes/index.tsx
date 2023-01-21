@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>VS|Branch - Homepage</title>
+        <title>Branch - Homepage</title>
       </Head>
       <main>
         <Header></Header>
@@ -15,7 +15,7 @@ export default function Home() {
             <div className="w-[50%]">
               <p className="my-20 mx-10 text-justify text-lg">
                 FINALLY! A backend visualization solution for the Deno runtime
-                environment based within VS|Code has arrived. No more exporting
+                environment based within VSCode has arrived. No more exporting
                 your files to another website. No more flipping between screens.
                 Now you can see it all and do it all from one easy, familiar
                 location!
