@@ -1,13 +1,14 @@
 const vscode = require('vscode');
 const { spawn } = require('child_process');
 
+let PORT;
 const scrapedData = {};
 const METHODS = ['get', 'post', 'put', 'patch', 'delete'];
 // increment MAX_SCRAPES for every additional scrape required before formatting
 const MAX_SCRAPES = 8;
 let scrapeCount = 0;
 let treeData = {
-  name: `http://localhost:3000`,
+  name: '',
   parent: null,
   methods: [],
   reqParamRequired: false,
@@ -46,9 +47,18 @@ class RouteTree {
 
 const scrape = (cwd, method, webview) => {
   let result;
-  const rg = spawn('rg', [`(.${method}[(]['"][./])`, './'], {
-    cwd: cwd + '/server',
-  });
+  let rg;
+  // let regex = new RegExp((/(port *= *)..../i))
+  if (method === 'PORT' || method === 'listen') {
+    //FUTURE SELF: add a condition to search direction for 4 digit numbers or 3000/8080 specifically
+    rg = spawn('rg', [`(${method})`, './'], {
+      cwd: cwd + '/server',
+    });
+  } else {
+    rg = spawn('rg', [`(.${method}[(]['"][./])`, './'], {
+      cwd: cwd + '/server',
+    });
+  }
 
   rg.stdout.on('data', (data) => {
     result = data;
@@ -64,6 +74,7 @@ const scrape = (cwd, method, webview) => {
 
   rg.on('close', (code) => {
     scrapeCount++;
+    console.log(result.toString());
     console.log(`ripgrep: ${method} exited with code ${code}`);
     if (result) {
       scrapedData[method] = result.toString();
@@ -79,12 +90,29 @@ const scrape = (cwd, method, webview) => {
 // FORMAT - takes the raw scraped data and formats it into a usable structure
 //===============================
 
-// FIXME 
+// FIXME
 
 const format = (webview) => {
+  console.log('scraped DATA', scrapedData);
   // TODO First, filter through the 'require' statements, and map each router name to the path of the file.
   // Then, append the given routes to the root of treeData
   let routerPaths;
+  if (scrapedData['PORT']) {
+    const regex = /[0-9][0-9][0-9][0-9]/;
+    PORT = scrapedData['PORT'].match(regex);
+    PORT = Number(PORT[0]);
+    treeData.name = `http://localhost:${PORT}`;
+    delete scrapedData['PORT'];
+  }
+
+  if (scrapedData['listen']) {
+    const regex = /[0-9][0-9][0-9][0-9]/;
+    PORT = scrapedData['listen'].match(regex);
+    PORT = Number(PORT[0]);
+    treeData.name = `http://localhost:${PORT}`;
+    delete scrapedData['listen'];
+  }
+
   if (scrapedData['require'] && scrapedData['use']) {
     routerPaths = getRouterPaths(scrapedData['require'].split('\n'));
     delete scrapedData['require'];
@@ -95,66 +123,65 @@ const format = (webview) => {
 
   // TODO Finally, iterate through each method in scrapedData, and place it under its respective router
   /**
-    * REQUIREMENTS TO NOTE IN DOCS:
-    *  - Router files must be just one folder deep
-    *  - Files containing routes must end in .ts or .js
-    */
+   * REQUIREMENTS TO NOTE IN DOCS:
+   *  - Router files must be just one folder deep
+   *  - Files containing routes must end in .ts or .js
+   */
 
   for (const method in scrapedData) {
     scrapedData[method] = scrapedData[method].split('\n');
-    scrapedData[method] = scrapedData[method].forEach(
-      (route) => {
-        if (route === '') return;
-        // Slice the name of the route out of the full route string
-        /**Ex: '/:parkCode' */
-        const routeNameRegEx = new RegExp(`(?<=.${method}[(]').*(?=',)`);
-        let routeName = route.match(routeNameRegEx);
-        routeName = routeName ? routeName[0] : undefined;
+    scrapedData[method] = scrapedData[method].forEach((route) => {
+      if (route === '') return;
+      // Slice the name of the route out of the full route string
+      /**Ex: '/:parkCode' */
+      const routeNameRegEx = new RegExp(`(?<=.${method}[(]').*(?=',)`);
+      let routeName = route.match(routeNameRegEx);
+      routeName = routeName ? routeName[0] : undefined;
 
-        // Slice the file name out of the full route string
-        // matches any file name that is one folder deep and ends in .js or .ts
-        /**Ex: './routers/UserRouter.js'*/
-        let parentPath = route.match(/.\/.*\/.*(?=(\.[jt]s:))/);
-        parentPath = parentPath ? parentPath[0] : undefined;
-        console.log('routerPaths: ', routerPaths);
-        console.log('   > Comparing: ', parentPath);
-        if (Object.values(routerPaths).includes(parentPath)) {       
-          // match the file name to a specific router
-          // for every router
-          console.log(`${routeName}, ${method}: found router`);
-          for (const router of treeData.children) {
-            // check if the current route already exists under its parent router
-            if (routerPaths[router.name] === parentPath) {
-              let childExists = false;
-              for (const child of router.children) {
-                if (child.name === routeName) {
-                  childExists = true;
-                  child.methods.push(method);
-                  break;
-                }
-              }
-              if (!childExists) {
-                router.children.push({
-                  name: routeName,
-                  methods: [method],
-                  reqParamRequired: /('\/:)/.test(route),
-                  children: [],
-                  parent: router.name
-                });
+      // Slice the file name out of the full route string
+      // matches any file name that is one folder deep and ends in .js or .ts
+      /**Ex: './routers/UserRouter.js'*/
+      let parentPath = route.match(/.\/.*\/.*(?=(\.[jt]s:))/);
+      parentPath = parentPath ? parentPath[0] : undefined;
+      console.log('routerPaths: ', routerPaths);
+      console.log('   > Comparing: ', parentPath);
+      if (Object.values(routerPaths).includes(parentPath)) {
+        // match the file name to a specific router
+        // for every router
+        console.log(`${routeName}, ${method}: found router`);
+        for (const router of treeData.children) {
+          // check if the current route already exists under its parent router
+          if (routerPaths[router.name] === parentPath) {
+            let childExists = false;
+            for (const child of router.children) {
+              if (child.name === routeName) {
+                childExists = true;
+                child.methods.push(method);
+                break;
               }
             }
+            if (!childExists) {
+              router.children.push({
+                name: routeName,
+                methods: [method],
+                reqParamRequired: /('\/:)/.test(route),
+                children: [],
+                parent: router.name,
+              });
+            }
           }
-          // add the current method to that route's methods
-          // Check if route name has a colon at the beginning. If it does, set reqParam = true.
-        } else {
-          treeData.children.push({
-            name: routeName,
-            methods: [method.toUpperCase],
-            reqParamRequired: /('\/:)/.test(route),
-            children: [],
-            parent: treeData.name
-          });
         }
+        // add the current method to that route's methods
+        // Check if route name has a colon at the beginning. If it does, set reqParam = true.
+      } else {
+        treeData.children.push({
+          name: routeName,
+          methods: [method.toUpperCase],
+          reqParamRequired: /('\/:)/.test(route),
+          children: [],
+          parent: treeData.name,
+        });
+      }
     });
   }
 
@@ -166,8 +193,8 @@ const format = (webview) => {
           name: method,
           reqParamRequired: tree.reqParamRequired,
           methods: [method],
-          parent: tree.name
-        }); 
+          parent: tree.name,
+        });
       }
     }
   });
@@ -176,7 +203,7 @@ const format = (webview) => {
   console.log('TreeData to be sent to webview: ', treeData);
   webview.webview.postMessage(treeData);
   treeData = {
-    name: `http://localhost:3000`,
+    name: `http://localhost:${PORT}`,
     parent: null,
     reqParamRequired: false,
     children: [],
@@ -184,7 +211,7 @@ const format = (webview) => {
 };
 
 const depthFirstTraverse = (tree, fn) => {
-  if(tree.children !== []) {
+  if (tree.children !== []) {
     for (const child of tree.children) depthFirstTraverse(child, fn);
   }
   fn(tree);
@@ -192,7 +219,7 @@ const depthFirstTraverse = (tree, fn) => {
 
 const getRouterPaths = (routes) => {
   /**
-   * REQUIREMENTS TO NOTE IN DOCS: 
+   * REQUIREMENTS TO NOTE IN DOCS:
    *  - folder containing router files shouls start with 'r'
    *  - import statements must be defined as constants
    */
@@ -210,7 +237,6 @@ const getRouterPaths = (routes) => {
 
 const mapRoutesToRouterPaths = (routes, routerPaths) => {
   routes.forEach((route) => {
-    
     let routeName = route.match(/(?<=(use\(')).*(?=',)/);
     routeName = routeName ? routeName[0] : undefined;
     let routerName = route.match(/(?<=, ).*(?=\);)/);
@@ -224,7 +250,7 @@ const mapRoutesToRouterPaths = (routes, routerPaths) => {
         reqParamRequired: false,
         methods: [],
         parent: treeData.name,
-        children: []
+        children: [],
       });
     }
   });
@@ -239,14 +265,14 @@ const scraper = {};
 scraper.getRoutes = (webview) => {
   if (vscode.workspace.workspaceFolders) {
     const cwd = vscode.workspace.workspaceFolders[0].uri.path;
+    scrape(cwd, 'listen', webview);
+    scrape(cwd, 'PORT', webview);
+    scrape(cwd, 'require', webview);
     scrape(cwd, 'use', webview);
     scrape(cwd, 'get', webview);
     scrape(cwd, 'post', webview);
     scrape(cwd, 'delete', webview);
     scrape(cwd, 'put', webview);
-    scrape(cwd, 'patch', webview);
-    scrape(cwd, 'require', webview);
-    scrape(cwd, 'listen', webview);
   } else {
     console.error('No workspace directory found!');
   }

@@ -205,6 +205,7 @@ const displayTree = (treeData) => {
 
 // deno-lint-ignore no-window-prefix
 window.addEventListener('message', msg => {
+  console.log(msg.data)
   displayTree(msg.data)});
 // deno-lint-ignore no-window-prefix
 // window.addEventListener('message', (msg) => {
