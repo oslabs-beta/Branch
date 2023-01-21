@@ -55,13 +55,13 @@ export default function AboutPage() {
               </div>
               <div id="secret">
                 <a href="/spsull" className="text-white">
-                  X
+                  Easter Egg
                 </a>
               </div>
             </div>
             <div className="w-1/4 bg-white m-3 p-3 rounded-xl grid justify-items-center shadow-md">
               <img
-                src="https://i.imgur.com/1XXAny6.png"
+                src="https://imgur.com/Od6cI5p.png"
                 alt="Team Face"
                 className="max-w-[200px]"
               />
@@ -87,13 +87,13 @@ export default function AboutPage() {
               </div>
               <div id="secret">
                 <a href="/spbenj" className="text-white">
-                  X
+                  Easter Egg
                 </a>
               </div>
             </div>
             <div className="w-1/4 bg-white m-3 p-3 rounded-xl grid justify-items-center shadow-md">
               <img
-                src="https://i.imgur.com/1XXAny6.png"
+                src="https://imgur.com/Zy1xRqP.png"
                 alt="Team Face"
                 className="max-w-[200px]"
               />
@@ -101,14 +101,14 @@ export default function AboutPage() {
                 <p>
                   Zach Hall <br />
                   <a
-                    href="https://github.com/Zachh85"
+                    href="https://github.com/z-r-hall"
                     className="underline text-blue-700"
                   >
                     Github
                   </a>
                   <br />
                   <a
-                    href="https://github.com/SirGoatsalot"
+                    href="https://www.linkedin.com/in/z-r-hall/"
                     className="underline text-blue-700"
                   >
                     LinkedIn
@@ -119,7 +119,7 @@ export default function AboutPage() {
               </div>
               <div id="secret">
                 <a href="/sphall" className="text-white">
-                  X
+                  Easter Egg
                 </a>
               </div>
             </div>
@@ -151,7 +151,7 @@ export default function AboutPage() {
               </div>
               <div id="secret">
                 <a href="/spgold" className="text-white">
-                  X
+                  Easter Egg
                 </a>
               </div>
             </div>
