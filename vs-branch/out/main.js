@@ -63,6 +63,7 @@ var displayTree = (treeData) => {
   }
 };
 window.addEventListener("message", (msg) => {
+  console.log(msg.data);
   displayTree(msg.data);
 });
 var pathStr = "";
