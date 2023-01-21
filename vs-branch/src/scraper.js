@@ -9,6 +9,7 @@ let scrapeCount = 0;
 let treeData = {
   name: `http://localhost:3000`,
   parent: null,
+  methods: [],
   reqParamRequired: false,
   children: [],
 };
@@ -78,6 +79,8 @@ const scrape = (cwd, method, webview) => {
 // FORMAT - takes the raw scraped data and formats it into a usable structure
 //===============================
 
+// FIXME 
+
 const format = (webview) => {
   // TODO First, filter through the 'require' statements, and map each router name to the path of the file.
   // Then, append the given routes to the root of treeData
@@ -86,7 +89,7 @@ const format = (webview) => {
     routerPaths = getRouterPaths(scrapedData['require'].split('\n'));
     delete scrapedData['require'];
     // TODO Second, filter through the 'use' statements, appending each route as a child to the parent route in treeData
-    formatRouters(scrapedData['use'].split('\n'), routerPaths);
+    mapRoutesToRouterPaths(scrapedData['use'].split('\n'), routerPaths);
     delete scrapedData['use'];
   }
 
@@ -146,7 +149,7 @@ const format = (webview) => {
         } else {
           treeData.children.push({
             name: routeName,
-            methods: [method],
+            methods: [method.toUpperCase],
             reqParamRequired: /('\/:)/.test(route),
             children: [],
             parent: treeData.name
@@ -154,6 +157,21 @@ const format = (webview) => {
         }
     });
   }
+
+  depthFirstTraverse(treeData, (tree) => {
+    if (tree.methods !== []) {
+      // console.log(`${tree.name} methods: ${tree.methods}`);
+      for (const method of tree.methods) {
+        tree.children.push({
+          name: method,
+          reqParamRequired: tree.reqParamRequired,
+          methods: [method],
+          parent: tree.name
+        }); 
+      }
+    }
+  });
+
   // Send the final formatted data to the webview.
   console.log('TreeData to be sent to webview: ', treeData);
   webview.webview.postMessage(treeData);
@@ -163,6 +181,13 @@ const format = (webview) => {
     reqParamRequired: false,
     children: [],
   };
+};
+
+const depthFirstTraverse = (tree, fn) => {
+  if(tree.children !== []) {
+    for (const child of tree.children) depthFirstTraverse(child, fn);
+  }
+  fn(tree);
 };
 
 const getRouterPaths = (routes) => {
@@ -183,7 +208,7 @@ const getRouterPaths = (routes) => {
   return routerPaths;
 };
 
-const formatRouters= (routes, routerPaths) => {
+const mapRoutesToRouterPaths = (routes, routerPaths) => {
   routes.forEach((route) => {
     
     let routeName = route.match(/(?<=(use\(')).*(?=',)/);
@@ -197,7 +222,7 @@ const formatRouters= (routes, routerPaths) => {
       treeData.children.push({
         name: routeName,
         reqParamRequired: false,
-        methods: null,
+        methods: [],
         parent: treeData.name,
         children: []
       });
