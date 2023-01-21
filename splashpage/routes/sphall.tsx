@@ -17,7 +17,7 @@ export default function AboutPage() {
   return (
     <>
       <head>
-        <title>VS|Branch - Hall</title>
+        <title>Branch - Hall</title>
       </head>
       <main>
         <Header></Header>

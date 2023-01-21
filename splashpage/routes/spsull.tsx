@@ -17,7 +17,7 @@ export default function AboutPage() {
   return (
     <>
       <head>
-        <title>VS|Branch - Sullivan</title>
+        <title>Branch - Sullivan</title>
       </head>
       <main>
         <Header></Header>
