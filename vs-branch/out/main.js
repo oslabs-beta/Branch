@@ -1,68 +1,9 @@
 // src/main.js
-var treeData = {
-  name: "http://localhost:3000",
-  parent: null,
-  children: [
-    {
-      name: "/chore",
-      parent: "http://localhost:3000",
-      children: [
-        {
-          name: "/",
-          method: ["GET, POST", "DELETE", "PUT"],
-          parent: "router1",
-          children: [
-            {
-              name: "GET",
-              method: ["GET"],
-              parent: "router1",
-              reqParamRequired: "true",
-              children: null
-            },
-            {
-              name: "POST",
-              method: ["POST"],
-              parent: "router1",
-              reqParamRequired: "false",
-              children: null
-            },
-            {
-              name: "DELETE",
-              method: ["DELETE"],
-              parent: "router1",
-              reqParamRequired: "true",
-              children: null
-            },
-            {
-              name: "PUT",
-              method: ["PUT"],
-              parent: "router1",
-              reqParamRequired: "true",
-              children: null
-            }
-          ]
-        },
-        {
-          name: "/pasta",
-          method: ["POST"],
-          parent: "router1",
-          children: null
-        }
-      ]
-    },
-    {
-      name: "/",
-      method: ["GET", "POST"],
-      children: null,
-      parent: "http://localhost:3000"
-    }
-  ]
-};
-var displayTree = (treeData2) => {
+var displayTree = (treeData) => {
   const margin = { top: 20, right: 120, bottom: 20, left: 175 }, width = 800 - margin.right - margin.left, height = 400 - margin.top - margin.bottom;
   let i = 0;
   const duration = 750;
-  const root = treeData2;
+  const root = treeData;
   const tree = d3.layout.tree().size([height, width]);
   const diagonal = d3.svg.diagonal().projection(function(d) {
     return [d.y, d.x];
@@ -122,10 +63,11 @@ var displayTree = (treeData2) => {
   }
 };
 window.addEventListener("message", (msg) => {
-  displayTree(treeData);
+  displayTree(msg.data);
 });
 var pathStr = "";
 function click(d, node) {
+  console.log(d);
   const required = document.querySelector(".required");
   const get = document.querySelector(".get");
   const post = document.querySelector(".post");
@@ -134,7 +76,8 @@ function click(d, node) {
   const delete1 = document.querySelector(".delete");
   const key = document.querySelector("#key");
   const value = document.querySelector("#value");
-  if (d.method[0] === "GET") {
+  const string = d.methods[0].toLowerCase();
+  if (string === "get") {
     required.innerText = "";
     get.style.backgroundColor = "red";
     url.style.borderColor = "red";
@@ -144,7 +87,7 @@ function click(d, node) {
     delete1.style.backgroundColor = "#eee5d5";
     post.style.backgroundColor = "#eee5d5";
   }
-  if (d.method[0] === "POST") {
+  if (string === "post") {
     url.value = "";
     required.innerText = "";
     post.style.backgroundColor = "red";
@@ -155,7 +98,7 @@ function click(d, node) {
     url.style.borderColor = "#b7c5b7";
     delete1.style.backgroundColor = "#eee5d5";
   }
-  if (d.method[0] === "PUT") {
+  if (string === "put") {
     required.innerText = "";
     put2.style.backgroundColor = "red";
     key.style.borderColor = "red";
@@ -165,7 +108,7 @@ function click(d, node) {
     get.style.backgroundColor = "#eee5d5";
     post.style.backgroundColor = "#eee5d5";
   }
-  if (d.method[0] === "DELETE") {
+  if (string === "delete") {
     required.innerText = "";
     delete1.style.backgroundColor = "red";
     url.style.borderColor = "red";
@@ -178,7 +121,7 @@ function click(d, node) {
   pathStr = "";
   const input = document.querySelector("#url");
   input.value = "";
-  if (d.method) {
+  if (d.methods.length > 0) {
     const fullPath = [];
     const tempD = structuredClone(d);
     while (tempD.parent) {
@@ -191,12 +134,12 @@ function click(d, node) {
       }
     }
   }
-  if (d.reqParamRequired && d.method[0] !== "POST") {
+  if (d.reqParamRequired && d.methods[0] !== "post") {
     input.value = pathStr + ":ENTER PARAM ID HERE";
   } else {
     input.value = pathStr;
   }
-  if (d.method[0] === "GET" && d.reqParamRequired === false) {
+  if (d.methods[0] === "get" && d.reqParamRequired === false) {
     fetch(pathStr).then((data) => data.json()).then((data) => {
       data = JSON.stringify(data);
       codemirror.getDoc().setValue(data);

@@ -175,6 +175,12 @@ const format = (webview) => {
   // Send the final formatted data to the webview.
   console.log('TreeData to be sent to webview: ', treeData);
   webview.webview.postMessage(treeData);
+  treeData = {
+    name: `http://localhost:3000`,
+    parent: null,
+    reqParamRequired: false,
+    children: [],
+  };
 };
 
 const depthFirstTraverse = (tree, fn) => {
