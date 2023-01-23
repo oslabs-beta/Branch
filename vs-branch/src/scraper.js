@@ -116,8 +116,11 @@ const format = (webview) => {
   if (scrapedData['require'] && scrapedData['use']) {
     routerPaths = getRouterPaths(scrapedData['require'].split('\n'));
     delete scrapedData['require'];
+
     // TODO Second, filter through the 'use' statements, appending each route as a child to the parent route in treeData
-    mapRoutesToRouterPaths(scrapedData['use'].split('\n'), routerPaths);
+    if (routerPaths !== undefined) {
+      mapRoutesToRouterPaths(scrapedData['use'].split('\n'), routerPaths);
+    }
     delete scrapedData['use'];
   }
 
@@ -145,7 +148,7 @@ const format = (webview) => {
       parentPath = parentPath ? parentPath[0] : undefined;
       console.log('routerPaths: ', routerPaths);
       console.log('   > Comparing: ', parentPath);
-      if (Object.values(routerPaths).includes(parentPath)) {
+      if (routerPaths !== undefined && Object.values(routerPaths).includes(parentPath)) {
         // match the file name to a specific router
         // for every router
         console.log(`${routeName}, ${method}: found router`);
