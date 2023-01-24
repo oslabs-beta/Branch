@@ -67,8 +67,8 @@ body {
 .input input {
   border-radius: 0.5rem;
   margin-right: 1rem;
-  background-color: var(--vscode-editor-selectionBackground);
-  color: var(--vscode-textPreformat-foreground);
+  background-color: var(--vscode-input-background);
+  color: var(--vscode-input-foreground);
 }
 
 .input button {
