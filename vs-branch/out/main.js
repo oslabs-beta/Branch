@@ -68,11 +68,10 @@ window.addEventListener("message", (msg) => {
 });
 var pathStr = "";
 function click(d, node) {
-  console.log(d);
   const required = document.querySelector(".required");
   const get = document.querySelector(".get");
   const post = document.querySelector(".post");
-  const url = document.querySelector("#url");
+  const url2 = document.querySelector("#url");
   const put2 = document.querySelector(".put");
   const delete1 = document.querySelector(".delete");
   const key = document.querySelector("#key");
@@ -80,44 +79,46 @@ function click(d, node) {
   const string = d.methods[0].toLowerCase();
   if (string === "get") {
     required.innerText = "";
-    get.style.backgroundColor = "red";
-    url.style.borderColor = "red";
-    put2.style.backgroundColor = "#eee5d5";
+    if (d.reqParamRequired) {
+      get.style.backgroundColor = "red";
+      url2.style.borderColor = "red";
+    }
+    put2.style.backgroundColor = "var(--vscode-extensionButton-prominentBackground)";
     key.style.borderColor = "#b7c5b7";
     value.style.borderColor = "#b7c5b7";
-    delete1.style.backgroundColor = "#eee5d5";
-    post.style.backgroundColor = "#eee5d5";
+    delete1.style.backgroundColor = "var(--vscode-extensionButton-prominentBackground)";
+    post.style.backgroundColor = "var(--vscode-extensionButton-prominentBackground)";
   }
   if (string === "post") {
-    url.value = "";
+    url2.value = "";
     required.innerText = "";
     post.style.backgroundColor = "red";
     key.style.borderColor = "red";
     value.style.borderColor = "red";
-    put2.style.backgroundColor = "#eee5d5";
-    get.style.backgroundColor = "#eee5d5";
-    url.style.borderColor = "#b7c5b7";
-    delete1.style.backgroundColor = "#eee5d5";
+    put2.style.backgroundColor = "var(--vscode-extensionButton-prominentBackground)";
+    get.style.backgroundColor = "var(--vscode-extensionButton-prominentBackground)";
+    url2.style.borderColor = "#b7c5b7";
+    delete1.style.backgroundColor = "var(--vscode-extensionButton-prominentBackground)";
   }
   if (string === "put") {
     required.innerText = "";
     put2.style.backgroundColor = "red";
     key.style.borderColor = "red";
     value.style.borderColor = "red";
-    url.style.borderColor = "red";
-    delete1.style.backgroundColor = "#eee5d5";
-    get.style.backgroundColor = "#eee5d5";
-    post.style.backgroundColor = "#eee5d5";
+    url2.style.borderColor = "red";
+    delete1.style.backgroundColor = "var(--vscode-extensionButton-prominentBackground)";
+    get.style.backgroundColor = "var(--vscode-extensionButton-prominentBackground)";
+    post.style.backgroundColor = "var(--vscode-extensionButton-prominentBackground)";
   }
   if (string === "delete") {
     required.innerText = "";
     delete1.style.backgroundColor = "red";
-    url.style.borderColor = "red";
-    put2.style.backgroundColor = "#eee5d5";
+    url2.style.borderColor = "red";
+    put2.style.backgroundColor = "var(--vscode-extensionButton-prominentBackground)";
     key.style.borderColor = "#b7c5b7";
     value.style.borderColor = "#b7c5b7";
-    get.style.backgroundColor = "#eee5d5";
-    post.style.backgroundColor = "#eee5d5";
+    get.style.backgroundColor = "var(--vscode-extensionButton-prominentBackground)";
+    post.style.backgroundColor = "var(--vscode-extensionButton-prominentBackground)";
   }
   pathStr = "";
   const input = document.querySelector("#url");
@@ -135,11 +136,7 @@ function click(d, node) {
       }
     }
   }
-  if (d.reqParamRequired && d.methods[0] !== "post") {
-    input.value = pathStr + ":ENTER PARAM ID HERE";
-  } else {
-    input.value = pathStr;
-  }
+  input.value = pathStr;
   if (d.methods[0] === "get" && d.reqParamRequired === false) {
     fetch(pathStr).then((data) => data.json()).then((data) => {
       data = JSON.stringify(data);
@@ -157,6 +154,9 @@ function click(d, node) {
 }
 var bodyObj = {};
 function checkRoute() {
+  document.querySelector(".post").style.backgroundColor = "var(--vscode-extensionButton-prominentBackground)";
+  document.getElementById("key").style.borderColor = "#b7c5b7";
+  document.getElementById("value").style.borderColor = "#b7c5b7";
   const key = document.getElementById("key").value;
   document.getElementById("key").value = "";
   const value = document.getElementById("value").value;
@@ -187,7 +187,8 @@ var addParams = () => {
   document.querySelector(".reqObj").innerText = JSON.stringify(bodyObj);
 };
 var checkParam = () => {
-  document.querySelector(".get").style.backgroundColor = "#eee5d5";
+  document.querySelector(".get").style.backgroundColor = "var(--vscode-extensionButton-prominentBackground)";
+  document.querySelector("#url").style.borderColor = "#b7c5b7";
   const urlPath = document.querySelector("#url").value;
   fetch(urlPath).then((data) => data.json()).then((data) => {
     data = JSON.stringify(data);
@@ -196,10 +197,10 @@ var checkParam = () => {
 };
 var statusInfo = {};
 function deleteItem() {
-  document.querySelector(".delete").style.backgroundColor = "#eee5d5";
+  document.querySelector(".delete").style.backgroundColor = "var(--vscode-extensionButton-prominentBackground)";
   document.querySelector("#url").style.borderColor = "#b7c5b7";
   const urlPath = document.querySelector("#url").value;
-  document.getElementById("url").value = "";
+  url.value = "";
   fetch(urlPath, {
     method: "DELETE",
     headers: {
@@ -210,27 +211,6 @@ function deleteItem() {
     statusInfo["status"] = data.statusText;
     data = JSON.stringify(statusInfo);
     codemirror.getDoc().setValue(data);
-  });
-}
-function put() {
-  document.querySelector(".put").style.backgroundColor = "#eee5d5";
-  document.querySelector("#key").style.borderColor = "#b7c5b7";
-  document.querySelector("#value").style.borderColor = "#b7c5b7";
-  document.querySelector("#url").style.borderColor = "#b7c5b7";
-  const urlPath = document.querySelector("#url").value;
-  document.getElementById("key").value = "";
-  document.getElementById("value").value = "";
-  fetch(urlPath, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(bodyObj)
-  }).then((data) => {
-    statusInfo["status code"] = data.status;
-    statusInfo["status"] = data.statusText;
-    data = JSON.stringify(statusInfo);
-    codemirror.getDoc().setValue(status);
   });
 }
 var deleteReqBody = () => {
