@@ -74,7 +74,6 @@ const scrape = (cwd, method, webview) => {
 
   rg.on('close', (code) => {
     scrapeCount++;
-    console.log(result.toString());
     console.log(`ripgrep: ${method} exited with code ${code}`);
     if (result) {
       scrapedData[method] = result.toString();
@@ -93,19 +92,21 @@ const scrape = (cwd, method, webview) => {
 // FIXME
 
 const format = (webview) => {
-  console.log('scraped DATA', scrapedData);
   // TODO First, filter through the 'require' statements, and map each router name to the path of the file.
   // Then, append the given routes to the root of treeData
+  console.table(scrapedData);
   let routerPaths;
+  let portFound = false;
   if (scrapedData['PORT']) {
     const regex = /[0-9][0-9][0-9][0-9]/;
     PORT = scrapedData['PORT'].match(regex);
     PORT = Number(PORT[0]);
     treeData.name = `http://localhost:${PORT}`;
     delete scrapedData['PORT'];
+    portFound = true;
   }
 
-  if (scrapedData['listen']) {
+  if (!portFound && scrapedData['listen']) {
     const regex = /[0-9][0-9][0-9][0-9]/;
     PORT = scrapedData['listen'].match(regex);
     PORT = Number(PORT[0]);
@@ -116,8 +117,11 @@ const format = (webview) => {
   if (scrapedData['require'] && scrapedData['use']) {
     routerPaths = getRouterPaths(scrapedData['require'].split('\n'));
     delete scrapedData['require'];
+
     // TODO Second, filter through the 'use' statements, appending each route as a child to the parent route in treeData
-    mapRoutesToRouterPaths(scrapedData['use'].split('\n'), routerPaths);
+    if (routerPaths !== undefined) {
+      mapRoutesToRouterPaths(scrapedData['use'].split('\n'), routerPaths);
+    }
     delete scrapedData['use'];
   }
 
@@ -143,12 +147,9 @@ const format = (webview) => {
       /**Ex: './routers/UserRouter.js'*/
       let parentPath = route.match(/.\/.*\/.*(?=(\.[jt]s:))/);
       parentPath = parentPath ? parentPath[0] : undefined;
-      console.log('routerPaths: ', routerPaths);
-      console.log('   > Comparing: ', parentPath);
-      if (Object.values(routerPaths).includes(parentPath)) {
+      if (routerPaths !== undefined && Object.values(routerPaths).includes(parentPath)) {
         // match the file name to a specific router
         // for every router
-        console.log(`${routeName}, ${method}: found router`);
         for (const router of treeData.children) {
           // check if the current route already exists under its parent router
           if (routerPaths[router.name] === parentPath) {

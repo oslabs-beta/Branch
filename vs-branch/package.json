@@ -1,14 +1,23 @@
 {
-  "name": "test-branch",
-  "displayName": "test-branch",
-  "description": "",
+  "name": "branch",
+  "displayName": "Branch",
+  "publisher": "Branch",
+  "description": "A tree visualizer and tester for server routes in Oak/Express",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.74.0"
   },
   "categories": [
-    "Other"
+    "Other", "Visualization", "Testing"
   ],
+  "galleryBanner": {
+    "color": "#eee5d5"
+  },
+  "icon": "images/branch-logo-square.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oslabs-beta/Branch"
+  },
   "activationEvents": [
     "onCommand:branch.start"
   ],
