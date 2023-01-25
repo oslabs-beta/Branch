@@ -1,19 +1,38 @@
+//================================
+// Header Island - included on all webpages
+//================================
+
+//================================
+// Imports
+//================================
+
+// NO IMPORTS NECESSARY
+
+//================================
+// Header Island HTML & Tailwind CSS
+//================================
+
 export default function Header() {
   return (
     <>
-      <header className=" fixed top-0 bg-light-green w-[100%] h-17">
+      <header className=" fixed top-0 bg-light-green w-[100%] h-17 z-10">
         <div className="flex flex-row max-w-[100%]">
-          <div className="w-1/8">
+          <div className="w-[1500px] flex">
             <a href="/">
               <img
-                className="max-w-[70px]"
-                src="https://imgur.com/sZRTCcz.png"
+                className="max-w-[60px] ml-5 mt-2"
+                src="https://imgur.com/h7zmDfS.png"
                 alt="logoHolder"
               ></img>
             </a>
+            <img
+              className="h-[40px] ml-1 my-3"
+              src="https://imgur.com/aFx2uY8.png"
+              alt="logoHolder"
+            ></img>
           </div>
           <div className="w-1/2 text-left text-5xl">
-            <p className="text-green mt-2 ml-[10px]">VS|Branch</p>
+            <p className="text-green mt-2 ml-[40px]"></p>
           </div>
           <div className="w-1/2 flex justify-end">
             <div className="my-auto">
@@ -31,7 +50,7 @@ export default function Header() {
               </a>
             </div>
             <div className="self-end my-auto ml-5 mr-10">
-              <a className="" href="https://github.com/oslabs-beta/VS-Branch">
+              <a className="" href="https://github.com/oslabs-beta/Branch">
                 <img
                   className="max-w-[30px]"
                   src="https://imgur.com/Eq4BPYR.png"

@@ -1,13 +1,26 @@
+//================================
+// About Page - Information about the team (includes 4 easteregg links)
+//================================
+
+//================================
+// Imports
+//================================
 import { PageProps } from '$fresh/server.ts';
 import Header from '../islands/Header.tsx';
 import Footer from '../islands/Footer.tsx';
+import { Head } from '$fresh/runtime.ts';
+
+//================================
+// About Page HTML & Tailwind CSS
+//================================
 
 export default function AboutPage() {
   return (
     <>
-      <head>
-        <title>VS|Branch - About Us</title>
-      </head>
+      <Head>
+        <title>Branch - About Us</title>
+        <link rel="shortcut icon" href="https://imgur.com/SJ36zku.png" />
+      </Head>
       <main>
         <Header></Header>
         <div className="bg-off-white h-screen">
