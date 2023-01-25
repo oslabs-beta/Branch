@@ -58,31 +58,31 @@ export default function Home() {
             </div>
             <div className="w-[50%]">
               <img
-                className="max-w-[75%] mx-auto mt-10 rounded-xl"
-                src="https://yaobinouyang.gallerycdn.vsassets.io/extensions/yaobinouyang/codeatlas/1.3.34/1635120555850/273052/1/main.png"
-                alt="Placeholer Image"
+                className="max-w-[75%] mx-auto mt-10 "
+                src="https://imgur.com/znZpn2Z.png"
+                alt="Sample VSCode view with branch"
               />
             </div>
           </div>
           <div id="supportedEnvironments" className="h-1/2 flex bg-off-white2">
             <div className="w-[50%] ">
               <img
-                className="w-[200px] position: absolute top-[550px] left-[60px] z-0"
+                className="w-[200px] position: absolute top-[500px] left-[60px] z-0"
                 src="https://upload.wikimedia.org/wikipedia/commons/8/84/Deno.svg"
                 alt="Deno Logo"
               />
               <img
-                className="w-[200px] position: absolute top-[730px] left-[350px] z-0"
+                className="w-[200px] position: absolute top-[680px] left-[350px] z-0"
                 src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg"
                 alt="Node.js Logo"
               />
               <img
-                className="w-[150px] position: absolute top-[580px] left-[250px] z-0"
+                className="w-[150px] position: absolute top-[530px] left-[250px] z-0"
                 src="https://imgur.com/DE6JfVw.png"
                 alt="Check Mark for Deno"
               />
               <img
-                className="w-[150px] position: absolute top-[710px] left-[560px] z-0"
+                className="w-[150px] position: absolute top-[660px] left-[560px] z-0"
                 src="https://imgur.com/DE6JfVw.png"
                 alt="Check Mark for Node"
               />
