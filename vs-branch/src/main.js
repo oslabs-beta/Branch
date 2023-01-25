@@ -205,6 +205,7 @@ const displayTree = (treeData) => {
 
 // deno-lint-ignore no-window-prefix
 window.addEventListener('message', msg => {
+  console.log(msg.data)
   displayTree(msg.data)});
 // deno-lint-ignore no-window-prefix
 // window.addEventListener('message', (msg) => {
@@ -213,35 +214,36 @@ window.addEventListener('message', msg => {
 
 //string that we will use to build/rebuild our path
 let pathStr = '';
+
 // Event handler for clicking a node
 function click(d, node) {
-  console.log(d)
+
   //saving html elements into variables for easier access
-  const required = document.querySelector('.required');
-  const get = document.querySelector('.get');
-  const post = document.querySelector('.post');
-  const url = document.querySelector('#url');
-  const put = document.querySelector('.put');
-  const delete1 = document.querySelector('.delete');
-  const key = document.querySelector('#key');
-  const value = document.querySelector('#value');
-
-
-
+const required = document.querySelector('.required');
+const get = document.querySelector('.get');
+const post = document.querySelector('.post');
+const url = document.querySelector('#url');
+const put = document.querySelector('.put');
+const delete1 = document.querySelector('.delete');
+const key = document.querySelector('#key');
+const value = document.querySelector('#value');
+  
   /*highlight the required fields based on the request type and 
   ensure that all non-required fields are changed back to their original color*/
   const string = d.methods[0].toLowerCase();
   if (string === 'get') {
     //required fields 
     required.innerText = '';
+    if(d.reqParamRequired) {
     get.style.backgroundColor = 'red';
     url.style.borderColor = 'red';
+    }
     //unnecessary fields
-    put.style.backgroundColor = '#eee5d5';
+    put.style.backgroundColor = 'var(--vscode-extensionButton-prominentBackground)';
     key.style.borderColor = '#b7c5b7';
     value.style.borderColor = '#b7c5b7';
-    delete1.style.backgroundColor = '#eee5d5';
-    post.style.backgroundColor = '#eee5d5';
+    delete1.style.backgroundColor = 'var(--vscode-extensionButton-prominentBackground)';
+    post.style.backgroundColor = 'var(--vscode-extensionButton-prominentBackground)';
     // document.querySelector('.addParam').style.backgroundColor = '#eee5d5';
   }
   if (string === 'post') {
@@ -252,10 +254,10 @@ function click(d, node) {
     value.style.borderColor = 'red';
     // document.querySelector('.addParam').style.backgroundColor = 'red'
 
-    put.style.backgroundColor = '#eee5d5';
-    get.style.backgroundColor = '#eee5d5';
+    put.style.backgroundColor = 'var(--vscode-extensionButton-prominentBackground)';
+    get.style.backgroundColor = 'var(--vscode-extensionButton-prominentBackground)';
     url.style.borderColor = '#b7c5b7';
-    delete1.style.backgroundColor = '#eee5d5';
+    delete1.style.backgroundColor = 'var(--vscode-extensionButton-prominentBackground)';
   }
   if (string === 'put') {
     required.innerText = '';
@@ -265,20 +267,20 @@ function click(d, node) {
     url.style.borderColor = 'red';
     // document.querySelector('.addParam').style.backgroundColor = 'red'
 
-    delete1.style.backgroundColor = '#eee5d5';
-    get.style.backgroundColor = '#eee5d5';
-    post.style.backgroundColor = '#eee5d5';
+    delete1.style.backgroundColor = 'var(--vscode-extensionButton-prominentBackground)';
+    get.style.backgroundColor = 'var(--vscode-extensionButton-prominentBackground)';
+    post.style.backgroundColor = 'var(--vscode-extensionButton-prominentBackground)';
   }
   if (string === 'delete') {
     required.innerText = '';
     delete1.style.backgroundColor = 'red';
     url.style.borderColor = 'red';
 
-    put.style.backgroundColor = '#eee5d5';
+    put.style.backgroundColor = 'var(--vscode-extensionButton-prominentBackground)';
     key.style.borderColor = '#b7c5b7';
     value.style.borderColor = '#b7c5b7';
-    get.style.backgroundColor = '#eee5d5';
-    post.style.backgroundColor = '#eee5d5';
+    get.style.backgroundColor = 'var(--vscode-extensionButton-prominentBackground)';
+    post.style.backgroundColor = 'var(--vscode-extensionButton-prominentBackground)';
     // document.querySelector('.addParam').style.backgroundColor = '#eee5d5';
   }
 
@@ -305,11 +307,12 @@ function click(d, node) {
     }
   }
   //if a param is required - generate the urlpath and add instructions then populate the url input
-  if (d.reqParamRequired && d.methods[0] !== 'post') {
-    input.value = pathStr + ':ENTER PARAM ID HERE';
-  } else {
-    input.value = pathStr;
-  }
+  // if (d.reqParamRequired && d.methods[0] !== 'post') {
+  //   input.value = pathStr + ':ENTER PARAM ID HERE';
+  // } else {
+  //   input.value = pathStr;
+  // }
+  input.value = pathStr;
 
   //if there is no param required for the GET request, fetch all 
   if (d.methods[0] === 'get' && d.reqParamRequired === false) {
@@ -337,6 +340,9 @@ let bodyObj = {};
 
 //click handler to be used for checking POST request routes
 function checkRoute() {
+  document.querySelector('.post').style.backgroundColor = 'var(--vscode-extensionButton-prominentBackground)'
+  document.getElementById('key').style.borderColor = '#b7c5b7';
+  document.getElementById('value').style.borderColor = '#b7c5b7';
   const key = document.getElementById('key').value;
   document.getElementById('key').value = '';
   const value = document.getElementById('value').value;
@@ -373,7 +379,8 @@ const addParams = () => {
 
 //click handler to be used for GET requests
 const checkParam = () => {
-  document.querySelector('.get').style.backgroundColor = '#eee5d5';
+  document.querySelector('.get').style.backgroundColor = 'var(--vscode-extensionButton-prominentBackground)';
+  document.querySelector('#url').style.borderColor = '#b7c5b7';
   const urlPath = document.querySelector('#url').value;
   fetch(urlPath)
     .then((data) => data.json())
@@ -387,10 +394,10 @@ const checkParam = () => {
 const statusInfo = {};
 //click handler to be used for delete requests
 function deleteItem() {
-  document.querySelector('.delete').style.backgroundColor = '#eee5d5';
+  document.querySelector('.delete').style.backgroundColor = 'var(--vscode-extensionButton-prominentBackground)';
   document.querySelector('#url').style.borderColor = '#b7c5b7';
   const urlPath = document.querySelector('#url').value;
-  document.getElementById('url').value = '';
+  url.value = '';
 
   fetch(urlPath, {
     method: 'DELETE',
@@ -409,8 +416,8 @@ function deleteItem() {
 }
 
 //click handler to be used for PUT requests
-function put() {
-  document.querySelector('.put').style.backgroundColor = '#eee5d5';
+function put1() {
+  document.querySelector('.put').style.backgroundColor = 'var(--vscode-extensionButton-prominentBackground)';
   document.querySelector('#key').style.borderColor = '#b7c5b7';
   document.querySelector('#value').style.borderColor = '#b7c5b7';
   document.querySelector('#url').style.borderColor = '#b7c5b7';
@@ -428,7 +435,7 @@ function put() {
     statusInfo['status code'] = data.status;
     statusInfo['status'] = data.statusText;
     data = JSON.stringify(statusInfo);
-    codemirror.getDoc().setValue(status);
+    codemirror.getDoc().setValue(data);
   });
 }
 

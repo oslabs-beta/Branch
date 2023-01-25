@@ -1,13 +1,26 @@
+//================================
+// Easter Egg Page - Chase Benjamin
+//================================
+
+//================================
+// Imports
+//================================
 import { PageProps } from '$fresh/server.ts';
 import Header from '../islands/Header.tsx';
 import Footer from '../islands/Footer.tsx';
+import { Head } from '$fresh/runtime.ts';
+
+//================================
+// Easter Egg HTML & Tailwind CSS
+//================================
 
 export default function AboutPage() {
   return (
     <>
-      <head>
-        <title>VS|Branch - Benjamin</title>
-      </head>
+      <Head>
+        <title>Branch - Benjamin</title>
+        <link rel="shortcut icon" href="https://imgur.com/SJ36zku.png" />
+      </Head>
       <main>
         <Header></Header>
         <div className="bg-off-white h-screen">
