@@ -90,7 +90,7 @@ function getWebViewContent(jsSrc, cssSrc) {
 			<input id="value" />
 			<button class"addParam" onclick="addParams()">Add to Body</button>
 			<button class="post" onclick="checkRoute()">POST</button>
-			<button class="put" onclick="put()">PUT</button>
+			<button class="put" onclick="put1()">PUT</button>
 			<div class="required"></div>
 		</div>
 		<div class="reqBody" id="reqBody">
