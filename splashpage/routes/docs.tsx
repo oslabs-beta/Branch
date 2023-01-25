@@ -1,16 +1,26 @@
+//================================
+// Documentation Page
+//================================
+
+//================================
+// Imports
+//================================
 import { PageProps } from '$fresh/server.ts';
 import Header from '../islands/Header.tsx';
 import Footer from '../islands/Footer.tsx';
+import { Head } from '$fresh/runtime.ts';
+
+//================================
+// Docs Page HTML & Tailwind CSS
+//================================
 
 export default function AboutPage() {
   return (
     <>
-      <head>
-        <title>VS|Branch - Documentation</title>
-        {/* <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@100&display=swap"> */}
-      </head>
+      <Head>
+        <title>Branch - Documentation</title>
+        <link rel="shortcut icon" href="https://imgur.com/SJ36zku.png" />
+      </Head>
       <main>
         <Header></Header>
         <div className="bg-off-white h-full flex fixed z-[-10]">
@@ -37,6 +47,10 @@ export default function AboutPage() {
                 Instructions
               </a>
               <br />
+              <a className="ml-4 text-link" href="#troubleshooting">
+                Troubleshooting
+              </a>
+              <br />
               <a className="ml-4 text-link" href="#chocoCake">
                 Chocolate Cake Recipe
               </a>
@@ -49,10 +63,12 @@ export default function AboutPage() {
               />
             </div>
           </div>
-
           <div id="body" className="h-full">
             <div id="spacer" className="w-full p-[50px]"></div>
-            <div id="scrollOption" className="h-full overflow-scroll">
+            <div
+              id="scrollOption"
+              className="h-full overflow-y-scroll overflow-x-hidden"
+            >
               <div id="documentationHeader" className="flex justify-center ">
                 <img
                   className="max-w-[90px] max-h-[50px] self-center mt-[20px]"
@@ -72,27 +88,27 @@ export default function AboutPage() {
                 <h2 className="text-2xl text-green" id="overview">
                   Overview
                 </h2>
-                <p className="m-4">
-                  VS|Branch is an extension for VSCode which allows developers
-                  to view and test their backend routes within express and/or
-                  oak.
-                </p>
+                <h3 className="m-4 mr-40 font-medium">
+                  Branch is an extension for VSCode which allows developers to
+                  view and test their backend routes within Express or Oak
+                  frameworks.
+                </h3>
                 <br />
                 <p className="ml-4">
-                  VS|Branch functions best when conventional syntax standards
-                  and best practices are used. This includes:
+                  Branch functions best when conventional syntax standards and
+                  best practices are used. This includes:
                 </p>
                 <br />
                 <ul className="list-square">
                   <li className="ml-10">
-                    Saving all server files inside a server directory.
+                    Saving all server files inside a server directory
                   </li>
                   <li className="ml-10">
                     Saving port number in a port variable. Alternatively, you
-                    can use port 3000 or 8080 directly.
+                    can use port 3000 or 8080 directly
                   </li>
                   <li className="ml-10">
-                    Using traditional routes (get, post, put, delete)
+                    Using traditional routes (GET, POST, PUT, DELETE)
                   </li>
                 </ul>
               </div>
@@ -101,52 +117,124 @@ export default function AboutPage() {
                   Installation
                 </h2>
                 <p className="m-4">
-                  To use VS|Branch, you will first need to install ripGrep on
-                  your machine.
+                  To use Branch, you will first need to ensure that{' '}
+                  <a
+                    href="https://github.com/BurntSushi/ripgrep#installation"
+                    className="font-medium text-blue"
+                  >
+                    RipGrep
+                  </a>{' '}
+                  (a command line search tool) is installed on your machine.
                 </p>
+                <p className="m-4 ml-10">
+                  To check to see what version of RipGrep is installed on your
+                  machine, enter the following in your terminal.
+                </p>
+                <p className="m-4 ml-16 font-mono bg-green-100 p-2 w-[300px]">
+                  $ rg --version
+                </p>
+                <p className="m-4 ml-14 italic">
+                  We recommend that you use version 13.0.0 or newer.
+                </p>
+                <br />
                 <p className="m-4 ml-10">
                   For MacOS X Homebrew users, install ripgrep by entering the
                   following into your terminal:
                 </p>
-                <p className="m-4 ml-16 font-comp bg-green-100 p-2 w-[300px]">
+                <p className="m-4 ml-16 font-mono bg-green-100 p-2 w-[300px]">
                   $ brew install ripgrep
                 </p>
                 <p className="m-4 ml-10">
-                  For Arch Linux users, install ripgrep by entering the
+                  For Debian & Ubuntu users, install ripgrep by entering the
                   following into your terminal:
                 </p>
-                <p className="m-4 ml-16 font-comp bg-green-100 p-2 w-[300px]">
-                  $ pacman -S ripgrep
+                <p className="m-4 ml-16 font-mono bg-green-100 p-2 w-[1000px]">
+                  $ curl -LO
+                  https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb
+                </p>
+                <p className="m-4 ml-16 font-mono bg-green-100 p-2 w-[1000px]">
+                  $ sudo dpkg -i ripgrep_13.0.0_amd64.deb
                 </p>
                 <p className="m-4 ml-10">
                   For all other users, install ripgrep by navigating to the link
                   below and following the associated instructions.
                 </p>
                 <a
-                  className="ml-20 font-bold text-link underline text-xl"
-                  href="https://docs.rs/crate/ripgrep/0.2.7"
+                  className="ml-20 font-bold font-serif text-link text-3xl"
+                  href="https://github.com/BurntSushi/ripgrep#installation"
                 >
-                  Ripgrep Docs
+                  - RipGrep Docs -
                 </a>
-                <p className="m-4">
+                <p className="m-4 ml-10 mr-40">
                   Once you have ripGrep installed on your machine, it is time to
-                  install VS|Branch. Click the install link on the top right of
-                  this page.
+                  install the Branch extension into VSCode. Click{' '}
+                  <a
+                    className="font-bold text-link"
+                    href="https://marketplace.visualstudio.com/items?itemName=OSLabs.VSCode"
+                  >
+                    HERE
+                  </a>{' '}
+                  or on the install link at the top right of this page to
+                  navigate to the VisualStudio Marketplace. From there, click
+                  install and follow the prompts.
                 </p>
               </div>
+              <br />
               <div className="m-4" id="instructions">
                 <h2 className="text-2xl text-green" id="instructions">
                   Instructions
                 </h2>
+                <div id="startupExplination" className="w-full flex">
+                  <div id="written explination" className="m-4">
+                    <h3 className="m-4 font-bold">Accessing the Extension:</h3>
+                    <p className="ml-8 mr-40">
+                      To access the extension, open the app you wish to test as
+                      you normally would in VSCode. Now open the Command Palette
+                      by pressing control (command on a mac) F1 and selecting{' '}
+                      <span className="font-bold">Branch: Start</span>. This
+                      will open the Branch view, and you are ready to go.
+                    </p>
+                    <div id="exampleImages">
+                      <img
+                        src="https://imgur.com/UYUZl3Q.png"
+                        alt="Example App Layout"
+                        className="rounded-lg border-4 border-black mt-7 w-[60%] m-auto"
+                      />
+                    </div>
+                  </div>
+                </div>
                 <br />
                 <div id="layoutExplinationBox" className="w-full flex">
                   <div id="letteredExplination" className=" m-4 mr-5">
-                    <h3>
-                      The VS|Branch view consists of four primary sections:
-                    </h3>
+                    <h3 className="font-bold m-4">Using the Branch view:</h3>
                     <br />
-                    <ul className="m-4">
+                    <p className="ml-8">
+                      The Branch view consists of four primary sections:
+                    </p>
+                    <br />
+                    <ul id="shortList" className="ml-40">
                       <li>
+                        <span className="font-bold text-xl">A</span>
+                        <span className="font-bold"> - Route Tree </span>
+                      </li>
+                      <li>
+                        <span className="font-bold text-xl">B</span>
+                        <span className="font-bold"> - Query Fields </span>
+                      </li>
+                      <li>
+                        <span className="font-bold text-xl">C</span>
+                        <span className="font-bold">
+                          {' '}
+                          - Request Body Field{' '}
+                        </span>
+                      </li>
+                      <li>
+                        <span className="font-bold text-xl">D</span>
+                        <span className="font-bold"> - Response Object </span>
+                      </li>
+                    </ul>
+                    <ul className="m-4">
+                      <li className="mt-[120px]">
                         <span className="font-bold text-xl">A</span>
                         <span className="font-bold"> - Route Tree: </span>This
                         is the interactive visual representation of your routes.
@@ -154,9 +242,9 @@ export default function AboutPage() {
                         by a{' '}
                         <span className="text-blue font-bold">blue circle</span>
                         . Simply click on that circle to see the route expanded.
-                        When selecting an endpoint (GET, POST, etc...),
-                        VS|Branch will begin filling out the appropriate query
-                        fields below.
+                        When selecting an endpoint (GET, POST, etc...), Branch
+                        will begin filling out the appropriate query fields
+                        below.
                       </li>
                       <br />
                       <li>
@@ -201,8 +289,9 @@ export default function AboutPage() {
                             click the highlighted DELETE button. <br />
                             <span className="text-red font-bold">
                               <span className="font-black">CAUTION: </span>
-                              Deleting from your database is permanant. Be sure
-                              you really wish to do this before clicking DELETE.
+                              If you are working with a live database, running
+                              delete with Branch is permanant. Be sure you
+                              really wish to do this before clicking DELETE.
                             </span>
                           </li>{' '}
                           <br />
@@ -215,12 +304,12 @@ export default function AboutPage() {
                             the POST button highlight. However, the URL field
                             will NOT populate as it is not necessary for this
                             type of request. <br /> <br /> Using the Key & Value
-                            fields, enter the appropriate data per your schema.
-                            As you enter each pair and click Add To Body, it
-                            will populate in the Request Body Field to the
-                            right. When you have entered all the necessary
-                            parameters, click the POST button to complete your
-                            query.
+                            fields, enter the appropriate data per your
+                            middleware needs. As you enter each pair and click
+                            Add To Body, it will populate in the Request Body
+                            Field to the right. When you have entered all the
+                            necessary parameters, click the POST button to
+                            complete your query.
                           </li>{' '}
                           <br />
                           <li>
@@ -255,9 +344,12 @@ export default function AboutPage() {
                         If you enter incorrect data, click the X button to clear
                         the field and restart building your query.
                         <br />
-                        <br />
-                        IMPORTANT: This section will remain empty when building
-                        GET or DELETE queries.
+                        <br />{' '}
+                        <span className="italic">
+                          {' '}
+                          IMPORTANT: This section will remain empty when
+                          building GET or DELETE queries.
+                        </span>
                       </li>
                       <br />
                       <li>
@@ -269,6 +361,13 @@ export default function AboutPage() {
                     </ul>
                   </div>
                   <div id="instructionImages">
+                    <div id="sampleAppLayout" className="">
+                      <img
+                        src="https://imgur.com/UYUZl3Q.png"
+                        alt="Example App Layout"
+                        className="rounded-lg border-4 border-black mt-7 w-[80%]"
+                      />
+                    </div>
                     <div id="sampleAppLayout" className="">
                       <img
                         src="https://imgur.com/UYUZl3Q.png"
@@ -313,6 +412,72 @@ export default function AboutPage() {
                     </div>
                   </div>
                 </div>
+              </div>
+              <div className="w-full m-4" id="troubleshooting section">
+                <h2 className="text-2xl text-green" id="troubleshooting">
+                  Troubleshooting
+                </h2>
+                <br />
+                <h3 className="ml-4">
+                  If you are experiencing issues when using Branch, consider the
+                  following:
+                </h3>
+                <br />
+                <table className="table-fixed text-left align top font-light w-[85%] border-1 border-black">
+                  <thead>
+                    <tr>
+                      <th className="border-1 border-black px-4">Problem</th>
+                      <th className="border-1 border-black px-4">
+                        Solution(s)
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th className="border-1 border-black font-normal px-4">
+                        The tree doesn't populate at startup
+                      </th>
+                      <th className="border-1 border-black font-normal px-4">
+                        - Make sure you only have one instance of Branch
+                        running. <br />- Restart your VSCode.
+                      </th>
+                    </tr>
+                    <tr>
+                      <th className="border-1 border-black font-normal px-4">
+                        Route tree is present but only displays a single node
+                      </th>
+                      <th className="border-1 border-black font-normal px-4">
+                        - Make sure your server files are stored in a directory
+                        titled "server". <br />- Make sure your "server"
+                        directory is in the root of your VSCode workspace.
+                      </th>{' '}
+                    </tr>
+                    <tr>
+                      <th className="border-1 border-black font-normal px-4">
+                        Route tree has one or more blank nodes
+                      </th>
+                      <th className="border-1 border-black font-normal px-4">
+                        - Branch's scraper operates by searching your code for
+                        "app.get" and then reads the remainder of the line.
+                        Ensure that your route information written in a single
+                        line.
+                      </th>
+                    </tr>
+                    <tr>
+                      <th className="border-1 border-black font-normal px-4">
+                        Route tree incorrectly displays multiple routes for a
+                        single node
+                      </th>
+                      <th className="border-1 border-black font-normal px-4">
+                        - This is a known bug that we are currently working on
+                        fixing. We welcome feedback and ideas to resolve this
+                        bug.
+                      </th>
+                    </tr>
+                  </tbody>
+                </table>
+                <p className="w-4"></p>
+                <br />
               </div>
               <div className="m-4">
                 <h2 className="text-2xl text-green" id="chocoCake">
@@ -369,3 +534,7 @@ export default function AboutPage() {
     </>
   );
 }
+
+//================================
+// NOTE: Feel free to remove chocolate cake recipe if needed
+//================================
