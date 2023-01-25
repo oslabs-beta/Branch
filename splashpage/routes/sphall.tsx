@@ -8,6 +8,7 @@
 import { PageProps } from '$fresh/server.ts';
 import Header from '../islands/Header.tsx';
 import Footer from '../islands/Footer.tsx';
+import { Head } from '$fresh/runtime.ts';
 
 //================================
 // Easter Egg HTML & Tailwind CSS
@@ -16,9 +17,10 @@ import Footer from '../islands/Footer.tsx';
 export default function AboutPage() {
   return (
     <>
-      <head>
+      <Head>
         <title>Branch - Hall</title>
-      </head>
+        <link rel="shortcut icon" href="https://imgur.com/SJ36zku.png" />
+      </Head>
       <main>
         <Header></Header>
         <div className="bg-off-white h-screen">

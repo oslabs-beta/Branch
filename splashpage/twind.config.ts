@@ -29,6 +29,7 @@ export default {
         'light-tan': '#bfb6a6',
         'branch':'#b78b54',
         'off-white': "#dde6dc",
+        'off-white2': "#c7cfc6",
         'white' : '#ffffff',
         'dark' : '#0b1c09',
         'link' : '#0202e6',
