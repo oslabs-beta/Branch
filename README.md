@@ -13,9 +13,9 @@
     <br />
     <br />
     <br />
-    <a href="https://github.com/oslabs-beta/sapling/issues">Report Bug</a>
+    <a href="https://github.com/oslabs-beta/Branch/issues">Report Bug</a>
     ·
-    <a href="https://github.com/oslabs-beta/sapling/issues">Request Feature</a>
+    <a href="https://github.com/oslabs-beta/Branch/issues">Request Feature</a>
   </p>
     <!-- BADGES -->
   <p align="center">
