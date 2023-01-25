@@ -89,7 +89,7 @@ export default function AboutPage() {
                   </a>
                   <br />
                   <a
-                    href="https://github.com/SirGoatsalot"
+                    href="https://www.linkedin.com/in/chase-benjamin300/"
                     className="underline text-blue-700"
                   >
                     LinkedIn

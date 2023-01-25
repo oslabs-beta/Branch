@@ -70,7 +70,7 @@ export default function AboutPage() {
                   <br />
                   <a
                     id="myLinkedInProfile"
-                    href="www.linkedin.com/in/jason-goldman-3039986"
+                    href="https://www.linkedin.com/in/chase-benjamin300/"
                     className="underline text-blue-700"
                   >
                     LinkedIn
@@ -81,7 +81,7 @@ export default function AboutPage() {
                 <br />
               </div>
               <div id="special fact" className="text-center">
-                FACT: I am a D3 master and a resource guru!
+                FACT: I am a D3 master and a DOM guru!
               </div>
             </div>
             <div className="w-1/4 bg-white m-3 p-3 rounded-xl grid justify-items-center shadow-md">
@@ -94,14 +94,14 @@ export default function AboutPage() {
               />
               <div id="teamText" className="text-center">
                 <p>
-                  Gatsby 'Catvid' Goldman <br />
+                  Porto, Portugal - Summer '22 <br />
                   <br />
-                  Snuggler
+                  Love to travel
                 </p>
                 <br />
               </div>
               <div id="secret pets" className="text-center">
-                Adopted during the pandemic. Loves belly rubs. Snores loudly.
+                Most interesting place I've visited is Madeira, Portugal
               </div>
             </div>{' '}
             <div className="w-1/4 bg-white m-3 p-3 rounded-xl grid justify-items-center shadow-md">
@@ -113,14 +113,14 @@ export default function AboutPage() {
               />
               <div id="teamText" className="text-center">
                 <p>
-                  Grimm 'Catio' Goldman <br />
+                  Ithaca, NY - Summer '21 <br />
                   <br />
-                  Mischief Maker
+                  Like being active and outside
                 </p>
                 <br />
               </div>
               <div id="secret pets" className="text-center">
-                Loves to play fetch! Must sit in every lap. Constantly moving.
+                Cycling around the Finger Lakes in Upstate NY
               </div>
             </div>
           </div>

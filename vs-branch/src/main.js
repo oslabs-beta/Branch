@@ -340,6 +340,7 @@ let bodyObj = {};
 
 //click handler to be used for checking POST request routes
 function checkRoute() {
+  document.querySelector('.required').innerText = '';
   document.querySelector('.post').style.backgroundColor = 'var(--vscode-extensionButton-prominentBackground)'
   document.getElementById('key').style.borderColor = '#b7c5b7';
   document.getElementById('value').style.borderColor = '#b7c5b7';
@@ -379,6 +380,7 @@ const addParams = () => {
 
 //click handler to be used for GET requests
 const checkParam = () => {
+  document.querySelector('.required').innerText = '';
   document.querySelector('.get').style.backgroundColor = 'var(--vscode-extensionButton-prominentBackground)';
   document.querySelector('#url').style.borderColor = '#b7c5b7';
   const urlPath = document.querySelector('#url').value;
@@ -394,6 +396,7 @@ const checkParam = () => {
 const statusInfo = {};
 //click handler to be used for delete requests
 function deleteItem() {
+  document.querySelector('.required').innerText = '';
   document.querySelector('.delete').style.backgroundColor = 'var(--vscode-extensionButton-prominentBackground)';
   document.querySelector('#url').style.borderColor = '#b7c5b7';
   const urlPath = document.querySelector('#url').value;
@@ -417,6 +420,7 @@ function deleteItem() {
 
 //click handler to be used for PUT requests
 function put1() {
+  document.querySelector('.required').innerText = '';
   document.querySelector('.put').style.backgroundColor = 'var(--vscode-extensionButton-prominentBackground)';
   document.querySelector('#key').style.borderColor = '#b7c5b7';
   document.querySelector('#value').style.borderColor = '#b7c5b7';
