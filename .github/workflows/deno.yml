@@ -31,9 +31,6 @@ jobs:
         uses: denoland/setup-deno@9db7f66e8e16b5699a514448ce994936c63f0d54
         with:
           deno-version: v1.x
-          project: branch
-          entrypoint: main.ts
-          
 
       # Uncomment this step to verify the use of 'deno fmt' on each commit.
       # - name: Verify formatting
