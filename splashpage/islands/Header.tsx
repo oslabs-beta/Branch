@@ -34,13 +34,13 @@ export default function Header() {
           <div className="w-1/2 text-left text-5xl">
             <p className="text-green mt-2 ml-[40px]"></p>
           </div>
-          <div className="w-1/2 flex justify-end">
+          <div className="w-[800px] flex justify-end">
             <div className="my-auto">
               <a href="/docs" className="grow mr-10 font-bold">
                 Docs
               </a>
               <a
-                href="https://marketplace.visualstudio.com/items?itemName=OSLabs.VSCode"
+                href="https://marketplace.visualstudio.com/items?itemName=Branch.branch"
                 className="grow mr-10 font-bold"
               >
                 Install
