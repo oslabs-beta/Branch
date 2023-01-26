@@ -20,7 +20,7 @@ export default function Home() {
         <title>Branch - Homepage</title>
         <link rel="shortcut icon" href="https://imgur.com/SJ36zku.png" />
       </Head>
-      <main className="min-w-[1000px]">
+      <main>
         <Header></Header>
         <div
           id="body"
@@ -122,39 +122,39 @@ export default function Home() {
                 our custom GUI for your coding enjoyment.
               </p>
             </div>
-            <div className="w-[50%]">
+            <div className="w-[50%] h-[100px]">
               <img
-                className="w-[75px] position: absolute top-[950px] left-[760px] z-0"
+                className="w-[75px] position: relative top-[80px] left-[30px] z-0"
                 src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg"
                 alt="VSCode Logo"
               />
               <img
-                className="w-[75px] position: absolute top-[950px] left-[860px] z-0"
+                className="w-[75px] position: relative top-[5px] left-[120px] z-0"
                 src="https://imgur.com/Q9Fzuwk.png"
                 alt="Plus sign"
               />
               <img
-                className="w-[100px] position: absolute top-[950px] left-[955px] z-0 mt-4"
+                className="w-[100px] position: relative top-[-68px] left-[210px] z-0 mt-4"
                 src="https://imgur.com/UmgImh1.png"
                 alt="Ripgrep Logo"
               />
               <img
-                className="w-[75px] position: absolute top-[950px] left-[1060px] z-0"
+                className="w-[75px] position: relative top-[-140px] left-[315px] z-0"
                 src="https://imgur.com/Q9Fzuwk.png"
                 alt="Plus sign"
               />
               <img
-                className="w-[75px] position: absolute top-[950px] left-[1150px] z-0"
+                className="w-[75px] position: relative top-[-215px] left-[400px] z-0"
                 src="https://github.com/d3/d3-logo/blob/master/d3.png?raw=true"
                 alt="D3 logo"
               />
               <img
-                className="w-[75px] position: absolute top-[950px] left-[1240px] z-0"
+                className="w-[75px] position: relative top-[-290px] left-[490px] z-0"
                 src="https://imgur.com/wjMSqZw.png"
                 alt="Equals Sign"
               />
               <img
-                className="w-[175px] position: absolute top-[1050px] left-[960px] z-0"
+                className="w-[175px] position: relative top-[-270px] left-[220px] z-0"
                 src="https://imgur.com/XVDamPl.png"
                 alt="Branch Logo"
               />
