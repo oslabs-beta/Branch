@@ -42,7 +42,7 @@ export default function AboutPage() {
           <div className="flex w-full">
             <div className="w-1/4 h-[380px] bg-white m-3 p-3 rounded-xl grid justify-items-center shadow-md">
               <img
-                src="https://i.imgur.com/1XXAny6.png"
+                src="https://imgur.com/JghSSWG.png"
                 alt="Team Face"
                 className="max-w-[200px]"
               />
@@ -138,7 +138,7 @@ export default function AboutPage() {
             </div>
             <div className="w-1/4 bg-white m-3 p-3 rounded-xl grid justify-items-center shadow-md">
               <img
-                src="https://i.imgur.com/1XXAny6.png"
+                src="https://imgur.com/ZMT7CvN.png"
                 alt="Team Face"
                 className="max-w-[200px]"
               />
