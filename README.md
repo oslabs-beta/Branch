@@ -85,60 +85,42 @@
 
 <p> To use Branch, you will first need to ensure that
   <a href="https://github.com/BurntSushi/ripgrep#installation">
-    RipGrep
-  </a>
-  (a command line search tool) is installed on your machine.
-
-  To check to see what version of RipGrep is installed on your
+    RipGrep</a>
+  (a command line search tool) is installed on your machine. To check to see what version of RipGrep is installed on your
   machine, enter the following in your terminal.
 </p>
-<pml-16 font-mono bg-green-100 p-2 w-[300px]">
-  $ rg --version
+
+
+```
+$ rg --version
+```
 </p>
-<pml-14 italic">
+<p>
   We recommend that you use version 13.0.0 or newer.
 </p>
 <br />
-<pml-10">
+<p>
   For MacOS X Homebrew users, install ripgrep by entering the
   following into your terminal:
 </p>
-<pml-16 font-mono bg-green-100 p-2 w-[300px]">
-  $ brew install ripgrep
-</p>
-<pml-10">
+
+```
+$ brew install ripgrep
+```
+<p>
   For Debian & Ubuntu users, install ripgrep by entering the
   following into your terminal:
 </p>
-<pml-16 font-mono bg-green-100 p-2 w-[1000px]">
-  $ curl -LO
-  https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb
-</p>
-<pml-16 font-mono bg-green-100 p-2 w-[1000px]">
-  $ sudo dpkg -i ripgrep_13.0.0_amd64.deb
-</p>
-<pml-10">
-  For all other users, install ripgrep by navigating to the link
-  below and following the associated instructions.
-</p>
-<a
-0 font-bold font-serif text-link text-3xl"
-  href="https://github.com/BurntSushi/ripgrep#installation"
->
-  - RipGrep Docs -
-</a>
-<pml-10 mr-40">
+
+```
+$ curl -LO https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb
+$ sudo dpkg -i ripgrep_13.0.0_amd64.deb
+```
+
+  For all other users, install ripgrep by navigating to the <a href="https://github.com/BurntSushi/ripgrep#installation">RipGrep repo</a> and finding your configuration.
+<p>
   Once you have ripGrep installed on your machine, it is time to
-  install the Branch extension into VSCode. Click{' '}
-  <a
-  -bold text-link"
-    href="https://marketplace.visualstudio.com/items?itemName=OSLabs.VSCode"
-  >
-    HERE
-  </a>{' '}
-  or on the install link at the top right of this page to
-  navigate to the VisualStudio Marketplace. From there, click
-  install and follow the prompts.
+  install the Branch extension into VSCode. Click <a href="https://marketplace.visualstudio.com/items?itemName=Branch.branch">here</a> or at the top of this page to navigate to the VisualStudio Marketplace. From there, click install and follow the prompts.
 </p>
 
 ## Docs
