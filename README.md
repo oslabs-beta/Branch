@@ -50,8 +50,8 @@
 
 ## About Branch
 
-### Branch is a unique & convenient backend route visualization tool built directly into VS Code! With Branch, you can:
-<ul className="ml-20 list-square">
+#### Branch is a unique & convenient backend route visualization tool built directly into VS Code! With Branch, you can:
+<ul>
   <li>
     View your app's routes without leaving your editing
     environemnt
@@ -65,10 +65,8 @@
   </li>
   <li>View returning data in an easy to read format</li>
 </ul>
-<br />
 
-### Branch functions best when conventional syntax standards and best practices are used. This includes:
-
+####  Branch functions best when conventional syntax standards and best practices are used. This includes:
 <br />
 <ul>
   <li >
@@ -85,6 +83,64 @@
 
 ## Installation
 
+<p> To use Branch, you will first need to ensure that
+  <a href="https://github.com/BurntSushi/ripgrep#installation">
+    RipGrep
+  </a>
+  (a command line search tool) is installed on your machine.
+
+  To check to see what version of RipGrep is installed on your
+  machine, enter the following in your terminal.
+</p>
+<pml-16 font-mono bg-green-100 p-2 w-[300px]">
+  $ rg --version
+</p>
+<pml-14 italic">
+  We recommend that you use version 13.0.0 or newer.
+</p>
+<br />
+<pml-10">
+  For MacOS X Homebrew users, install ripgrep by entering the
+  following into your terminal:
+</p>
+<pml-16 font-mono bg-green-100 p-2 w-[300px]">
+  $ brew install ripgrep
+</p>
+<pml-10">
+  For Debian & Ubuntu users, install ripgrep by entering the
+  following into your terminal:
+</p>
+<pml-16 font-mono bg-green-100 p-2 w-[1000px]">
+  $ curl -LO
+  https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb
+</p>
+<pml-16 font-mono bg-green-100 p-2 w-[1000px]">
+  $ sudo dpkg -i ripgrep_13.0.0_amd64.deb
+</p>
+<pml-10">
+  For all other users, install ripgrep by navigating to the link
+  below and following the associated instructions.
+</p>
+<a
+0 font-bold font-serif text-link text-3xl"
+  href="https://github.com/BurntSushi/ripgrep#installation"
+>
+  - RipGrep Docs -
+</a>
+<pml-10 mr-40">
+  Once you have ripGrep installed on your machine, it is time to
+  install the Branch extension into VSCode. Click{' '}
+  <a
+  -bold text-link"
+    href="https://marketplace.visualstudio.com/items?itemName=OSLabs.VSCode"
+  >
+    HERE
+  </a>{' '}
+  or on the install link at the top right of this page to
+  navigate to the VisualStudio Marketplace. From there, click
+  install and follow the prompts.
+</p>
+
 ## Docs
 
 Chicory java aftertaste spoon, mocha crema, extraction, irish chicory carajillo cinnamon, a, carajillo organic, that wings café au lait mazagran plunger pot sweet caffeine. Plunger pot con panna coffee filter french press, single shot half and half dark filter caramelization percolator cream instant strong. Flavour carajillo seasonal organic black, grounds irish dark mug, variety qui filter, kopi-luwak carajillo galão, barista espresso, seasonal americano caramelization affogato percolator. Black, espresso single shot steamed, chicory java redeye seasonal frappuccino, latte, wings, decaffeinated, caramelization, qui cream carajillo medium cortado espresso.
@@ -93,7 +149,7 @@ So single origin, caramelization single origin body spoon robust sweet, as aroma
 
 ## Section 4
 
-<h2 className="text-2xl text-green" id="chocoCake">
+<h2-2xl text-green" id="chocoCake">
                   Chocolate Cake Recipe
                 </h2>
                 <h3>
@@ -101,7 +157,7 @@ So single origin, caramelization single origin body spoon robust sweet, as aroma
                   recipe!
                 </h3>{' '}
                 <br />
-                <p className="m-4">
+                <p>
                   <p>2/3 cup butter - softened</p>
                   <p>1-2/3 cups sugar</p>
                   <p>3 large eggs - room temperature</p>
@@ -112,7 +168,7 @@ So single origin, caramelization single origin body spoon robust sweet, as aroma
                   <p>1-1/3 cups 2% milk</p>
                   <p>Confectioners' sugar or favorite frosting</p>
                   <br />
-                  <p className="w-2/3">
+                  <p3">
                     In a bowl, cream butter and sugar until light and fluffy,
                     5-7 minutes. Add eggs, 1 at a time, beating well after each
                     addition. In a seperate bowl, combine flour, cocoa, baking
@@ -122,7 +178,7 @@ So single origin, caramelization single origin body spoon robust sweet, as aroma
                     baking pan.
                   </p>
                   <br />
-                  <p className="w-2/3">
+                  <p3">
                     Bake at 350° for 35-40 minutes, or until a toothpick
                     inserted in center comes out clean. Cool completely on a
                     wire rack. When cake is cool, dust with confectioners' sugar
@@ -130,7 +186,7 @@ So single origin, caramelization single origin body spoon robust sweet, as aroma
                   </p>
                   <br />
                   <p>Nutrition Facts</p>
-                  <p className="font-light text-xs">
+                  <p-light text-xs">
                     1 piece: 257 calories, 10g fat (6g saturated fat), 67mg
                     cholesterol, 368mg sodium, 38g carbohydrate (23g sugars, 1g
                     fiber), 4g protein.
