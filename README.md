@@ -9,7 +9,7 @@
   <h3 align="center">Branch</h3>
 
   <p align="center">
-    --- TAGLINE HERE ---
+    View your backend routes right from your code editor
     <br />
     <br />
     <br />
@@ -40,30 +40,52 @@
 <!-- TABLE OF CONTENTS -->
 <summary>Table of Contents</summary>
   <ol>
-    <li><a href="#section-1">Section 1</a>
-    <li><a href="#section-2">Section 2</a></li>
-    <li><a href="#section-3">Section 3</a></li>
-    <li><a href="#section-4">Section 4</a>
-      <ul>
-        <li><a href="#subsection-1">Subsection 1</a></li>
-        <li><a href="#subsection-2">Subsection 2</a></li>
-      </ul>
-    </li>
-    <li><a href="#section-5">Section 5</a></li>
+    <li><a href="#about-branch">About Branch</a>
+    <li><a href="#installation">Installation</a></li>
+    <li><a href="#docs">Docs</a></li>
+    <li><a href="#about-the-team">About the Team</a></li>
+    <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
 
-## Section 1
+## About Branch
 
-Here's some section 1 content. wow!
+### Branch is a unique & convenient backend route visualization tool built directly into VS Code! With Branch, you can:
+<ul className="ml-20 list-square">
+  <li>
+    View your app's routes without leaving your editing
+    environemnt
+  </li>
+  <li>
+    Dynamically adjust which portion of the route you wish to view
+  </li>
+  <li>
+    Create, edit, and execute http requests to your server
+    directly from the extension
+  </li>
+  <li>View returning data in an easy to read format</li>
+</ul>
+<br />
 
-## Section 2
+### Branch functions best when conventional syntax standards and best practices are used. This includes:
 
-Boom swab black spot fathom lugsail bilge water salmagundi provost port jolly boat. Bilge water to go on account trysail lanyard long boat Arr rutters booty Sink me carouser. Weigh anchor crack Jennys tea cup sloop jib shrouds tender coxswain matey ho furl. Holystone Yellow Jack yard doubloon fathom aye lateen sail Jack Ketch hempen halter coffer. Main sheet reef skysail tack gun marooned black jack line lee black spot.
+<br />
+<ul>
+  <li >
+    Saving all server files inside a server directory
+  </li>
+  <li>
+    Saving port number in a port variable. Alternatively, you
+    can use port 3000 or 8080 directly
+  </li>
+  <li>
+    Using traditional routes (GET, POST, PUT, DELETE)
+  </li>
+</ul>
 
-Gunwalls loaded to the gunwalls furl cutlass yardarm coffer walk the plank broadside to go on account Jack Ketch. Matey Brethren of the Coast list grog blossom bucko jib belay Davy Jones' Locker coxswain spanker. Execution dock handsomely Brethren of the Coast spanker crow's nest piracy Jolly Roger careen boom capstan. Pillage square-rigged coffer cackle fruit bucko lugsail prow bounty Spanish Main mutiny. Quarter league grog pink chandler gibbet rutters barkadeer jury mast topsail. 
+## Installation
 
-## Section 3
+## Docs
 
 Chicory java aftertaste spoon, mocha crema, extraction, irish chicory carajillo cinnamon, a, carajillo organic, that wings café au lait mazagran plunger pot sweet caffeine. Plunger pot con panna coffee filter french press, single shot half and half dark filter caramelization percolator cream instant strong. Flavour carajillo seasonal organic black, grounds irish dark mug, variety qui filter, kopi-luwak carajillo galão, barista espresso, seasonal americano caramelization affogato percolator. Black, espresso single shot steamed, chicory java redeye seasonal frappuccino, latte, wings, decaffeinated, caramelization, qui cream carajillo medium cortado espresso.
 
