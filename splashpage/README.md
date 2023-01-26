@@ -46,7 +46,7 @@
   <ol>
     <li><a href="#about-branch">About Branch</a>
     <li><a href="#installation">Installation</a></li>
-    <li><a href="#docs">Docs</a></li>
+    <li><a href="#our-extension">Our Extension</a></li>
     <li><a href="#the-team">The Team</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
@@ -121,7 +121,7 @@ $ curl -LO https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgre
 $ sudo dpkg -i ripgrep_13.0.0_amd64.deb
 ```
 
-  For all other users, install ripgrep by navigating to the <a href="https://github.com/BurntSushi/ripgrep#installation">RipGrep repo</a> and finding your configuration.
+  For all other users, install rdocspgrep by navigating to the <a href="https://github.com/BurntSushi/ripgrep#installation">RipGrep repo</a> and finding your configuration.
 <p>
   Once you have ripGrep installed on your machine, it is time to
   install the Branch extension into VSCode. Click <a href="https://marketplace.visualstudio.com/items?itemName=Branch.branch">here</a> or at the top of this page to navigate to the VisualStudio Marketplace. From there, click install and follow the prompts.
