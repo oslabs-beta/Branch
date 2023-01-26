@@ -9,7 +9,7 @@
   <h3 align="center">Branch</h3>
 
   <p align="center">
-    View adn test your backend routes right from your code editor!
+    View and test your backend routes right from your code editor!
     <br />
     <br />
     <br />
@@ -172,10 +172,10 @@ displayed.
 
 ## The Team
 
--  Foster Sullivan | <a href="">LinkedIn</a> | <a href="">GitHub</a>  
--  Chase Benjamin | <a href="">LinkedIn</a> | <a href="">GitHub</a> 
--  Zach Hall | <a href="">LinkedIn</a> | <a href="">GitHub</a> 
--  Jason Goldman| <a href="">LinkedIn</a> | <a href="">GitHub</a> 
+-  Foster Sullivan | <a href="https://www.linkedin.com/in/foster-sullivan-468970253/">LinkedIn</a> | <a href="https://github.com/SirGoatsalot">GitHub</a>  
+-  Chase Benjamin | <a href="https://www.linkedin.com/in/chase-benjamin300/">LinkedIn</a> | <a href="https://github.com/chasebenj">GitHub</a> 
+-  Zach Hall | <a href="https://www.linkedin.com/in/z-r-hall/">LinkedIn</a> | <a href="https://github.com/z-r-hall">GitHub</a> 
+-  Jason Goldman| <a href="www.linkedin.com/in/jason-goldman-3039986">LinkedIn</a> | <a href="https://github.com/Trablink">GitHub</a> 
 
 ## Acknowledgements
 

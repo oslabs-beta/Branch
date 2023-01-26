@@ -18,6 +18,7 @@
     "type": "git",
     "url": "https://github.com/oslabs-beta/Branch"
   },
+  "homepage": "https://branch.deno.dev/",
   "activationEvents": [
     "onCommand:branch.start"
   ],
