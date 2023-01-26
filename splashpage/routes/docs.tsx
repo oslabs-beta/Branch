@@ -63,7 +63,7 @@ export default function AboutPage() {
               />
             </div>
           </div>
-          <div id="body" className="h-full">
+          <div id="body" className="h-full ml-6">
             <div id="spacer" className="w-full p-[50px]"></div>
             <div
               id="scrollOption"
@@ -113,6 +113,8 @@ export default function AboutPage() {
                 </ul>
               </div>
               <div className="m-4">
+                <br />
+                <br />
                 <h2 className="text-2xl text-green" id="installation">
                   Installation
                 </h2>
@@ -170,7 +172,7 @@ export default function AboutPage() {
                   install the Branch extension into VSCode. Click{' '}
                   <a
                     className="font-bold text-link"
-                    href="https://marketplace.visualstudio.com/items?itemName=OSLabs.VSCode"
+                    href="https://marketplace.visualstudio.com/items?itemName=Branch.branch"
                   >
                     HERE
                   </a>{' '}
@@ -196,7 +198,7 @@ export default function AboutPage() {
                     </p>
                     <div id="exampleImages">
                       <img
-                        src="https://imgur.com/UYUZl3Q.png"
+                        src="https://imgur.com/N0TfcJb.gif"
                         alt="Example App Layout"
                         className="rounded-lg border-4 border-black mt-7 w-[60%] m-auto"
                       />
@@ -246,7 +248,7 @@ export default function AboutPage() {
                         will begin filling out the appropriate query fields
                         below.
                       </li>
-                      <br />
+                      <br /> <br /> <br />
                       <li>
                         <span className="font-bold text-xl">B</span>
                         <span className="font-bold">- Query Fields: </span> Here
@@ -356,64 +358,75 @@ export default function AboutPage() {
                         <span className="font-bold text-xl">D</span>
                         <span className="font-bold"> - Response Object: </span>
                         This is where the results of your query will be
-                        displayed.
+                        displayed. <br /> <br /> If your query returns an
+                        object, it will auto-populate here. If your query only
+                        returns a status code, that status code will be
+                        displayed instead.
                       </li>
                     </ul>
                   </div>
                   <div id="instructionImages">
                     <div id="sampleAppLayout" className="">
                       <img
-                        src="https://imgur.com/UYUZl3Q.png"
-                        alt="Example App Layout"
-                        className="rounded-lg border-4 border-black mt-7 w-[80%]"
+                        src="https://imgur.com/iagVOsk.png"
+                        alt="Example Branch App Layout"
+                        className="rounded-lg border-4 border-black mt-[110px] w-[80%]"
                       />
                     </div>
                     <div id="sampleAppLayout" className="">
                       <img
-                        src="https://imgur.com/UYUZl3Q.png"
-                        alt="Example App Layout"
-                        className="rounded-lg border-4 border-black mt-7 w-[80%]"
+                        src="https://imgur.com/XCJdZyJ.png"
+                        alt="Example Route Tree"
+                        className="rounded-lg border-4 border-black mt-[100px] w-[80%]"
                       />
                     </div>
                     <div id="getExplination">
                       <img
-                        src="https://imgur.com/7hqoJ7q.jpg"
-                        alt="Sample GET Query"
-                        className="rounded-lg border-4 border-black mt-[78px] w-[80%]"
+                        src="https://imgur.com/kXjYuIV.gif"
+                        alt="Sample GET Query No Params"
+                        className="rounded-lg border-4 border-black mt-[130px] w-[80%]"
                       />
                     </div>
                     <div id="deleteExplination">
                       <img
-                        src="https://imgur.com/7hqoJ7q.jpg"
-                        alt="Sample DELETE Query"
-                        className="rounded-lg border-4 border-black mt-[115px] w-[80%]"
+                        src="https://imgur.com/xB6z849.gif"
+                        alt="Sample DELETE Query With Params"
+                        className="rounded-lg border-4 border-black mt-[35px] w-[80%]"
                       />
                     </div>
                     <div id="postExplination">
                       <img
-                        src="https://imgur.com/7hqoJ7q.jpg"
-                        alt="Sample POST Query"
-                        className="rounded-lg border-4 border-black mt-[160px] w-[80%]"
+                        src="https://imgur.com/ZIPCmM7.gif"
+                        alt="Sample POST Query With Params"
+                        className="rounded-lg border-4 border-black mt-[55px] w-[80%]"
                       />
                     </div>
                     <div id="putExplination">
                       <img
-                        src="https://imgur.com/7hqoJ7q.jpg"
-                        alt="Sample PUT Query"
-                        className="rounded-lg border-4 border-black mt-[160px] w-[80%]"
+                        src="https://imgur.com/ihas7Y1.gif"
+                        alt="Sample PUT Query With Params"
+                        className="rounded-lg border-4 border-black mt-[150px] w-[80%]"
                       />
                     </div>
                     <div id="requestBodyField">
                       <img
-                        src="https://imgur.com/UYUZl3Q.png"
-                        alt="Request Body Field"
-                        className="rounded-lg border-4 border-black mt-[270px] w-[80%]"
+                        src="https://imgur.com/PuRj5GL.gif"
+                        alt="Sample Request Body Field"
+                        className="rounded-lg border-4 border-black mt-[120px] w-[80%]"
+                      />
+                    </div>
+                    <div id="responseObject">
+                      <img
+                        src="https://imgur.com/TNgo6Zt.gif"
+                        alt="Sample Response Object"
+                        className="rounded-lg border-4 border-black mt-[30px] w-[80%]"
                       />
                     </div>
                   </div>
                 </div>
               </div>
               <div className="w-full m-4" id="troubleshooting section">
+                <br /> <br />
                 <h2 className="text-2xl text-green" id="troubleshooting">
                   Troubleshooting
                 </h2>
@@ -480,6 +493,7 @@ export default function AboutPage() {
                 <br />
               </div>
               <div className="m-4">
+                <br /> <br />
                 <h2 className="text-2xl text-green" id="chocoCake">
                   Chocolate Cake Recipe
                 </h2>
