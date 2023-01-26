@@ -140,30 +140,33 @@ by pressing control (command on a mac) F1 and selecting `Branch: Start`
 The Branch view consists of four primary sections:
 <ol>
   <li>
-    **Route Tree**: This
-    is the interactive visual representation of your routes.
-    Each route that can be expanded upon will be indicated
-    by a blue circle. Simply click on that circle to see the route expanded. When selecting an endpoint (GET, POST, etc...), Branch
-    will begin filling out the appropriate query fields
-    below.
+    
+**Route Tree** : This
+is the interactive visual representation of your routes.
+Each route that can be expanded upon will be indicated
+by a blue circle. Simply click on that circle to see the route expanded. When selecting an endpoint (GET, POST, etc...), Branch
+will begin filling out the appropriate query fields
+below.
   </li>
   <li>
-    **Query Fields**: Here
-    you can determine the query parameters that you need.
-    The URL section will begin to auto-populate when you
-    click on an endpoint in the Route Tree above.
-    Additionally, the appropriate button and input field for
-    your query type will highlight. For more detailed information on query types, see our <a href="">detailed docs</a>.
-    </ul>
+
+**Query Fields**: Here
+you can determine the query parameters that you need.
+The URL section will begin to auto-populate when you
+click on an endpoint in the Route Tree above.
+Additionally, the appropriate button and input field for
+your query type will highlight. For more detailed information on query types, see our <a href="">detailed docs</a>.
   </li>
   <li>
-    **Request Body Field**: Here, you will see the request body when you are generating a POST or PUT request.
-    If you enter incorrect data, click the X button to clear
-    the field and restart building your query.
+
+**Request Body Field**: Here, you will see the request body when you are generating a POST or PUT request.
+If you enter incorrect data, click the X button to clear
+the field and restart building your query.
   </li>
   <li>
-    **Response Object**: This is where the results of your query will be
-    displayed.
+
+**Response Object**: This is where the results of your query will be
+displayed.
   </li>
 </ol>
 
