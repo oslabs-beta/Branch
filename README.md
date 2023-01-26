@@ -155,7 +155,7 @@ you can determine the query parameters that you need.
 The URL section will begin to auto-populate when you
 click on an endpoint in the Route Tree above.
 Additionally, the appropriate button and input field for
-your query type will highlight. For more detailed information on query types, see our <a href="">detailed docs</a>.
+your query type will highlight. For more detailed information on query types, see our <a href="https://branch.deno.dev/docs">detailed docs</a>.
   </li>
   <li>
 
