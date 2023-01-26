@@ -20,7 +20,7 @@ export default function Home() {
         <title>Branch - Homepage</title>
         <link rel="shortcut icon" href="https://imgur.com/SJ36zku.png" />
       </Head>
-      <main>
+      <main className="min-w-[1000px]">
         <Header></Header>
         <div
           id="body"
@@ -64,25 +64,28 @@ export default function Home() {
               />
             </div>
           </div>
-          <div id="supportedEnvironments" className="h-1/2 flex bg-off-white2">
+          <div
+            id="supportedEnvironments"
+            className="h-[400px] flex bg-off-white2"
+          >
             <div className="w-[50%] ">
               <img
-                className="w-[200px] position: absolute top-[500px] left-[60px] z-0"
+                className="w-[200px] position: relative top-[40px] left-[60px] z-0"
                 src="https://upload.wikimedia.org/wikipedia/commons/8/84/Deno.svg"
                 alt="Deno Logo"
               />
               <img
-                className="w-[200px] position: absolute top-[680px] left-[350px] z-0"
+                className="w-[200px] position: relative top-[0px] left-[350px] z-0"
                 src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg"
                 alt="Node.js Logo"
               />
               <img
-                className="w-[150px] position: absolute top-[530px] left-[250px] z-0"
+                className="w-[150px] position: relative top-[-230px] left-[250px] z-0"
                 src="https://imgur.com/DE6JfVw.png"
                 alt="Check Mark for Deno"
               />
               <img
-                className="w-[150px] position: absolute top-[660px] left-[560px] z-0"
+                className="w-[150px] position: relative top-[-300px] left-[560px] z-0"
                 src="https://imgur.com/DE6JfVw.png"
                 alt="Check Mark for Node"
               />
