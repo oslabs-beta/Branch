@@ -70,7 +70,7 @@ export default function AboutPage() {
                   <br />
                   <a
                     id="myLinkedInProfile"
-                    href="www.linkedin.com/in/jason-goldman-3039986"
+                    href="www.linkedin.com/in/jasonegoldman"
                     className="underline text-blue-700"
                   >
                     LinkedIn
