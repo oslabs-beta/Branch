@@ -44,7 +44,7 @@ export default function Home() {
               <ul className="ml-20 list-square">
                 <li>
                   View your app's routes without leaving your editing
-                  environemnt
+                  environment
                 </li>
                 <li>
                   Dynamically adjust which portion of the route you wish to view
